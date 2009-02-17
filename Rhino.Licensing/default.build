@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding='iso-8859-1' ?>
+<project
+	name="Rhino.Licensing"
+	default="build"
+	xmlns="http://nant.sf.net/release/0.85/nant.xsd"
+>
+	<property overwrite="false" name="assembly.is-cls-compliant" value="true" />
+
+	<property name="root.dir" value="../.." />
+	<include buildfile="${root.dir}/common-project.xml" />
+
+	<target name="init" depends="common.init">
+		<property name="assembly.version" value="1.0.0.0" />
+		<property name="assembly.description" value="Rhino Service Bus" />
+
+		<assemblyfileset id="project.references" basedir="${build.dir}">			
+			<include name="System"/>
+			<include name="System.Configuration"/>
+			<include name="System.Core"/>
+			<include name="System.Messaging"/>
+			<include name="System.Transactions"/>
+			<include name="System.Web.Extensions"/>
+			<include name="System.XML"/>
+			<include name="System.Xml.Linq"/>
+			
+		</assemblyfileset>
+	</target>
+
+	<target name="generate-assemblyinfo" depends="init common.generate-assemblyinfo" />
+
+	<target name="build" description="Build ${project::get-name()}" depends="generate-assemblyinfo common.compile-dll" />
+
+</project>
