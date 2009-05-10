@@ -6,6 +6,7 @@ using System.Xml;
 
 namespace Rhino.Licensing
 {
+	using System.Globalization;
 	using System.ServiceModel;
 	using System.Threading;
 
@@ -163,8 +164,8 @@ namespace Rhino.Licensing
 			XmlNode date = doc.SelectSingleNode("/license/@expiration");
 			if (date == null)
 				return false;
-
-			ExpirationDate = XmlConvert.ToDateTime(date.Value, XmlDateTimeSerializationMode.Utc);
+			
+			ExpirationDate = DateTime.ParseExact(date.Value, "yyyy-MM-ddTHH:mm:ss.fffffff", CultureInfo.CurrentCulture);
 
 			XmlNode licenseType = doc.SelectSingleNode("/license/@type");
 			if (licenseType == null)
