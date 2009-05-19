@@ -3,6 +3,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Security.Cryptography.Xml;
 using System.Xml;
+using log4net;
 
 namespace Rhino.Licensing
 {
@@ -12,6 +13,8 @@ namespace Rhino.Licensing
 
 	public class LicenseValidator
 	{
+		private readonly ILog log = LogManager.GetLogger(typeof (LogManager));
+
 		private readonly string licensePath;
 		private readonly string licenseServerUrl;
 		private readonly Guid clientId;
@@ -55,11 +58,14 @@ namespace Rhino.Licensing
 		public void AssertValidLicense()
 		{
 			if (File.Exists(licensePath) == false)
+			{
+				log.WarnFormat("Could not find license file: {0}", licensePath);
 				throw new LicenseFileNotFoundException();
+			}
 
 			if (HasExistingLicense())
 				return;
-
+			log.WarnFormat("Could not find an existing license in {0}", licensePath);
 			throw new LicenseNotFoundException();
 		}
 
@@ -68,11 +74,18 @@ namespace Rhino.Licensing
 			try
 			{
 				if (File.Exists(licensePath) == false)
+				{
+					log.WarnFormat("Could not find license file: {0}", licensePath);
 					return false;
+				}
 
 				if (TryValidate() == false)
+				{
+					log.WarnFormat("Failed validating license file: {0}", licensePath);
 					return false;
-
+				}
+				log.InfoFormat("License {0} expiration date is {0}", licensePath, ExpirationDate);
+				
 				return DateTime.Now < ExpirationDate;
 			}
 			catch (Exception)
@@ -94,24 +107,34 @@ namespace Rhino.Licensing
 				doc.Load(licensePath);
 
 				if (TryGetValidDocument(publicKey, doc) == false)
+				{
+					log.WarnFormat("Could not validate xml signature of {0}", licensePath);
 					return false;
+				}
 
 				if (doc.FirstChild == null)
+				{
+					log.WarnFormat("Could not find first child of {0}", licensePath);
 					return false;
+				}
 
 				if (doc.SelectSingleNode("/floating-license") != null)
 				{
 					var node = doc.SelectSingleNode("/floating-license/license-server-public-key/text()");
 					if (node == null)
+					{
+						log.WarnFormat("Invalid license file {0}, floating license without license server public key", licensePath);
 						throw new InvalidOperationException(
 							"Invalid license file format, floating license without license server public key");
+					}
 					return ValidateFloatingLicense(node.InnerText);
 				}
 
 				return ValidateXmlDocumentLicense(doc);
 			}
-			catch (Exception)
+			catch (Exception e)
 			{
+				log.ErrorFormat("Could not validate license", e);
 				return false;
 			}
 		}
@@ -119,7 +142,10 @@ namespace Rhino.Licensing
 		private bool ValidateFloatingLicense(string publicKeyOfFloatingLicense)
 		{
 			if (licenseServerUrl == null)
+			{
+				log.Warn("Could not find license server url");
 				throw new InvalidOperationException("Floating license encountered, but licenseServerUrl was not set");
+			}
 
 			var success = false;
 			var licensingService = ChannelFactory<ILicensingService>.CreateChannel(new WSHttpBinding(), new EndpointAddress(licenseServerUrl));
@@ -135,13 +161,17 @@ namespace Rhino.Licensing
 				doc.LoadXml(leasedLicense);
 
 				if (TryGetValidDocument(publicKeyOfFloatingLicense, doc) == false)
+				{
+					log.WarnFormat("Could not get valid license from floating license server{0}", licensePath);
 					return false;
+				}
 
 				var validLicense = ValidateXmlDocumentLicense(doc);
 				if (validLicense)
 				{
 					//setup next lease
 					var time = (ExpirationDate.AddMinutes(-5) - DateTime.Now);
+					log.Debug("Will lease license again at {0}", time);
 					nextLeaseTimer.Change(time, time);
 				}
 				return validLicense;
@@ -157,41 +187,58 @@ namespace Rhino.Licensing
 		{
 			XmlNode id = doc.SelectSingleNode("/license/@id");
 			if (id == null)
+			{
+				log.WarnFormat("Could not find id attribute in {0}", licensePath);
 				return false;
+			}
 
 			UserId = new Guid(id.Value);
 
 			XmlNode date = doc.SelectSingleNode("/license/@expiration");
 			if (date == null)
+			{
+				log.WarnFormat("Could not find expiration in {0}", licensePath);
 				return false;
+			}
 			
 			ExpirationDate = DateTime.ParseExact(date.Value, "yyyy-MM-ddTHH:mm:ss.fffffff", CultureInfo.CurrentCulture);
 
 			XmlNode licenseType = doc.SelectSingleNode("/license/@type");
 			if (licenseType == null)
+			{
+				log.WarnFormat("Could not find license type in {0}", licenseType);
 				return false;
+			}
 
 			LicenseType = (LicenseType)Enum.Parse(typeof(LicenseType), licenseType.Value);
 
 			XmlNode name = doc.SelectSingleNode("/license/name/text()");
 			if (name == null)
+			{
+				log.WarnFormat("Could not find licensee's name in {0}", licensePath);
 				return false;
+			}
 
 			Name = name.Value;
 
 			return true;
 		}
 
-		private bool TryGetValidDocument(string licensePrivateKey, XmlDocument doc)
+		private bool TryGetValidDocument(string licensePublicKey, XmlDocument doc)
 		{
 			var rsa = new RSACryptoServiceProvider();
-			rsa.FromXmlString(licensePrivateKey);
+			rsa.FromXmlString(licensePublicKey);
 
 			var nsMgr = new XmlNamespaceManager(doc.NameTable);
 			nsMgr.AddNamespace("sig", "http://www.w3.org/2000/09/xmldsig#");
 
 			var signedXml = new SignedXml(doc);
 			var sig = (XmlElement)doc.SelectSingleNode("//sig:Signature", nsMgr);
+			if(sig == null)
+			{
+				log.WarnFormat("Could not find this signature node on {0}", licensePath);
+				return false;
+			}
 			signedXml.LoadXml(sig);
 
 			return signedXml.CheckSignature(rsa);
