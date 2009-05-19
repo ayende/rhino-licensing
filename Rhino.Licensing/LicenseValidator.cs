@@ -84,7 +84,7 @@ namespace Rhino.Licensing
 					log.WarnFormat("Failed validating license file: {0}", licensePath);
 					return false;
 				}
-				log.InfoFormat("License {0} expiration date is {0}", licensePath, ExpirationDate);
+				log.InfoFormat("License {0} expiration date is {1}", licensePath, ExpirationDate);
 				
 				return DateTime.Now < ExpirationDate;
 			}
