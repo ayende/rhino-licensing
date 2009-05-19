@@ -171,7 +171,7 @@ namespace Rhino.Licensing
 				{
 					//setup next lease
 					var time = (ExpirationDate.AddMinutes(-5) - DateTime.Now);
-					log.Debug("Will lease license again at {0}", time);
+					log.DebugFormat("Will lease license again at {0}", time);
 					nextLeaseTimer.Change(time, time);
 				}
 				return validLicense;
