@@ -13,7 +13,7 @@ namespace Rhino.Licensing
 
 	public class LicenseValidator
 	{
-		private readonly ILog log = LogManager.GetLogger(typeof (LogManager));
+		private readonly ILog log = LogManager.GetLogger(typeof(LicenseValidator));
 
 		private readonly string licensePath;
 		private readonly string licenseServerUrl;
@@ -134,7 +134,7 @@ namespace Rhino.Licensing
 			}
 			catch (Exception e)
 			{
-				log.ErrorFormat("Could not validate license", e);
+				log.Error("Could not validate license", e);
 				return false;
 			}
 		}
