@@ -14,6 +14,8 @@
 		<property name="assembly.description" value="Rhino Service Bus" />
 
 		<assemblyfileset id="project.references" basedir="${build.dir}">			
+			<include name="log4net.dll"/>
+			
 			<include name="System"/>
 			<include name="System.Configuration"/>
 			<include name="System.Core"/>

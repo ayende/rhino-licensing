@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.IO;
 using System.Security.Cryptography;
 using System.Security.Cryptography.Xml;
@@ -91,7 +92,7 @@ namespace Rhino.Licensing
         
             var expirDateAttr = doc.CreateAttribute("expiration");
             license.Attributes.Append(expirDateAttr);
-            expirDateAttr.Value = expirationDate.ToString("yyyy-MM-ddTHH:mm:ss.fffffff");
+            expirDateAttr.Value = expirationDate.ToString("yyyy-MM-ddTHH:mm:ss.fffffff", CultureInfo.InvariantCulture);
 
             var licenseAttr = doc.CreateAttribute("type");
             license.Attributes.Append(licenseAttr);

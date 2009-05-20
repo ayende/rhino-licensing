@@ -201,7 +201,7 @@ namespace Rhino.Licensing
 				return false;
 			}
 			
-			ExpirationDate = DateTime.ParseExact(date.Value, "yyyy-MM-ddTHH:mm:ss.fffffff", CultureInfo.CurrentCulture);
+			ExpirationDate = DateTime.ParseExact(date.Value, "yyyy-MM-ddTHH:mm:ss.fffffff", CultureInfo.InvariantCulture);
 
 			XmlNode licenseType = doc.SelectSingleNode("/license/@type");
 			if (licenseType == null)

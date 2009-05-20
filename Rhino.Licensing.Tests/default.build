@@ -14,7 +14,7 @@
 
     <assemblyfileset id="project.references" basedir="${build.dir}">
       <include name="xunit.dll"/>
-      <include name="Rhino.DHT.dll" />
+      <include name="log4net.dll" />
       <include name="Rhino.Mocks.dll" />
       <include name="Rhino.Licensing.dll" />
             
