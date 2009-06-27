@@ -9,6 +9,9 @@ namespace Rhino.Licensing
 	public interface ILicensingService
 	{
 		[OperationContract]
-		string LeaseLicense(Guid id);
+		string LeaseLicense(
+			string machine,
+			string user,
+			Guid id);
 	}
 }

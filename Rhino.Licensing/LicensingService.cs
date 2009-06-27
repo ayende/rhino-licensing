@@ -18,7 +18,7 @@ namespace Rhino.Licensing
 		public static string LicenseServerPrivateKey { get; set; }
 
 		private readonly List<LicenseValidator> availableLicenses = new List<LicenseValidator>();
-		private readonly Dictionary<Guid, KeyValuePair<DateTime, LicenseValidator>> leasedLicenses = new Dictionary<Guid, KeyValuePair<DateTime, LicenseValidator>>();
+		private readonly Dictionary<string, KeyValuePair<DateTime, LicenseValidator>> leasedLicenses = new Dictionary<string, KeyValuePair<DateTime, LicenseValidator>>();
 
 		public LicensingService()
 		{
@@ -64,21 +64,25 @@ namespace Rhino.Licensing
 			}
 		}
 
-		public string LeaseLicense(Guid id)
+		public string LeaseLicense(
+			string machine,
+			string user, 
+			Guid id)
 		{
 			KeyValuePair<DateTime, LicenseValidator> value;
-			if (leasedLicenses.TryGetValue(id, out value))
+			var identifier = machine+@"\"+user+": "+id;
+			if (leasedLicenses.TryGetValue(identifier, out value))
 			{
 				Debug.WriteLine(id+" is already leased, so extending lease");
 				var licenseValidator = value.Value;
-				return GenerateLicenseAndRenewLease(id, licenseValidator);
+				return GenerateLicenseAndRenewLease(identifier, id, licenseValidator);
 			}
 			if (availableLicenses.Count > 0)
 			{
 				var availableLicense = availableLicenses[availableLicenses.Count-1];
 				availableLicenses.RemoveAt(availableLicenses.Count-1);
 				Debug.WriteLine("Found available license to give, leasing it");
-				return GenerateLicenseAndRenewLease(id, availableLicense);
+				return GenerateLicenseAndRenewLease(identifier, id, availableLicense);
 			}
 			foreach (var kvp in leasedLicenses)
 			{
@@ -86,15 +90,15 @@ namespace Rhino.Licensing
 					continue;
 				leasedLicenses.Remove(kvp.Key);
 				Debug.WriteLine("Found expired leased license, leasing it");
-				return GenerateLicenseAndRenewLease(id, kvp.Value.Value);
+				return GenerateLicenseAndRenewLease(identifier, id, kvp.Value.Value);
 			}
 			Debug.WriteLine("Could not find license to lease");
 			return null;
 		}
 
-		private string GenerateLicenseAndRenewLease(Guid id, LicenseValidator licenseValidator)
+		private string GenerateLicenseAndRenewLease(string identifier, Guid id, LicenseValidator licenseValidator)
 		{
-			leasedLicenses[id] = new KeyValuePair<DateTime, LicenseValidator>(DateTime.Now.AddMinutes(30), licenseValidator);
+			leasedLicenses[identifier] = new KeyValuePair<DateTime, LicenseValidator>(DateTime.Now.AddMinutes(30), licenseValidator);
 			return GenerateLicense(id, licenseValidator);
 		}
 
