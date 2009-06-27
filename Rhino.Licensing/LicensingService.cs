@@ -42,7 +42,7 @@ namespace Rhino.Licensing
 			}
 			foreach (var license in Directory.GetFiles(licensesDirectory, "*.xml"))
 			{
-				var set = new HashSet<string>();
+				var set = new HashSet<Guid>();
 				var validator = new LicenseValidator(SoftwarePublicKey, license);
 				try
 				{
@@ -51,10 +51,10 @@ namespace Rhino.Licensing
 					if (validator.LicenseType == LicenseType.Standard && 
 						// this prevent a simple cheating of simply copying the same
 						// license file several times
-						set.Add(validator.Name))
+						set.Add(validator.UserId))
 					{
 						availableLicenses.Add(validator);
-						Debug.WriteLine("Accepting license for: " + validator.Name);
+						Debug.WriteLine("Accepting license for: " + validator.Name + " " + validator.UserId);
 					}
 				}
 				catch (Exception)

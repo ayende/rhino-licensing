@@ -58,6 +58,31 @@ namespace Rhino.Licensing.Tests
 
 		}
 
+		[Fact]
+		public void Can_only_get_license_per_allocated_licenses()
+		{
+			string fileName = WriteFloatingLicenseFile();
+
+			GenerateLicenseFileInLicensesDirectory();
+
+			LicensingService.SoftwarePublicKey = public_only;
+			LicensingService.LicenseServerPrivateKey = floating_private;
+
+			var host = new ServiceHost(typeof(LicensingService));
+			var address = "http://localhost:9292/license";
+			host.AddServiceEndpoint(typeof(ILicensingService), new WSHttpBinding(), address);
+
+			host.Open();
+
+			var validator = new LicenseValidator(public_only, fileName, address, Guid.NewGuid());
+			validator.AssertValidLicense();
+
+			var validator2 = new LicenseValidator(public_only, fileName, address, Guid.NewGuid());
+			Assert.Throws<LicenseNotFoundException>(validator2.AssertValidLicense);
+
+			host.Abort();
+		}
+
 		private void GenerateLicenseFileInLicensesDirectory()
 		{
 			var generator = new LicenseGenerator(public_and_private);
