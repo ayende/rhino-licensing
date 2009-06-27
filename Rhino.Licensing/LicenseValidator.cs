@@ -151,7 +151,10 @@ namespace Rhino.Licensing
 			var licensingService = ChannelFactory<ILicensingService>.CreateChannel(new WSHttpBinding(), new EndpointAddress(licenseServerUrl));
 			try
 			{
-				var leasedLicense = licensingService.LeaseLicense(clientId);
+				var leasedLicense = licensingService.LeaseLicense(
+					Environment.MachineName,
+					Environment.UserName,
+					clientId);
 				((ICommunicationObject)licensingService).Close();
 				success = true;
 				if (leasedLicense == null)

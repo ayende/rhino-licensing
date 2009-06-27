@@ -46,7 +46,7 @@ namespace Rhino.Licensing.Tests
 			LicensingService.LicenseServerPrivateKey = floating_private;
 
 			var host = new ServiceHost(typeof(LicensingService));
-			var address = "http://localhost:9292/license";
+			const string address = "http://localhost:9292/license";
 			host.AddServiceEndpoint(typeof(ILicensingService), new WSHttpBinding(), address);
 
 			host.Open();
@@ -55,7 +55,6 @@ namespace Rhino.Licensing.Tests
 			validator.AssertValidLicense();
 
 			host.Abort();
-
 		}
 
 		[Fact]
