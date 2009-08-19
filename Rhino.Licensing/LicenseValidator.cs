@@ -88,8 +88,12 @@ namespace Rhino.Licensing
 					return false;
 				}
 				log.InfoFormat("License {0} expiration date is {1}", licensePath, ExpirationDate);
-				
+
 				return DateTime.Now < ExpirationDate;
+			}
+			catch(RhinoLicensingException)
+			{
+				throw;
 			}
 			catch (Exception)
 			{
@@ -135,6 +139,10 @@ namespace Rhino.Licensing
 
 				return ValidateXmlDocumentLicense(doc);
 			}
+			catch (RhinoLicensingException)
+			{
+				throw;
+			}
 			catch (Exception e)
 			{
 				log.Error("Could not validate license", e);
@@ -166,15 +174,18 @@ namespace Rhino.Licensing
 				((ICommunicationObject)licensingService).Close();
 				success = true;
 				if (leasedLicense == null)
-					return false;
+				{
+					log.WarnFormat("Null response from license server: {0}", licensePath);
+					throw new FloatingLicenseNotAvialableException();
+				}
 
 				var doc = new XmlDocument();
 				doc.LoadXml(leasedLicense);
 
 				if (TryGetValidDocument(publicKeyOfFloatingLicense, doc) == false)
 				{
-					log.WarnFormat("Could not get valid license from floating license server{0}", licensePath);
-					return false;
+					log.WarnFormat("Could not get valid license from floating license server {0}", licensePath);
+					throw new FloatingLicenseNotAvialableException();
 				}
 
 				var validLicense = ValidateXmlDocumentLicense(doc);
@@ -211,7 +222,7 @@ namespace Rhino.Licensing
 				log.WarnFormat("Could not find expiration in {0}", licensePath);
 				return false;
 			}
-			
+
 			ExpirationDate = DateTime.ParseExact(date.Value, "yyyy-MM-ddTHH:mm:ss.fffffff", CultureInfo.InvariantCulture);
 
 			XmlNode licenseType = doc.SelectSingleNode("/license/@type");
@@ -245,7 +256,7 @@ namespace Rhino.Licensing
 
 			var signedXml = new SignedXml(doc);
 			var sig = (XmlElement)doc.SelectSingleNode("//sig:Signature", nsMgr);
-			if(sig == null)
+			if (sig == null)
 			{
 				log.WarnFormat("Could not find this signature node on {0}", licensePath);
 				return false;

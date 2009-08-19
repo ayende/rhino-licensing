@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Rhino.Licensing
 {
     [Serializable]
-    public class LicenseNotFoundException : Exception
+	public class LicenseNotFoundException : RhinoLicensingException
     {
         public LicenseNotFoundException()
         {
