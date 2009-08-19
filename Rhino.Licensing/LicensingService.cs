@@ -20,7 +20,7 @@ namespace Rhino.Licensing
 
 		private readonly List<LicenseValidator> availableLicenses = new List<LicenseValidator>();
 		private readonly Dictionary<string, KeyValuePair<DateTime, LicenseValidator>> leasedLicenses = new Dictionary<string, KeyValuePair<DateTime, LicenseValidator>>();
-		private string state;
+		private readonly string state;
 
 		public LicensingService()
 		{
