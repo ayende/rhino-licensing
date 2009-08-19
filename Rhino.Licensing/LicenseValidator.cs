@@ -27,15 +27,18 @@ namespace Rhino.Licensing
 		public Guid UserId { get; private set; }
 		public string Name { get; private set; }
 
+		public bool DisableFloatingLicenses { get; set; }
+
 		private readonly Timer nextLeaseTimer;
 
 		private void LeaseLicenseAgain(object state)
 		{
 			if (TryValidate())
 				return;
-			if (LicenseInvalidated == null)
+			var licenseInvalidated = LicenseInvalidated;
+			if (licenseInvalidated == null)
 				throw new InvalidOperationException("License was invalidated, but there is no one subscribe to the LicenseInvalidated event");
-			LicenseInvalidated();
+			licenseInvalidated();
 		}
 
 		public LicenseValidator(string publicKey, string licensePath)
@@ -141,6 +144,11 @@ namespace Rhino.Licensing
 
 		private bool ValidateFloatingLicense(string publicKeyOfFloatingLicense)
 		{
+			if (DisableFloatingLicenses)
+			{
+				log.Warn("Floating licenses have been disabled");
+				return false;
+			}
 			if (licenseServerUrl == null)
 			{
 				log.Warn("Could not find license server url");
