@@ -111,7 +111,8 @@ namespace Rhino.Licensing
 			try
 			{
 				var doc = new XmlDocument();
-				doc.Load(licensePath);
+                using (var stream = File.OpenRead(licensePath))
+                    doc.Load(stream);
 
 				if (TryGetValidDocument(publicKey, doc) == false)
 				{
