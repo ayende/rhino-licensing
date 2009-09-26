@@ -46,15 +46,20 @@ namespace Rhino.Licensing.Tests
 			LicensingService.LicenseServerPrivateKey = floating_private;
 
 			var host = new ServiceHost(typeof(LicensingService));
-			const string address = "http://localhost:9292/license";
+			const string address = "http://localhost:19292/license";
 			host.AddServiceEndpoint(typeof(ILicensingService), new WSHttpBinding(), address);
 
 			host.Open();
+			try
+			{
 
-			var validator = new LicenseValidator(public_only, fileName, address, Guid.NewGuid());
-			validator.AssertValidLicense();
-
-			host.Abort();
+				var validator = new LicenseValidator(public_only, fileName, address, Guid.NewGuid());
+				validator.AssertValidLicense();
+			}
+			finally
+			{
+				host.Abort();
+			}
 		}
 
 		[Fact]
@@ -68,18 +73,23 @@ namespace Rhino.Licensing.Tests
 			LicensingService.LicenseServerPrivateKey = floating_private;
 
 			var host = new ServiceHost(typeof(LicensingService));
-			var address = "http://localhost:9292/license";
+			var address = "http://localhost:29292/license";
 			host.AddServiceEndpoint(typeof(ILicensingService), new WSHttpBinding(), address);
 
 			host.Open();
 
-			var validator = new LicenseValidator(public_only, fileName, address, Guid.NewGuid());
-			validator.AssertValidLicense();
+			try
+			{
+				var validator = new LicenseValidator(public_only, fileName, address, Guid.NewGuid());
+				validator.AssertValidLicense();
 
-			var validator2 = new LicenseValidator(public_only, fileName, address, Guid.NewGuid());
-			Assert.Throws<LicenseNotFoundException>(validator2.AssertValidLicense);
-
-			host.Abort();
+				var validator2 = new LicenseValidator(public_only, fileName, address, Guid.NewGuid());
+				Assert.Throws<FloatingLicenseNotAvialableException>(validator2.AssertValidLicense);
+			}
+			finally
+			{
+				host.Abort();
+			}
 		}
 
 		private void GenerateLicenseFileInLicensesDirectory()
