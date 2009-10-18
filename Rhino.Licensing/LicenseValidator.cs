@@ -14,7 +14,7 @@ namespace Rhino.Licensing
 
 	public class LicenseValidator
 	{
-		private readonly ILog log = LogManager.GetLogger(typeof(LicenseValidator));
+		protected readonly ILog log = LogManager.GetLogger(typeof(LicenseValidator));
 
 		private readonly string licensePath;
 		private readonly string licenseServerUrl;
@@ -63,7 +63,7 @@ namespace Rhino.Licensing
 		}
 
 
-		public void AssertValidLicense()
+		public virtual void AssertValidLicense()
 		{
 			LicenseAttributes.Clear();
 			if (File.Exists(licensePath) == false)
