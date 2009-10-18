@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
 using System.Security.Cryptography.Xml;
@@ -31,6 +32,8 @@ namespace Rhino.Licensing
 
 		private readonly Timer nextLeaseTimer;
 
+		public IDictionary<string, string> LicenseAttributes { get; private set; }
+
 		private void LeaseLicenseAgain(object state)
 		{
 			if (TryValidate())
@@ -43,6 +46,7 @@ namespace Rhino.Licensing
 
 		public LicenseValidator(string publicKey, string licensePath)
 		{
+			LicenseAttributes = new Dictionary<string, string>(); 
 			nextLeaseTimer = new Timer(LeaseLicenseAgain);
 			this.publicKey = publicKey;
 			this.licensePath = licensePath;
@@ -50,6 +54,7 @@ namespace Rhino.Licensing
 
 		public LicenseValidator(string publicKey, string licensePath, string licenseServerUrl, Guid clientId)
 		{
+			LicenseAttributes = new Dictionary<string, string>();
 			nextLeaseTimer = new Timer(LeaseLicenseAgain);
 			this.publicKey = publicKey;
 			this.licensePath = licensePath;
@@ -60,6 +65,7 @@ namespace Rhino.Licensing
 
 		public void AssertValidLicense()
 		{
+			LicenseAttributes.Clear();
 			if (File.Exists(licensePath) == false)
 			{
 				log.WarnFormat("Could not find license file: {0}", licensePath);
@@ -243,6 +249,15 @@ namespace Rhino.Licensing
 			}
 
 			Name = name.Value;
+
+			var license = doc.SelectSingleNode("/license");
+			foreach (XmlAttribute attrib in license.Attributes)
+			{
+				if (attrib.Name == "type" || attrib.Name == "expiration" || attrib.Name == "id")
+					continue;
+
+				LicenseAttributes.Add(attrib.Name, attrib.Value);
+			}
 
 			return true;
 		}

@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using Xunit;
 
@@ -25,6 +26,33 @@ namespace Rhino.Licensing.Tests
             Assert.Equal("Oren Eini", validator.Name);
             Assert.Equal(LicenseType.Trial, validator.LicenseType);
         }
+
+		[Fact]
+		public void Gen_and_validate_with_attributes()
+		{
+			var guid = Guid.NewGuid();
+			var generator = new LicenseGenerator(public_and_private);
+			var expiration = DateTime.Now.AddDays(30);
+			var key = generator.Generate("Oren Eini", guid, expiration,
+			                             new Dictionary<string, string>
+			                             {
+			                             	{"prof", "llb"},
+			                             	{"reporting", "on"}
+			                             }, LicenseType.Trial);
+
+			var path = Path.GetTempFileName();
+			File.WriteAllText(path, key);
+
+			var validator = new LicenseValidator(public_only, path);
+			validator.AssertValidLicense();
+
+			Assert.Equal("llb", validator.LicenseAttributes["prof"]);
+			Assert.Equal("on", validator.LicenseAttributes["reporting"]);
+			Assert.Equal(guid, validator.UserId);
+			Assert.Equal(expiration, validator.ExpirationDate);
+			Assert.Equal("Oren Eini", validator.Name);
+			Assert.Equal(LicenseType.Trial, validator.LicenseType);
+		}
 
         [Fact]
         public void Cannot_validate_hacked_license()

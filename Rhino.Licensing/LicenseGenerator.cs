@@ -1,10 +1,13 @@
 using System;
+using System.Collections;
+using System.Collections.Specialized;
 using System.Globalization;
 using System.IO;
 using System.Security.Cryptography;
 using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Xml;
+using System.Collections.Generic;
 
 namespace Rhino.Licensing
 {
@@ -48,13 +51,17 @@ namespace Rhino.Licensing
 				return new StreamReader(ms).ReadToEnd();
 			}
 		}
+		public string Generate(string name, Guid id, DateTime expirationDate, LicenseType licenseType)
+		{
+			return Generate(name, id, expirationDate, new Dictionary<string, string>(), licenseType);
+		}
 
-        public string Generate(string name, Guid id, DateTime expirationDate, LicenseType licenseType)
+		public string Generate(string name, Guid id, DateTime expirationDate, IDictionary<string, string> attributes, LicenseType licenseType)
         {
             using (var rsa = new RSACryptoServiceProvider())
             {
                 rsa.FromXmlString(privateKey);
-                var doc = CreateDocument(id, name, expirationDate,licenseType);
+                var doc = CreateDocument(id, name, expirationDate, attributes, licenseType);
 
                 var signature = GetXmlDigitalSignature(doc, rsa);
                 doc.FirstChild.AppendChild(doc.ImportNode(signature, true));
@@ -81,7 +88,7 @@ namespace Rhino.Licensing
             return signedXml.GetXml();
         }
 
-        private static XmlDocument CreateDocument(Guid id, string name, DateTime expirationDate, LicenseType licenseType)
+        private static XmlDocument CreateDocument(Guid id, string name, DateTime expirationDate,  IDictionary<string,string> attributes, LicenseType licenseType)
         {
             var doc = new XmlDocument();
             var license = doc.CreateElement("license");
@@ -101,7 +108,15 @@ namespace Rhino.Licensing
             var nameEl = doc.CreateElement("name");
             license.AppendChild(nameEl);
             nameEl.InnerText = name;
-            return doc;
+
+        	foreach (var attribute in attributes)
+        	{
+        		var attrib = doc.CreateAttribute(attribute.Key);
+        		attrib.Value = attribute.Value;
+        		license.Attributes.Append(attrib);
+        	}
+
+        	return doc;
         }
     }
 }
