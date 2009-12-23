@@ -182,7 +182,7 @@ namespace Rhino.Licensing
 				success = true;
 				if (leasedLicense == null)
 				{
-					log.WarnFormat("Null response from license server: {0}", licensePath);
+                    log.WarnFormat("Null response from license server: {0}", licenseServerUrl);
 					throw new FloatingLicenseNotAvialableException();
 				}
 
@@ -191,7 +191,7 @@ namespace Rhino.Licensing
 
 				if (TryGetValidDocument(publicKeyOfFloatingLicense, doc) == false)
 				{
-					log.WarnFormat("Could not get valid license from floating license server {0}", licensePath);
+                    log.WarnFormat("Could not get valid license from floating license server {0}", licenseServerUrl);
 					throw new FloatingLicenseNotAvialableException();
 				}
 
