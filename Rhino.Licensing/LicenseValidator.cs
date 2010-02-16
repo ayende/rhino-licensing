@@ -144,7 +144,12 @@ namespace Rhino.Licensing
 					return ValidateFloatingLicense(node.InnerText);
 				}
 
-				return ValidateXmlDocumentLicense(doc);
+				var result = ValidateXmlDocumentLicense(doc);
+				if(result)
+				{
+					nextLeaseTimer.Change(TimeSpan.FromMinutes(5), TimeSpan.FromMinutes(5));
+				}
+				return result;
 			}
 			catch (RhinoLicensingException)
 			{
