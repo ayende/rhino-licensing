@@ -95,7 +95,7 @@ namespace Rhino.Licensing
 				}
 				log.InfoFormat("License {0} expiration date is {1}", licensePath, ExpirationDate);
 
-				return DateTime.Now < ExpirationDate;
+				return DateTime.UtcNow < ExpirationDate;
 			}
 			catch(RhinoLicensingException)
 			{
@@ -199,7 +199,7 @@ namespace Rhino.Licensing
 				if (validLicense)
 				{
 					//setup next lease
-					var time = (ExpirationDate.AddMinutes(-5) - DateTime.Now);
+					var time = (ExpirationDate.AddMinutes(-5) - DateTime.UtcNow);
 					log.DebugFormat("Will lease license again at {0}", time);
 					nextLeaseTimer.Change(time, time);
 				}

@@ -167,7 +167,7 @@ namespace Rhino.Licensing
 			}
 			foreach (var kvp in leasedLicenses)
 			{
-				if ((DateTime.Now - kvp.Value.Key).TotalMinutes < 45)
+				if ((DateTime.UtcNow - kvp.Value.Key).TotalMinutes < 45)
 					continue;
 				leasedLicenses.Remove(kvp.Key);
 				Debug.WriteLine("Found expired leased license, leasing it");
@@ -179,7 +179,7 @@ namespace Rhino.Licensing
 
 		private string GenerateLicenseAndRenewLease(string identifier, Guid id, LicenseValidator licenseValidator)
 		{
-			leasedLicenses[identifier] = new KeyValuePair<DateTime, LicenseValidator>(DateTime.Now.AddMinutes(30), licenseValidator);
+			leasedLicenses[identifier] = new KeyValuePair<DateTime, LicenseValidator>(DateTime.UtcNow.AddMinutes(30), licenseValidator);
 			using (var file = new FileStream(state, FileMode.Create, FileAccess.ReadWrite))
 			{
 				WriteState(file);
@@ -190,7 +190,7 @@ namespace Rhino.Licensing
 		private static string GenerateLicense(Guid id, LicenseValidator validator)
 		{
 			var generator = new LicenseGenerator(LicenseServerPrivateKey);
-			return generator.Generate(validator.Name, id, DateTime.Now.AddMinutes(45), LicenseType.Floating);
+			return generator.Generate(validator.Name, id, DateTime.UtcNow.AddMinutes(45), LicenseType.Floating);
 		}
 	}
 }
