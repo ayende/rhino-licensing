@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.NetworkInformation;
 using System.Security.Cryptography;
 using System.Security.Cryptography.Xml;
 using System.Xml;
@@ -16,12 +17,28 @@ namespace Rhino.Licensing
 	{
 		protected readonly ILog log = LogManager.GetLogger(typeof(LicenseValidator));
 
+		protected readonly string[] timeServers = new[]
+		{
+			"time.nist.gov",
+			"time-nw.nist.gov",
+			"time-a.nist.gov",
+			"time-b.nist.gov",
+			"time-a.timefreq.bldrdoc.gov",
+			"time-b.timefreq.bldrdoc.gov",
+			"time-c.timefreq.bldrdoc.gov",
+			"utcnist.colorado.edu",
+			"nist1.datum.com",
+			"nist1.dc.certifiedtime.com",
+			"nist1.nyc.certifiedtime.com",
+			"nist1.sjc.certifiedtime.com"
+		};
+
 		private readonly string licensePath;
 		private readonly string licenseServerUrl;
 		private readonly Guid clientId;
 		private readonly string publicKey;
 
-		public event Action LicenseInvalidated;
+		public event Action<InvalidationType> LicenseInvalidated;
 
 		public DateTime ExpirationDate { get; private set; }
 		public LicenseType LicenseType { get; private set; }
@@ -36,12 +53,19 @@ namespace Rhino.Licensing
 
 		private void LeaseLicenseAgain(object state)
 		{
-			if (TryValidate())
+			if (HasExistingLicense())
 				return;
+			RaiseLicenseInvalidated();
+		}
+
+		private void RaiseLicenseInvalidated()
+		{
 			var licenseInvalidated = LicenseInvalidated;
 			if (licenseInvalidated == null)
 				throw new InvalidOperationException("License was invalidated, but there is no one subscribe to the LicenseInvalidated event");
-			licenseInvalidated();
+			licenseInvalidated(LicenseType == LicenseType.Floating
+				? InvalidationType.CannotGetNewLicense
+				: InvalidationType.TimeExpired);
 		}
 
 		public LicenseValidator(string publicKey, string licensePath)
@@ -95,6 +119,8 @@ namespace Rhino.Licensing
 				}
 				log.InfoFormat("License {0} expiration date is {1}", licensePath, ExpirationDate);
 
+				ValidateUsingNetworkTime();
+
 				return DateTime.UtcNow < ExpirationDate;
 			}
 			catch(RhinoLicensingException)
@@ -105,6 +131,22 @@ namespace Rhino.Licensing
 			{
 				return false;
 			}
+		}
+
+		private void ValidateUsingNetworkTime()
+		{
+			if (!NetworkInterface.GetIsNetworkAvailable()) 
+				return;
+
+			var sntp = new SntpClient(timeServers);
+			sntp.BeginGetDate(time =>
+			{
+				if (time > ExpirationDate)
+					RaiseLicenseInvalidated();
+			}, () =>
+			{
+				/* ignored */
+			});
 		}
 
 		public void RemoveExistingLicense()
@@ -286,5 +328,11 @@ namespace Rhino.Licensing
 
 			return signedXml.CheckSignature(rsa);
 		}
+	}
+
+	public enum InvalidationType
+	{
+		CannotGetNewLicense,
+		TimeExpired
 	}
 }

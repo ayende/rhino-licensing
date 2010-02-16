@@ -1,0 +1,149 @@
+using System;
+using System.Net;
+using System.Net.Sockets;
+using System.Threading;
+
+namespace Rhino.Licensing
+{
+	public class SntpClient
+	{
+		private const byte SntpDataLength = 48;
+		private readonly string[] hosts;
+		private int index = -1;
+
+		public SntpClient(string[] hosts)
+		{
+			this.hosts = hosts;
+		}
+
+		private static bool GetIsServerMode(byte[] sntpData)
+		{
+			return (sntpData[0] & 0x7) == 4 /* server mode */;
+		}
+
+		private static DateTime GetTransmitTimestamp(byte[] sntpData)
+		{
+			var milliSeconds = GetMilliSeconds(sntpData, 40);
+			return ComputeDate(milliSeconds);
+		}
+
+		private static DateTime ComputeDate(ulong milliseconds)
+		{
+			return new DateTime(1900, 1, 1).Add(TimeSpan.FromMilliseconds(milliseconds));
+		}
+
+		private static ulong GetMilliSeconds(byte[] sntpData, byte offset)
+		{
+			ulong intpart = 0, fractpart = 0;
+
+			for (var i = 0; i <= 3; i++)
+			{
+				intpart = 256*intpart + sntpData[offset + i];
+			}
+			for (var i = 4; i <= 7; i++)
+			{
+				fractpart = 256*fractpart + sntpData[offset + i];
+			}
+			var milliseconds = intpart*1000 + (fractpart*1000)/0x100000000L;
+			return milliseconds;
+		}
+
+		public void BeginGetDate(Action<DateTime> getTime, Action failure)
+		{
+			index += 1;
+			if (hosts.Length < index)
+			{
+				failure();
+				return;
+			}
+			try
+			{
+				var host = hosts[index];
+				var hostadd = Dns.GetHostEntry(host);
+				var endPoint = new IPEndPoint(hostadd.AddressList[0], 123);
+
+				var socket = new UdpClient();
+				socket.Connect(endPoint);
+				socket.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, 500);
+				socket.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.SendTimeout, 500);
+				var sntpData = new byte[SntpDataLength];
+				sntpData[0] = 0x1B; // version = 4 & mode = 3 (client)
+
+				socket.BeginSend(sntpData, sntpData.Length, EndSend, new State(socket, endPoint, getTime, failure));
+			}
+			catch (Exception)
+			{
+				// retry, recursion stops at the end of the hosts
+				BeginGetDate(getTime, failure);
+			}
+		}
+
+		private void EndSend(IAsyncResult ar)
+		{
+			var state = (State) ar.AsyncState;
+			try
+			{
+				state.Socket.EndSend(ar);
+				state.Socket.BeginReceive(EndReceive, state);
+			}
+			catch
+			{
+				state.Socket.Close();
+				BeginGetDate(state.GetTime, state.Failure);
+			}
+		}
+
+		private void EndReceive(IAsyncResult ar)
+		{
+			var state = (State) ar.AsyncState;
+			try
+			{
+				var endPoint = state.EndPoint;
+				var sntpData = state.Socket.EndReceive(ar, ref endPoint);
+				if(IsResponseValid(sntpData)==false)
+				{
+					state.Failure();
+					return;
+				}
+				var transmitTimestamp = GetTransmitTimestamp(sntpData);
+				state.GetTime(transmitTimestamp);
+			}
+			catch
+			{
+				BeginGetDate(state.GetTime, state.Failure);
+			}
+			finally
+			{
+				state.Socket.Close();
+			}
+		}
+
+		private bool IsResponseValid(byte[] sntpData)
+		{
+			return sntpData.Length >= SntpDataLength && GetIsServerMode(sntpData);
+		}
+
+		#region Nested type: State
+
+		public class State
+		{
+			public State(UdpClient socket, IPEndPoint endPoint, Action<DateTime> getTime, Action failure)
+			{
+				Socket = socket;
+				EndPoint = endPoint;
+				GetTime = getTime;
+				Failure = failure;
+			}
+
+			public UdpClient Socket { get; private set; }
+
+			public Action<DateTime> GetTime { get; private set; }
+
+			public Action Failure { get; private set; }
+
+			public IPEndPoint EndPoint { get; private set; }
+		}
+
+		#endregion
+	}
+}

@@ -66,6 +66,7 @@
     <Compile Include="LicensingService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RhinoLicensingException.cs" />
+    <Compile Include="SntpClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\ayende-open-source.snk">
