@@ -303,7 +303,7 @@ namespace Rhino.Licensing
 				if (attrib.Name == "type" || attrib.Name == "expiration" || attrib.Name == "id")
 					continue;
 
-				LicenseAttributes.Add(attrib.Name, attrib.Value);
+				LicenseAttributes[attrib.Name] = attrib.Value;
 			}
 
 			return true;
