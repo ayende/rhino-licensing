@@ -48,8 +48,9 @@ namespace Rhino.Licensing
 		public bool DisableFloatingLicenses { get; set; }
 
 		private readonly Timer nextLeaseTimer;
+	    private bool disableFutureChecks;
 
-		public IDictionary<string, string> LicenseAttributes { get; private set; }
+	    public IDictionary<string, string> LicenseAttributes { get; private set; }
 
 		private void LeaseLicenseAgain(object state)
 		{
@@ -187,7 +188,7 @@ namespace Rhino.Licensing
 				}
 
 				var result = ValidateXmlDocumentLicense(doc);
-				if(result)
+                if (result && disableFutureChecks == false)
 				{
 					nextLeaseTimer.Change(TimeSpan.FromMinutes(5), TimeSpan.FromMinutes(5));
 				}
@@ -248,7 +249,8 @@ namespace Rhino.Licensing
 					//setup next lease
 					var time = (ExpirationDate.AddMinutes(-5) - DateTime.UtcNow);
 					log.DebugFormat("Will lease license again at {0}", time);
-					nextLeaseTimer.Change(time, time);
+                    if (disableFutureChecks == false)
+                        nextLeaseTimer.Change(time, time);
 				}
 				return validLicense;
 			}
@@ -328,6 +330,12 @@ namespace Rhino.Licensing
 
 			return signedXml.CheckSignature(rsa);
 		}
+
+	    public void DisableFutureChecks()
+	    {
+	        disableFutureChecks = true;
+	        nextLeanextLeaseTimer.Dispose();
+	    }
 	}
 
 	public enum InvalidationType
