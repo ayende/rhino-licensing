@@ -51,7 +51,7 @@ namespace Rhino.Licensing
 		public void BeginGetDate(Action<DateTime> getTime, Action failure)
 		{
 			index += 1;
-			if (hosts.Length < index)
+			if (hosts.Length <= index)
 			{
 				failure();
 				return;
@@ -59,17 +59,8 @@ namespace Rhino.Licensing
 			try
 			{
 				var host = hosts[index];
-				var hostadd = Dns.GetHostEntry(host);
-				var endPoint = new IPEndPoint(hostadd.AddressList[0], 123);
-
-				var socket = new UdpClient();
-				socket.Connect(endPoint);
-				socket.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, 500);
-				socket.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.SendTimeout, 500);
-				var sntpData = new byte[SntpDataLength];
-				sntpData[0] = 0x1B; // version = 4 & mode = 3 (client)
-
-				socket.BeginSend(sntpData, sntpData.Length, EndSend, new State(socket, endPoint, getTime, failure));
+				Dns.BeginGetHostAddresses(host, EndGetHostAddress, 
+                    new State(null, null, getTime, failure) );
 			}
 			catch (Exception)
 			{
@@ -78,7 +69,33 @@ namespace Rhino.Licensing
 			}
 		}
 
-		private void EndSend(IAsyncResult ar)
+	    private void EndGetHostAddress(IAsyncResult asyncResult)
+        {
+	        var state = (State) asyncResult.AsyncState;
+	        try
+	        {
+                Thread.Sleep(1000);
+	            var addresses = Dns.EndGetHostAddresses(asyncResult);
+	            var endPoint = new IPEndPoint(addresses[0], 123);
+
+	            var socket = new UdpClient();
+	            socket.Connect(endPoint);
+	            socket.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, 500);
+	            socket.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.SendTimeout, 500);
+	            var sntpData = new byte[SntpDataLength];
+	            sntpData[0] = 0x1B; // version = 4 & mode = 3 (client)
+
+                socket.BeginSend(sntpData, sntpData.Length, EndSend, new State(socket, endPoint, state.GetTime, state.Failure));
+	        }
+	        catch (Exception)
+	        {
+                // retry, recursion stops at the end of the hosts
+                BeginGetDate(state.GetTime, state.Failure);
+	
+	        }
+	    }
+
+	    private void EndSend(IAsyncResult ar)
 		{
 			var state = (State) ar.AsyncState;
 			try
