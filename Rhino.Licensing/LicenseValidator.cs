@@ -334,7 +334,7 @@ namespace Rhino.Licensing
 	    public void DisableFutureChecks()
 	    {
 	        disableFutureChecks = true;
-	        nextLeanextLeaseTimer.Dispose();
+	        nextLeaseTimer.Dispose();
 	    }
 	}
 
