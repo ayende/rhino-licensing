@@ -74,7 +74,6 @@ namespace Rhino.Licensing
 	        var state = (State) asyncResult.AsyncState;
 	        try
 	        {
-                Thread.Sleep(1000);
 	            var addresses = Dns.EndGetHostAddresses(asyncResult);
 	            var endPoint = new IPEndPoint(addresses[0], 123);
 
