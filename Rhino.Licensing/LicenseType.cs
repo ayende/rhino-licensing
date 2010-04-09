@@ -6,6 +6,7 @@ namespace Rhino.Licensing
         Trial,
         Standard,
 		Personal,
-    	Floating
+    	Floating,
+		Subscription
     }
 }
