@@ -1,0 +1,3 @@
+Please note that in order to run the tests you must either run them in the context of the administrator or run the following command:
+
+netsh http add urlacl url=http://+:19292/license user=YOUR_USER_NAME
