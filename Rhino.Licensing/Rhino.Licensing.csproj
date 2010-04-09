@@ -56,8 +56,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbstractLicenseValidator.cs" />
+    <Compile Include="StringLicenseValidator.cs" />
     <Compile Include="FloatingLicenseNotAvialableException.cs" />
     <Compile Include="ILicensingService.cs" />
+    <Compile Include="ISubscriptionLicensingService.cs" />
     <Compile Include="LicenseFileNotFoundException.cs" />
     <Compile Include="LicenseGenerator.cs" />
     <Compile Include="LicenseType.cs" />

@@ -4,12 +4,12 @@ namespace Rhino.Licensing.Tests
 {
     public class BaseLicenseTest
     {
-        public readonly string public_and_private;
-        public readonly string public_only;
-		public readonly string floating_private;
-		public readonly string floating_public;
+		public readonly static string public_and_private;
+		public readonly static string public_only;
+		public readonly static string floating_private;
+		public readonly static string floating_public;
 
-        public BaseLicenseTest()
+        static BaseLicenseTest()
         {
             public_and_private = new StreamReader(typeof (Can_generate_and_validate_key)
                                                       .Assembly
