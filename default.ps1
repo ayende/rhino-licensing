@@ -70,12 +70,17 @@ task Release -depends Test {
     }
 }
 
-task Upload -depend Release {
-	if (Test-Path $uploadScript ) {
-		$log = git log -n 1 --oneline		
-		msbuild $uploadScript /p:Category=$uploadCategory "/p:Comment=$log" "/p:File=$release_dir\Rhino.Licensing-$humanReadableversion-Build-$env:ccnetnumericlabel.zip"
+task Upload -depends DoRelease {
+	Write-Host "Starting upload"
+	if (Test-Path $uploader) {
+		$log = $env:push_msg 
+    if($log -eq $null -or $log.Length -eq 0) {
+      $log = git log -n 1 --oneline		
+    }
+		&$uploader "$uploadCategory" "$release_dir\Rhino.Licensing-$humanReadableversion-Build-$env:ccnetnumericlabel.zip" "$log"
 		
 		if ($lastExitCode -ne 0) {
+      write-host "Failed to upload to S3: $lastExitCode"
 			throw "Error: Failed to publish build"
 		}
 	}
