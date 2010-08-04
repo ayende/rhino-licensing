@@ -9,7 +9,7 @@ properties {
   $tools_dir = "$base_dir\Tools"
   $release_dir = "$base_dir\Release"
   $uploadCategory = "Rhino-Licensing"
-  $uploadScript = "C:\Builds\Upload\PublishBuild.build"
+  $uploader = "..\Uploader\S3Uploader.exe"
 } 
 
 include .\psake_ext.ps1
