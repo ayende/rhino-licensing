@@ -70,7 +70,7 @@ task Release -depends Test {
     }
 }
 
-task Upload -depends DoRelease {
+task Upload -depends Release {
 	Write-Host "Starting upload"
 	if (Test-Path $uploader) {
 		$log = $env:push_msg 
