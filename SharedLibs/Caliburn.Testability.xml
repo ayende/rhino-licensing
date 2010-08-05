@@ -1,0 +1,1487 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Caliburn.Testability</name>
+    </assembly>
+    <members>
+        <member name="T:Caliburn.Testability.Assertions.AllPropertiesAssertion`1">
+            <summary>
+            Builds up a set of assertions for all of the properties of an object.
+            </summary>
+            <typeparam name="T">A type that implements <see cref="T:System.ComponentModel.INotifyPropertyChanged"/>.</typeparam>
+        </member>
+        <member name="T:Caliburn.Testability.Assertions.PropertyAssertionBase`1">
+            <summary>
+            A base class for assertions on properties.
+            </summary>
+            <typeparam name="T">A type that implements <see cref="T:System.ComponentModel.INotifyPropertyChanged"/>.</typeparam>
+        </member>
+        <member name="M:Caliburn.Testability.Assertions.PropertyAssertionBase`1.#ctor(System.ComponentModel.INotifyPropertyChanged)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.Assertions.PropertyAssertionBase`1"/> class.
+            </summary>
+            <param name="propertyOwner">The property owner.</param>
+        </member>
+        <member name="M:Caliburn.Testability.Assertions.PropertyAssertionBase`1.Execute">
+            <summary>
+            Executes the constructed set of assertions.
+            </summary>
+        </member>
+        <member name="M:Caliburn.Testability.Assertions.PropertyAssertionBase`1.GetCandidateProperties">
+            <summary>
+            Gets the candidate properties.
+            </summary>
+            <returns>An enumerable set of <see cref="T:System.Reflection.PropertyInfo"/> instances.</returns>
+        </member>
+        <member name="P:Caliburn.Testability.Assertions.PropertyAssertionBase`1.Values">
+            <summary>
+            Gets the values to set.
+            </summary>
+            <value>The values.</value>
+        </member>
+        <member name="M:Caliburn.Testability.Assertions.AllPropertiesAssertion`1.#ctor(System.ComponentModel.INotifyPropertyChanged)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.Assertions.AllPropertiesAssertion`1"/> class.
+            </summary>
+            <param name="propertyOwner">The property owner.</param>
+        </member>
+        <member name="M:Caliburn.Testability.Assertions.AllPropertiesAssertion`1.Ignoring``1(System.Linq.Expressions.Expression{System.Func{`0,``0}})">
+            <summary>
+            Ignore a property when makeing assertions on this object.
+            </summary>
+            <typeparam name="K">The type of the property.</typeparam>
+            <param name="property">The property.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.Assertions.AllPropertiesAssertion`1.GetCandidateProperties">
+            <summary>
+            Gets the candidate properties.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.Assertions.AllPropertiesAssertion`1.SetValue``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},``0)">
+            <summary>
+            Uses the specified value to set the property during the process of change notification asssertion.
+            </summary>
+            <typeparam name="K">The type of the property.</typeparam>
+            <param name="property">The property.</param>
+            <param name="valueToSet">The value to set.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.Assertions.AllPropertiesAssertion`1.RaiseChangeNotification">
+            <summary>
+            Raises the change notification.
+            </summary>
+        </member>
+        <member name="T:Caliburn.Testability.Assertions.PropertyHasChangedAssertion`2">
+            <summary>
+            Builds up an assertion that a given property raises change notification when the 
+            a given condition is executed.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="K">The type of the property.</typeparam>
+        </member>
+        <member name="M:Caliburn.Testability.Assertions.PropertyHasChangedAssertion`2.#ctor(`0,System.Linq.Expressions.Expression{System.Func{`0,`1}})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.Assertions.PropertyHasChangedAssertion`2"/> class.
+            </summary>
+            <param name="owner">The owner.</param>
+            <param name="property">The property.</param>
+        </member>
+        <member name="M:Caliburn.Testability.Assertions.PropertyHasChangedAssertion`2.When(System.Action)">
+            <summary>
+            Affects the property.
+            </summary>
+            <param name="affectProperty">The affect property.</param>
+        </member>
+        <member name="M:Caliburn.Testability.Assertions.PropertyHasChangedAssertion`2.Finalize">
+            <summary>
+            Releases unmanaged resources and performs other cleanup operations before the
+            <see cref="T:Caliburn.Testability.Assertions.PropertyHasChangedAssertion`2"/> is reclaimed by garbage collection.
+            </summary>
+        </member>
+        <member name="T:Caliburn.Testability.Assertions.SinglePropertyAssertion`2">
+            <summary>
+            Builds up a set of assertions for a single property of an object.
+            </summary>
+            <typeparam name="T">A type that implements <see cref="T:System.ComponentModel.INotifyPropertyChanged"/>.</typeparam>
+            <typeparam name="K">The type of the property the assertion is applied to.</typeparam>
+        </member>
+        <member name="M:Caliburn.Testability.Assertions.SinglePropertyAssertion`2.#ctor(System.ComponentModel.INotifyPropertyChanged,System.Linq.Expressions.Expression{System.Func{`0,`1}})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.Assertions.SinglePropertyAssertion`2"/> class.
+            </summary>
+            <param name="propertyOwner">The property owner.</param>
+            <param name="property">The property.</param>
+        </member>
+        <member name="M:Caliburn.Testability.Assertions.SinglePropertyAssertion`2.GetCandidateProperties">
+            <summary>
+            Gets the candidate properties.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.Assertions.SinglePropertyAssertion`2.RaisesChangeNotification">
+            <summary>
+            Raises the change notification.
+            </summary>
+        </member>
+        <member name="T:Caliburn.Testability.Extensions.PropertyAssertionExtensions">
+            <summary>
+            Hosts extension methods used to make assertions about property notification.
+            </summary>
+        </member>
+        <member name="M:Caliburn.Testability.Extensions.PropertyAssertionExtensions.AssertThatProperty``2(``0,System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+            Sets up an assertion about a single property.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="K"></typeparam>
+            <param name="propertyOwner">The property owner.</param>
+            <param name="property">The property.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.Extensions.PropertyAssertionExtensions.AssertThatAllProperties``1(``0)">
+            <summary>
+            Makes an assertion for all properties of an object.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="propertyOwner">The property owner.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.Extensions.PropertyAssertionExtensions.GetPropertyInfo``2(System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+            Gets the property info.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="K"></typeparam>
+            <param name="property">The property.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.Extensions.PropertyAssertionExtensions.AssertThatChangeNotificationIsRaisedBy``2(``0,System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+            Sets up an assertion for a given property with the expectation that change notification will be raised 
+            under certain conditions.
+            </summary>
+            <typeparam name="T">The type of the property owner.</typeparam>
+            <typeparam name="K">The type of the property.</typeparam>
+            <param name="propertyOwner">The property owner.</param>
+            <param name="property">The property of interest.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Caliburn.Testability.BindingError">
+            <summary>
+            Represents a binding related error.
+            </summary>
+        </member>
+        <member name="T:Caliburn.Testability.IError">
+            <summary>
+            Represents a validation error.
+            </summary>
+        </member>
+        <member name="P:Caliburn.Testability.IError.Element">
+            <summary>
+            Gets the item.
+            </summary>
+            <value>The item.</value>
+        </member>
+        <member name="P:Caliburn.Testability.IError.Type">
+            <summary>
+            Gets the type.
+            </summary>
+            <value>The type.</value>
+        </member>
+        <member name="P:Caliburn.Testability.IError.Message">
+            <summary>
+            Gets the message.
+            </summary>
+            <value>The message.</value>
+        </member>
+        <member name="M:Caliburn.Testability.BindingError.#ctor(Caliburn.Testability.IElement,Caliburn.Testability.BoundType,System.Windows.DependencyProperty,System.Windows.Data.Binding,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.BindingError"/> class.
+            </summary>
+            <param name="item">The item.</param>
+            <param name="type">The type.</param>
+            <param name="property">The property.</param>
+            <param name="binding">The binding.</param>
+            <param name="message">The message.</param>
+        </member>
+        <member name="P:Caliburn.Testability.BindingError.Element">
+            <summary>
+            Gets the item that yielded the binding error.
+            </summary>
+            <value>The item.</value>
+        </member>
+        <member name="P:Caliburn.Testability.BindingError.Type">
+            <summary>
+            Gets the type that was bound to.
+            </summary>
+            <value>The type.</value>
+        </member>
+        <member name="P:Caliburn.Testability.BindingError.Property">
+            <summary>
+            Gets the property on the UI element that was bound.
+            </summary>
+            <value>The property.</value>
+        </member>
+        <member name="P:Caliburn.Testability.BindingError.Binding">
+            <summary>
+            Gets the binding.
+            </summary>
+            <value>The binding.</value>
+        </member>
+        <member name="P:Caliburn.Testability.BindingError.Message">
+            <summary>
+            Gets the error message.
+            </summary>
+            <value>The message.</value>
+        </member>
+        <member name="T:Caliburn.Testability.BindingInfo">
+            <summary>
+            Represents information needed to validate a data binding.
+            </summary>
+        </member>
+        <member name="M:Caliburn.Testability.BindingInfo.#ctor(System.Windows.Data.Binding,System.Windows.DependencyProperty)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.BindingInfo"/> class.
+            </summary>
+            <param name="binding">The binding.</param>
+            <param name="property">The property.</param>
+        </member>
+        <member name="M:Caliburn.Testability.BindingInfo.ShouldBeValidated">
+            <summary>
+            Determines whether this information needs to be validated.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Caliburn.Testability.BindingInfo.Binding">
+            <summary>
+            Gets or sets the binding.
+            </summary>
+            <value>The binding.</value>
+        </member>
+        <member name="P:Caliburn.Testability.BindingInfo.Property">
+            <summary>
+            Gets or sets the property.
+            </summary>
+            <value>The property.</value>
+        </member>
+        <member name="T:Caliburn.Testability.BindingValidator">
+            <summary>
+            Validates bindings on a data bound item.
+            </summary>
+        </member>
+        <member name="M:Caliburn.Testability.BindingValidator.#ctor(Caliburn.Testability.IBoundElement)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.BindingValidator"/> class.
+            </summary>
+            <param name="element">The data bound item.</param>
+        </member>
+        <member name="M:Caliburn.Testability.BindingValidator.WithHint(System.String,System.Type)">
+            <summary>
+            Add a type hint for a property path, specifying the actual type returned 
+            by the last property of the property path chain
+            </summary>
+            <param name="propertyPath">The property path.</param>
+            <param name="hint">The Type actually returned.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.BindingValidator.Validate">
+            <summary>
+            Validates the bound item.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Caliburn.Testability.BindingValidator.Settings">
+            <summary>
+            Gets the settings.
+            </summary>
+            <value>The settings.</value>
+        </member>
+        <member name="T:Caliburn.Testability.Bound">
+            <summary>
+            A factory for data bound items.
+            </summary>
+        </member>
+        <member name="M:Caliburn.Testability.Bound.DependencyObject(System.Windows.DependencyObject,Caliburn.Testability.BoundType)">
+            <summary>
+            Creates a data bound element.
+            </summary>
+            <param name="element">The element.</param>
+            <param name="boundType">Type of the bound object.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.Bound.DependencyObject(System.Windows.DependencyObject,Caliburn.Testability.BoundType,System.String)">
+            <summary>
+            Creates a data bound element.
+            </summary>
+            <param name="element">The element.</param>
+            <param name="boundType">Type of the bound object.</param>
+            <param name="baseName">A base name.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.Bound.DependencyObject(System.Windows.DependencyObject,Caliburn.Testability.BoundType,System.String,System.Boolean)">
+            <summary>
+            Creates a data bound element.
+            </summary>
+            <param name="element">The element.</param>
+            <param name="boundType">Type of the bound object.</param>
+            <param name="baseName">A base name.</param>
+            <param name="checkLogicalChildren">Indicate whether this elements children should be checked.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.Bound.DataTemplate(System.Windows.DataTemplate,Caliburn.Testability.BoundType)">
+            <summary>
+            Creates a bound data template.
+            </summary>
+            <param name="dataTemplate">The data template.</param>
+            <param name="boundType">Type of the bound.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.Bound.DataTemplate(System.Windows.DataTemplate,Caliburn.Testability.BoundType,System.String)">
+            <summary>
+            Creates a bound data template.
+            </summary>
+            <param name="dataTemplate">The data template.</param>
+            <param name="boundType">Type of the bound object.</param>
+            <param name="baseName">A base name.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.Bound.ControlTemplate(System.Windows.Controls.ControlTemplate,Caliburn.Testability.BoundType,System.String)">
+            <summary>
+            Creates a bound control template.
+            </summary>
+            <param name="template">The template.</param>
+            <param name="boundType">Type of the bound object.</param>
+            <param name="baseName">A base name.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.Bound.Style(System.Windows.Style,Caliburn.Testability.BoundType)">
+            <summary>
+            Creates a bound style.
+            </summary>
+            <param name="style">The style.</param>
+            <param name="type">The type.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.Bound.Style(System.Windows.Style,Caliburn.Testability.BoundType,System.String)">
+            <summary>
+            Creates a bound style.
+            </summary>
+            <param name="style">The style.</param>
+            <param name="type">The type.</param>
+            <param name="name">The name.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.Bound.GroupStyle(System.Windows.Controls.GroupStyle,Caliburn.Testability.BoundType)">
+            <summary>
+            Creates a bound group style.
+            </summary>
+            <param name="groupStyle">The group style.</param>
+            <param name="type">The type.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.Bound.GroupStyle(System.Windows.Controls.GroupStyle,Caliburn.Testability.BoundType,System.String)">
+            <summary>
+            Creates a bound group style.
+            </summary>
+            <param name="groupStyle">The group style.</param>
+            <param name="type">The type.</param>
+            <param name="name">The name.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.Bound.Enumerable(System.Collections.IEnumerable,Caliburn.Testability.BoundType,System.String)">
+            <summary>
+            Creates a bound enumerable.
+            </summary>
+            <param name="enumerable">The enumerable.</param>
+            <param name="boundType">Type of the bound object.</param>
+            <param name="name">The name.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Caliburn.Testability.BoundType">
+            <summary>
+            Represents a type that an item is bound to.
+            </summary>
+        </member>
+        <member name="M:Caliburn.Testability.BoundType.#ctor(System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.BoundType"/> class.
+            </summary>
+            <param name="type">The type.</param>
+        </member>
+        <member name="M:Caliburn.Testability.BoundType.#ctor(System.Type,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.BoundType"/> class.
+            </summary>
+            <param name="type">The type.</param>
+            <param name="basePath">The base path.</param>
+        </member>
+        <member name="M:Caliburn.Testability.BoundType.#ctor(System.Type,System.String,System.Collections.Generic.IDictionary{System.String,System.Type})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.BoundType"/> class.
+            Used internally to create an associated BoundType from a parent one.
+            </summary>
+            <param name="type">The type.</param>
+            <param name="basePath">The base path.</param>
+            /// <param name="hints">Hints propagated from parent.</param>
+        </member>
+        <member name="M:Caliburn.Testability.BoundType.AddHint(System.String,System.Type)">
+            <summary>
+            Adds a hint for polymorphic type checking.
+            </summary>
+            <param name="propertyPath">The property path.</param>
+            <param name="hint">The hint.</param>
+        </member>
+        <member name="M:Caliburn.Testability.BoundType.ValidateAgainst(Caliburn.Testability.IElement,System.Windows.DependencyProperty,System.Windows.Data.Binding)">
+            <summary>
+            Validates the information against this type.
+            </summary>
+            <param name="element">The data bound element.</param>
+            <param name="boundProperty">The bound property.</param>
+            <param name="binding">The binding.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.BoundType.GetAssociatedType(System.String)">
+            <summary>
+            Gets a type by association.
+            </summary>
+            <param name="propertyPath">The property path.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.BoundType.GetPropertyType(System.String)">
+            <summary>
+            Gets the type of property.
+            </summary>
+            <param name="propertyPath">The property path.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.BoundType.DeriveTypeOfCollection(System.Type)">
+            <summary>
+            Derives the type of the collection.
+            </summary>
+            <param name="collection">The collection.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.BoundType.GetInterfaceProperty(System.String,System.Type)">
+            <summary>
+            Gets the interface property.
+            </summary>
+            <param name="propertyName">Name of the property.</param>
+            <param name="type">The type.</param>
+            <returns></returns>
+        </member>
+        <member name="P:Caliburn.Testability.BoundType.Type">
+            <summary>
+            Gets the type.
+            </summary>
+            <value>The type.</value>
+        </member>
+        <member name="T:Caliburn.Testability.ControlTemplateElement">
+            <summary>
+            Represents a bound <see cref="P:Caliburn.Testability.ControlTemplateElement.ControlTemplate"/>.
+            </summary>
+        </member>
+        <member name="T:Caliburn.Testability.DependencyObjectElement">
+            <summary>
+            Represents a data bound element.
+            </summary>
+        </member>
+        <member name="T:Caliburn.Testability.IBoundElement">
+            <summary>
+            Represents an element which can be bound.
+            </summary>
+        </member>
+        <member name="T:Caliburn.Testability.IElement">
+            <summary>
+            Represents a dependency object.
+            </summary>
+        </member>
+        <member name="M:Caliburn.Testability.IElement.GetChildren(Caliburn.Testability.ElementEnumeratorSettings)">
+            <summary>
+            Gets the children.
+            </summary>
+            <value>The children.</value>
+        </member>
+        <member name="M:Caliburn.Testability.IElement.Accept(Caliburn.Testability.IElementVisitor)">
+            <summary>
+            Accepts the specified visitor.
+            </summary>
+            <param name="visitor">The visitor.</param>
+        </member>
+        <member name="P:Caliburn.Testability.IElement.Name">
+            <summary>
+            Gets the name.
+            </summary>
+            <value>The name.</value>
+            
+        </member>
+        <member name="P:Caliburn.Testability.IBoundElement.Type">
+            <summary>
+            Gets the type the element is bound to.
+            </summary>
+            <value>The type.</value>
+        </member>
+        <member name="M:Caliburn.Testability.DependencyObjectElement.#ctor(System.Windows.DependencyObject,Caliburn.Testability.BoundType,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.DependencyObjectElement"/> class.
+            </summary>
+            <param name="element">The element.</param>
+            <param name="boundType">Type of the bound.</param>
+            <param name="baseName">Name of the base.</param>
+        </member>
+        <member name="M:Caliburn.Testability.DependencyObjectElement.#ctor(System.Windows.DependencyObject,Caliburn.Testability.BoundType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.DependencyObjectElement"/> class.
+            </summary>
+            <param name="element">The element.</param>
+            <param name="boundType">Type of the bound.</param>
+        </member>
+        <member name="M:Caliburn.Testability.DependencyObjectElement.GetChildren(Caliburn.Testability.ElementEnumeratorSettings)">
+            <summary>
+            Gets the children.
+            </summary>
+            <value>The children.</value>
+        </member>
+        <member name="M:Caliburn.Testability.DependencyObjectElement.Accept(Caliburn.Testability.IElementVisitor)">
+            <summary>
+            Accepts the specified visitor.
+            </summary>
+            <param name="visitor">The visitor.</param>
+        </member>
+        <member name="M:Caliburn.Testability.DependencyObjectElement.EnsureBoundType(Caliburn.Testability.BoundType)">
+            <summary>
+            Ensures that the type is accurately represented.
+            </summary>
+            <param name="boundType">Type of the bound.</param>
+            <returns></returns>
+        </member>
+        <member name="P:Caliburn.Testability.DependencyObjectElement.Name">
+            <summary>
+            Gets the name.
+            </summary>
+            <value>The name.</value>
+        </member>
+        <member name="P:Caliburn.Testability.DependencyObjectElement.BaseName">
+            <summary>
+            Gets or sets the base name used to generate the name.
+            </summary>
+            <value>The base name.</value>
+        </member>
+        <member name="P:Caliburn.Testability.DependencyObjectElement.Element">
+            <summary>
+            Gets the element.
+            </summary>
+            <value>The element.</value>
+        </member>
+        <member name="P:Caliburn.Testability.DependencyObjectElement.Type">
+            <summary>
+            Gets the type the item is bound to.
+            </summary>
+            <value>The type.</value>
+        </member>
+        <member name="P:Caliburn.Testability.DependencyObjectElement.DataContextCheckType">
+            <summary>
+            Gets the type of the data context check.
+            </summary>
+            <value>The type of the data context check.</value>
+        </member>
+        <member name="P:Caliburn.Testability.DependencyObjectElement.CheckLogicalChildren">
+            <summary>
+            Gets or sets a value indicating whether to check child elements.
+            </summary>
+            <value><c>true</c> to check children; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="M:Caliburn.Testability.ControlTemplateElement.#ctor(System.Windows.Controls.ControlTemplate,Caliburn.Testability.BoundType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.DataTemplateElement"/> class.
+            </summary>
+            <param name="controlTemplate">The data template.</param>
+            <param name="boundType">Type of the bound.</param>
+        </member>
+        <member name="M:Caliburn.Testability.ControlTemplateElement.#ctor(System.Windows.Controls.ControlTemplate,Caliburn.Testability.BoundType,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.DataTemplateElement"/> class.
+            </summary>
+            <param name="controlTemplate">The data template.</param>
+            <param name="boundType">Type of the bound.</param>
+            <param name="baseName">Name of the base.</param>
+        </member>
+        <member name="M:Caliburn.Testability.ControlTemplateElement.Accept(Caliburn.Testability.IElementVisitor)">
+            <summary>
+            Accepts the specified visitor.
+            </summary>
+            <param name="visitor">The visitor.</param>
+        </member>
+        <member name="P:Caliburn.Testability.ControlTemplateElement.ControlTemplate">
+            <summary>
+            Gets the control template.
+            </summary>
+            <value>The control template.</value>
+        </member>
+        <member name="T:Caliburn.Testability.ControlTemplateValidator">
+            <summary>
+            Validates a <see cref="T:Caliburn.Testability.ControlTemplateElement"/>.
+            </summary>
+        </member>
+        <member name="T:Caliburn.Testability.DependencyObjectValidator">
+            <summary>
+            Validates a <see cref="T:Caliburn.Testability.DependencyObjectElement"/>.
+            </summary>
+        </member>
+        <member name="M:Caliburn.Testability.DependencyObjectValidator.#ctor(Caliburn.Testability.ElementEnumeratorSettings,Caliburn.Testability.DependencyObjectElement)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.DependencyObjectValidator"/> class.
+            </summary>
+            <param name="settings">The settings.</param>
+            <param name="element">The element.</param>
+        </member>
+        <member name="M:Caliburn.Testability.DependencyObjectValidator.ValidateBindings">
+            <summary>
+            Validates the bindings.
+            </summary>
+            <returns>The result of the validation process.</returns>
+        </member>
+        <member name="M:Caliburn.Testability.DependencyObjectValidator.GetBindings">
+            <summary>
+            Gets the bindings.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Caliburn.Testability.DependencyObjectValidator.Settings">
+            <summary>
+            Gets the settings.
+            </summary>
+            <value>The settings.</value>
+        </member>
+        <member name="M:Caliburn.Testability.ControlTemplateValidator.#ctor(Caliburn.Testability.ElementEnumeratorSettings,Caliburn.Testability.ControlTemplateElement)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.ControlTemplateValidator"/> class.
+            </summary>
+            <param name="settings">The settings.</param>
+            <param name="element">The element.</param>
+        </member>
+        <member name="M:Caliburn.Testability.ControlTemplateValidator.ValidateBindings">
+            <summary>
+            Validates the bindings.
+            </summary>
+            <returns>The result of the validation process.</returns>
+        </member>
+        <member name="T:Caliburn.Testability.DataTemplateElement">
+            <summary>
+            Represents a bound <see cref="P:Caliburn.Testability.DataTemplateElement.DataTemplate"/>.
+            </summary>
+        </member>
+        <member name="M:Caliburn.Testability.DataTemplateElement.#ctor(System.Windows.DataTemplate,Caliburn.Testability.BoundType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.DataTemplateElement"/> class.
+            </summary>
+            <param name="dataTemplate">The data template.</param>
+            <param name="boundType">Type of the bound.</param>
+        </member>
+        <member name="M:Caliburn.Testability.DataTemplateElement.#ctor(System.Windows.DataTemplate,Caliburn.Testability.BoundType,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.DataTemplateElement"/> class.
+            </summary>
+            <param name="dataTemplate">The data template.</param>
+            <param name="boundType">Type of the bound.</param>
+            <param name="baseName">Name of the base.</param>
+        </member>
+        <member name="M:Caliburn.Testability.DataTemplateElement.Accept(Caliburn.Testability.IElementVisitor)">
+            <summary>
+            Accepts the specified visitor.
+            </summary>
+            <param name="visitor">The visitor.</param>
+        </member>
+        <member name="P:Caliburn.Testability.DataTemplateElement.DataTemplate">
+            <summary>
+            Gets the data template.
+            </summary>
+            <value>The data template.</value>
+        </member>
+        <member name="T:Caliburn.Testability.DataTemplateValidator">
+            <summary>
+            Validates a <see cref="T:Caliburn.Testability.DataTemplateElement"/>.
+            </summary>
+        </member>
+        <member name="M:Caliburn.Testability.DataTemplateValidator.#ctor(Caliburn.Testability.ElementEnumeratorSettings,Caliburn.Testability.DataTemplateElement)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.DataTemplateValidator"/> class.
+            </summary>
+            <param name="settings">The settings.</param>
+            <param name="element">The element.</param>
+        </member>
+        <member name="M:Caliburn.Testability.DataTemplateValidator.ValidateBindings">
+            <summary>
+            Validates the bindings.
+            </summary>
+            <returns>The result of the validation process.</returns>
+        </member>
+        <member name="T:Caliburn.Testability.ElementEnumerator">
+            <summary>
+            A class capable of enumerating all aspects of a UI.  A user defined visitor visits the enumerated UI elements.
+            </summary>
+        </member>
+        <member name="M:Caliburn.Testability.ElementEnumerator.#ctor(Caliburn.Testability.IElement)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.ElementEnumerator"/> class.
+            </summary>
+            <param name="element">The element.</param>
+        </member>
+        <member name="M:Caliburn.Testability.ElementEnumerator.Enumerate(Caliburn.Testability.IElementVisitor)">
+            <summary>
+            Enumerates the UI with the specified visitor.
+            </summary>
+            <param name="visitor">The visitor.</param>
+        </member>
+        <member name="P:Caliburn.Testability.ElementEnumerator.Settings">
+            <summary>
+            Gets the settings.
+            </summary>
+            <value>The settings.</value>
+        </member>
+        <member name="T:Caliburn.Testability.ElementEnumeratorSettings">
+            <summary>
+            Specifies the details of how a <see cref="T:Caliburn.Testability.ElementEnumerator"/> will do its work.
+            </summary>
+        </member>
+        <member name="M:Caliburn.Testability.ElementEnumeratorSettings.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.ElementEnumeratorSettings"/> class.
+            </summary>
+        </member>
+        <member name="M:Caliburn.Testability.ElementEnumeratorSettings.GetBoundProperty(System.Object,Caliburn.Testability.BoundType,System.String)">
+            <summary>
+            Gets the bound property.
+            </summary>
+            <param name="propertyValue">The property value.</param>
+            <param name="boundType">Type of the bound object.</param>
+            <param name="baseName">A base name.</param>
+            <returns>Returns an instance of <see cref="T:Caliburn.Testability.IElement"/> if the property should be checked, otherwise null.</returns>
+        </member>
+        <member name="P:Caliburn.Testability.ElementEnumeratorSettings.StopAfterFirstError">
+            <summary>
+            Gets or sets a value indicating whether to stop after the first error.
+            </summary>
+            <value><c>true</c> if should stop; otherwise, <c>false</c>.</value>
+            <remarks>False by default.</remarks>
+        </member>
+        <member name="P:Caliburn.Testability.ElementEnumeratorSettings.IncludeStyles">
+            <summary>
+            Gets or sets a value indicating whether to include styles during validation.
+            </summary>
+            <value><c>true</c> to include styles; otherwise, <c>false</c>.</value>
+            <remarks>True by default.</remarks>
+        </member>
+        <member name="P:Caliburn.Testability.ElementEnumeratorSettings.IncludeTemplates">
+            <summary>
+            Gets or sets a value indicating whether to include templates during validation.
+            </summary>
+            <value><c>true</c> to include templates; otherwise, <c>false</c>.</value>
+            <remarks>True by default.</remarks>
+        </member>
+        <member name="P:Caliburn.Testability.ElementEnumeratorSettings.IncludeAllDependencyObjects">
+            <summary>
+            Gets or sets a value indicating whether to include all dependency object values during validation.
+            </summary>
+            <value>
+            	<c>true</c> to include all dependency object values; otherwise, <c>false</c>.
+            </value>
+            <remarks>An example of</remarks>
+            <remarks>False by default. When set to true, will attempt to validate all properties which have dependency
+            object values.  For example, Brushes and ToolTips will be checked.</remarks>
+        </member>
+        <member name="P:Caliburn.Testability.ElementEnumeratorSettings.TraverseUserControls">
+            <summary>
+            Gets or sets a value indicating whether to include child user controls during validation.
+            </summary>
+            <value><c>true</c> to include user controls; otherwise, <c>false</c>.</value>
+            <remarks>False by default.</remarks>
+        </member>
+        <member name="T:Caliburn.Testability.EnumerableElement">
+            <summary>
+            An implementation of <see cref="T:Caliburn.Testability.IElement"/> that handles enumerables.
+            </summary>
+        </member>
+        <member name="M:Caliburn.Testability.EnumerableElement.#ctor(System.Collections.IEnumerable,Caliburn.Testability.BoundType,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.EnumerableElement"/> class.
+            </summary>
+            <param name="enumerable">The enumerable.</param>
+            <param name="boundType">Type of the bound.</param>
+            <param name="name">The name.</param>
+        </member>
+        <member name="M:Caliburn.Testability.EnumerableElement.GetChildren(Caliburn.Testability.ElementEnumeratorSettings)">
+            <summary>
+            Gets the children.
+            </summary>
+            <param name="settings"></param>
+            <returns></returns>
+            <value>The children.</value>
+        </member>
+        <member name="M:Caliburn.Testability.EnumerableElement.Accept(Caliburn.Testability.IElementVisitor)">
+            <summary>
+            Accepts the specified visitor.
+            </summary>
+            <param name="visitor">The visitor.</param>
+        </member>
+        <member name="P:Caliburn.Testability.EnumerableElement.Name">
+            <summary>
+            Gets the name.
+            </summary>
+            <value>The name.</value>
+        </member>
+        <member name="P:Caliburn.Testability.EnumerableElement.Type">
+            <summary>
+            Gets the type the item is bound to.
+            </summary>
+            <value>The type.</value>
+        </member>
+        <member name="T:Caliburn.Testability.Error">
+            <summary>
+            A factory for common error instances.
+            </summary>
+        </member>
+        <member name="M:Caliburn.Testability.Error.BadProperty(Caliburn.Testability.IElement,Caliburn.Testability.BoundType,System.Windows.DependencyProperty,System.Windows.Data.Binding)">
+            <summary>
+            Creates a "bad property" error.
+            </summary>
+            <param name="item">The item.</param>
+            <param name="type">The type.</param>
+            <param name="property">The property.</param>
+            <param name="binding">The binding.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.Error.NotEnumerable(Caliburn.Testability.IElement,Caliburn.Testability.BoundType,System.Windows.DependencyProperty,System.Windows.Data.Binding)">
+            <summary>
+            Creates an enumerable error.
+            </summary>
+            <param name="item">The item.</param>
+            <param name="type">The type.</param>
+            <param name="property">The property.</param>
+            <param name="binding">The binding.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.Error.BadDataContext(Caliburn.Testability.IElement,Caliburn.Testability.BoundType,System.Windows.DependencyProperty)">
+            <summary>
+            Creates a "bad data context" error.
+            </summary>
+            <param name="item">The item.</param>
+            <param name="type">The type.</param>
+            <param name="property">The property.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.Error.TemplateSelectorAmbiguity(Caliburn.Testability.IElement,Caliburn.Testability.BoundType,System.String)">
+            <summary>
+            Creates an ambiguous template error.
+            </summary>
+            <param name="item">The item.</param>
+            <param name="type">The type.</param>
+            <param name="templatePropertyName">The name of the template property.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.Error.StyleSelectorAmbiguity(Caliburn.Testability.IElement,Caliburn.Testability.BoundType,System.String)">
+            <summary>
+            Creates an ambiguous style error.
+            </summary>
+            <param name="item">The item.</param>
+            <param name="type">The type.</param>
+            <param name="stylePropertyName">The name of the style property.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Caliburn.Testability.ExtensionMethods">
+            <summary>
+            Extension methods related to testability.
+            </summary>
+        </member>
+        <member name="M:Caliburn.Testability.ExtensionMethods.GetActualBindings(System.Windows.Data.BindingBase)">
+            <summary>
+            Examines a <see cref="T:System.Windows.Data.BindingBase"/> and returns the actual bindings.
+            </summary>
+            <param name="bindingBase">The binding base.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.ExtensionMethods.GetActualBindings(System.Windows.Data.BindingExpressionBase)">
+            <summary>
+            Gets the actual bindings from a <see cref="T:System.Windows.Data.BindingExpressionBase"/>.
+            </summary>
+            <param name="expressionBase">The expression base.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.ExtensionMethods.ShouldValidate(System.Windows.Data.Binding)">
+            <summary>
+            Determines whether the binding should be validated.
+            </summary>
+            <param name="binding">The binding.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Caliburn.Testability.GeneralError">
+            <summary>
+            A general prupose implementation of <see cref="T:Caliburn.Testability.GeneralError"/>.
+            </summary>
+        </member>
+        <member name="M:Caliburn.Testability.GeneralError.#ctor(Caliburn.Testability.IElement,Caliburn.Testability.BoundType,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.GeneralError"/> class.
+            </summary>
+            <param name="item">The item.</param>
+            <param name="type">The type.</param>
+            <param name="message">The message.</param>
+        </member>
+        <member name="P:Caliburn.Testability.GeneralError.Element">
+            <summary>
+            Gets the item.
+            </summary>
+            <value>The item.</value>
+        </member>
+        <member name="P:Caliburn.Testability.GeneralError.Type">
+            <summary>
+            Gets the type.
+            </summary>
+            <value>The type.</value>
+        </member>
+        <member name="P:Caliburn.Testability.GeneralError.Message">
+            <summary>
+            Gets the message.
+            </summary>
+            <value>The message.</value>
+        </member>
+        <member name="T:Caliburn.Testability.BindingValidator`1">
+            <summary>
+            A type specific implementation of <see cref="T:Caliburn.Testability.BindingValidator"/>,
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Caliburn.Testability.BindingValidator`1.#ctor(Caliburn.Testability.IBoundElement)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.BindingValidator`1"/> class.
+            </summary>
+            <param name="element">The data bound item.</param>
+        </member>
+        <member name="M:Caliburn.Testability.BindingValidator`1.Validate">
+            <summary>
+            Validates the bound item.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.BindingValidator`1.WithHint``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Type)">
+            <summary>
+            Add a type hint for a property path, specifying the actual type returned 
+            by the last property of the property path chain
+            </summary>
+            <typeparam name="K"></typeparam>
+            <param name="property">The property</param>
+            <param name="hint">The Type actually returned.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Caliburn.Testability.ValidationResult`1">
+            <summary>
+            A type specific implementation of <see cref="T:Caliburn.Testability.ValidationResult"/>.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:Caliburn.Testability.ValidationResult">
+            <summary>
+            The results of a validation operation.
+            </summary>
+        </member>
+        <member name="M:Caliburn.Testability.ValidationResult.Add(Caliburn.Testability.ValidatedProperty)">
+            <summary>
+            Adds the specified validated property.
+            </summary>
+            <param name="validatedProperty">The validated property.</param>
+        </member>
+        <member name="M:Caliburn.Testability.ValidationResult.Add(Caliburn.Testability.ValidationResult)">
+            <summary>
+            Adds the specified validation result.
+            </summary>
+            <param name="validationResult">The validation result.</param>
+        </member>
+        <member name="M:Caliburn.Testability.ValidationResult.Add(Caliburn.Testability.IError)">
+            <summary>
+            Adds the specified error.
+            </summary>
+            <param name="error">The error.</param>
+        </member>
+        <member name="M:Caliburn.Testability.ValidationResult.WasBoundTo(System.String)">
+            <summary>
+            Determines if the property was bound.
+            </summary>
+            <param name="fullPropertyPath">The full property path.</param>
+            <returns></returns>
+        </member>
+        <member name="P:Caliburn.Testability.ValidationResult.HasErrors">
+            <summary>
+            Gets a value indicating whether this instance has errors.
+            </summary>
+            <value>
+            	<c>true</c> if this instance has errors; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Caliburn.Testability.ValidationResult.Errors">
+            <summary>
+            Gets the errors.
+            </summary>
+            <value>The errors.</value>
+        </member>
+        <member name="P:Caliburn.Testability.ValidationResult.ErrorSummary">
+            <summary>
+            Gets the error summary.
+            </summary>
+            <value>The error summary.</value>
+        </member>
+        <member name="P:Caliburn.Testability.ValidationResult.BoundProperties">
+            <summary>
+            Gets the bound properties.
+            </summary>
+            <value>The bound properties.</value>
+        </member>
+        <member name="M:Caliburn.Testability.ValidationResult`1.WasBoundTo``1(System.Linq.Expressions.Expression{System.Func{`0,``0}})">
+            <summary>
+            Determines if the property was bound.
+            </summary>
+            <typeparam name="K"></typeparam>
+            <param name="property">The property.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.ValidationResult`1.WasNotBoundTo``1(System.Linq.Expressions.Expression{System.Func{`0,``0}})">
+            <summary>
+             Determines if the property was not bound.
+            </summary>
+            <typeparam name="K"></typeparam>
+            <param name="property">The property.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.ValidationResult`1.AssertNoErrors">
+            <summary>
+            Asserts that the validation process yielded no errors.
+            </summary>
+        </member>
+        <member name="M:Caliburn.Testability.ValidationResult`1.AssertWasBound``1(System.Linq.Expressions.Expression{System.Func{`0,``0}})">
+            <summary>
+            Asserts that the specified property was bound.
+            </summary>
+            <typeparam name="K"></typeparam>
+            <param name="property">The property.</param>
+        </member>
+        <member name="M:Caliburn.Testability.ValidationResult`1.AssertWasNotBound``1(System.Linq.Expressions.Expression{System.Func{`0,``0}})">
+            <summary>
+            Asserts that the specified property was not bound.
+            </summary>
+            <typeparam name="K"></typeparam>
+            <param name="property">The property.</param>
+        </member>
+        <member name="T:Caliburn.Testability.GroupStyleElement">
+            <summary>
+            An implementation of <see cref="T:Caliburn.Testability.IElement"/> for <see cref="T:System.Windows.Controls.GroupStyle"/>.
+            </summary>
+        </member>
+        <member name="M:Caliburn.Testability.GroupStyleElement.#ctor(System.Windows.Controls.GroupStyle,Caliburn.Testability.BoundType,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.StyleElement"/> class.
+            </summary>
+            <param name="style">The style.</param>
+            <param name="boundType">Type of the bound.</param>
+            <param name="name">The name.</param>
+        </member>
+        <member name="M:Caliburn.Testability.GroupStyleElement.GetChildren(Caliburn.Testability.ElementEnumeratorSettings)">
+            <summary>
+            Gets the children.
+            </summary>
+            <value>The children.</value>
+        </member>
+        <member name="M:Caliburn.Testability.GroupStyleElement.Accept(Caliburn.Testability.IElementVisitor)">
+            <summary>
+            Accepts the specified visitor.
+            </summary>
+            <param name="visitor">The visitor.</param>
+        </member>
+        <member name="P:Caliburn.Testability.GroupStyleElement.Name">
+            <summary>
+            Gets the name.
+            </summary>
+            <value>The name.</value>
+        </member>
+        <member name="P:Caliburn.Testability.GroupStyleElement.Type">
+            <summary>
+            Gets the type the item is bound to.
+            </summary>
+            <value>The type.</value>
+        </member>
+        <member name="P:Caliburn.Testability.GroupStyleElement.Style">
+            <summary>
+            Gets the style.
+            </summary>
+            <value>The style.</value>
+        </member>
+        <member name="T:Caliburn.Testability.GroupStyleValidator">
+            <summary>
+            Validates a <see cref="T:Caliburn.Testability.GroupStyleValidator"/>.
+            </summary>
+        </member>
+        <member name="M:Caliburn.Testability.GroupStyleValidator.#ctor(Caliburn.Testability.ElementEnumeratorSettings,Caliburn.Testability.GroupStyleElement)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.GroupStyleValidator"/> class.
+            </summary>
+            <param name="settings">The settings.</param>
+            <param name="element">The element.</param>
+        </member>
+        <member name="M:Caliburn.Testability.GroupStyleValidator.ValidateBindings">
+            <summary>
+            Validates the bindings.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Caliburn.Testability.IElementVisitor">
+            <summary>
+            Implemented by classes capable of visiting instances of <see cref="T:Caliburn.Testability.IElement"/>.
+            </summary>
+        </member>
+        <member name="M:Caliburn.Testability.IElementVisitor.Prepare(Caliburn.Testability.ElementEnumeratorSettings)">
+            <summary>
+            Prepares the specified settings.
+            </summary>
+            <param name="settings">The settings.</param>
+        </member>
+        <member name="M:Caliburn.Testability.IElementVisitor.Visit(Caliburn.Testability.DependencyObjectElement)">
+            <summary>
+            Visits the specified element.
+            </summary>
+            <param name="element">The element.</param>
+        </member>
+        <member name="M:Caliburn.Testability.IElementVisitor.Visit(Caliburn.Testability.StyleElement)">
+            <summary>
+            Visits the specified element.
+            </summary>
+            <param name="element">The element.</param>
+        </member>
+        <member name="M:Caliburn.Testability.IElementVisitor.Visit(Caliburn.Testability.GroupStyleElement)">
+            <summary>
+            Visits the specified element.
+            </summary>
+            <param name="element">The element.</param>
+        </member>
+        <member name="M:Caliburn.Testability.IElementVisitor.Visit(Caliburn.Testability.DataTemplateElement)">
+            <summary>
+            Visits the specified element.
+            </summary>
+            <param name="element">The element.</param>
+        </member>
+        <member name="M:Caliburn.Testability.IElementVisitor.Visit(Caliburn.Testability.ControlTemplateElement)">
+            <summary>
+            Visits the specified element.
+            </summary>
+            <param name="element">The element.</param>
+        </member>
+        <member name="P:Caliburn.Testability.IElementVisitor.ShouldStopVisiting">
+            <summary>
+            Gets a value indicating whether the visitor wants the enumerator to stop visiting elements.
+            </summary>
+            <value><c>true</c> if visiting should stop; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="T:Caliburn.Testability.StyleElement">
+            <summary>
+            Represents a data bound <see cref="P:Caliburn.Testability.StyleElement.Style"/>.
+            </summary>
+        </member>
+        <member name="M:Caliburn.Testability.StyleElement.#ctor(System.Windows.Style,Caliburn.Testability.BoundType,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.StyleElement"/> class.
+            </summary>
+            <param name="style">The style.</param>
+            <param name="boundType">Type of the bound.</param>
+            <param name="name">The name.</param>
+        </member>
+        <member name="M:Caliburn.Testability.StyleElement.GetChildren(Caliburn.Testability.ElementEnumeratorSettings)">
+            <summary>
+            Gets the children.
+            </summary>
+            <value>The children.</value>
+        </member>
+        <member name="M:Caliburn.Testability.StyleElement.Accept(Caliburn.Testability.IElementVisitor)">
+            <summary>
+            Accepts the specified visitor.
+            </summary>
+            <param name="visitor">The visitor.</param>
+        </member>
+        <member name="P:Caliburn.Testability.StyleElement.Name">
+            <summary>
+            Gets the name.
+            </summary>
+            <value>The name.</value>
+        </member>
+        <member name="P:Caliburn.Testability.StyleElement.Type">
+            <summary>
+            Gets the type the item is bound to.
+            </summary>
+            <value>The type.</value>
+        </member>
+        <member name="P:Caliburn.Testability.StyleElement.Style">
+            <summary>
+            Gets the style.
+            </summary>
+            <value>The style.</value>
+        </member>
+        <member name="T:Caliburn.Testability.StyleValidator">
+            <summary>
+            Validates a <see cref="T:Caliburn.Testability.StyleElement"/>.
+            </summary>
+        </member>
+        <member name="M:Caliburn.Testability.StyleValidator.#ctor(Caliburn.Testability.ElementEnumeratorSettings,Caliburn.Testability.StyleElement)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.StyleValidator"/> class.
+            </summary>
+            <param name="settings">The settings.</param>
+            <param name="element">The element.</param>
+        </member>
+        <member name="M:Caliburn.Testability.StyleValidator.ValidateBindings">
+            <summary>
+            Validates the bindings.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Caliburn.Testability.TestResultEnumerator">
+            <summary>
+            Enumerates <see cref="T:Caliburn.PresentationFramework.RoutedMessaging.IResult"/> instances without calling execute or waiting for completion.
+            </summary>
+        </member>
+        <member name="M:Caliburn.Testability.TestResultEnumerator.#ctor(System.Collections.Generic.IEnumerable{Caliburn.PresentationFramework.RoutedMessaging.IResult})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.TestResultEnumerator"/> class.
+            </summary>
+            <param name="enumerator">The enumerator.</param>
+        </member>
+        <member name="M:Caliburn.Testability.TestResultEnumerator.Next``1">
+            <summary>
+            Returns the next <see cref="T:Caliburn.PresentationFramework.RoutedMessaging.IResult"/>.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="T:Caliburn.Testability.TriggerValidator">
+            <summary>
+            Validates a <see cref="T:System.Windows.TriggerCollection"/>.
+            </summary>
+        </member>
+        <member name="M:Caliburn.Testability.TriggerValidator.#ctor(Caliburn.Testability.BoundType,Caliburn.Testability.IElement,System.Windows.TriggerCollection)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.TriggerValidator"/> class.
+            </summary>
+            <param name="type">The type.</param>
+            <param name="item">The item.</param>
+            <param name="triggers">The triggers.</param>
+        </member>
+        <member name="M:Caliburn.Testability.TriggerValidator.ValidateBindings">
+            <summary>
+            Validates the bindings.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Caliburn.Testability.TriggerValidator.Type">
+            <summary>
+            Gets the type.
+            </summary>
+            <value>The type.</value>
+        </member>
+        <member name="P:Caliburn.Testability.TriggerValidator.Item">
+            <summary>
+            Gets the item.
+            </summary>
+            <value>The item.</value>
+        </member>
+        <member name="P:Caliburn.Testability.TriggerValidator.Triggers">
+            <summary>
+            Gets the triggers.
+            </summary>
+            <value>The triggers.</value>
+        </member>
+        <member name="T:Caliburn.Testability.ValidatedProperty">
+            <summary>
+            A property that has been processes by the validation engine.
+            </summary>
+        </member>
+        <member name="M:Caliburn.Testability.ValidatedProperty.#ctor(Caliburn.Testability.IError,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.ValidatedProperty"/> class.
+            </summary>
+            <param name="error">The error.</param>
+            <param name="fullPath">The full path.</param>
+        </member>
+        <member name="M:Caliburn.Testability.ValidatedProperty.#ctor(Caliburn.Testability.IError)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.ValidatedProperty"/> class.
+            </summary>
+            <param name="error">The error.</param>
+        </member>
+        <member name="P:Caliburn.Testability.ValidatedProperty.Error">
+            <summary>
+            Gets or sets the error.
+            </summary>
+            <value>The error.</value>
+        </member>
+        <member name="P:Caliburn.Testability.ValidatedProperty.FullPath">
+            <summary>
+            Gets or sets the full path.
+            </summary>
+            <value>The full path.</value>
+        </member>
+        <member name="P:Caliburn.Testability.ValidatedProperty.HasError">
+            <summary>
+            Gets a value indicating whether this instance has an error.
+            </summary>
+            <value><c>true</c> if this instance has an error; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="T:Caliburn.Testability.ValidationException">
+            <summary>
+            An exception indicating UI validation errors.
+            </summary>
+        </member>
+        <member name="M:Caliburn.Testability.ValidationException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.ValidationException"/> class.
+            </summary>
+        </member>
+        <member name="M:Caliburn.Testability.ValidationException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.ValidationException"/> class.
+            </summary>
+            <param name="message">The message.</param>
+        </member>
+        <member name="M:Caliburn.Testability.ValidationException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.ValidationException"/> class.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
+        <member name="M:Caliburn.Testability.ValidationException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Testability.ValidationException"/> class.
+            </summary>
+            <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> that holds the serialized object data about the exception being thrown.</param>
+            <param name="context">The <see cref="T:System.Runtime.Serialization.StreamingContext"/> that contains contextual information about the source or destination.</param>
+            <exception cref="T:System.ArgumentNullException">
+            The <paramref name="info"/> parameter is null.
+            </exception>
+            <exception cref="T:System.Runtime.Serialization.SerializationException">
+            The class name is null or <see cref="P:System.Exception.HResult"/> is zero (0).
+            </exception>
+        </member>
+        <member name="T:Caliburn.Testability.ValidationVisitor">
+            <summary>
+            An implementation of <see cref="T:Caliburn.Testability.IElementVisitor"/> that validates the elements that are visited.
+            </summary>
+        </member>
+        <member name="M:Caliburn.Testability.ValidationVisitor.Prepare(Caliburn.Testability.ElementEnumeratorSettings)">
+            <summary>
+            Prepares the specified settings.
+            </summary>
+            <param name="settings">The settings.</param>
+        </member>
+        <member name="M:Caliburn.Testability.ValidationVisitor.Visit(Caliburn.Testability.DependencyObjectElement)">
+            <summary>
+            Visits the specified element.
+            </summary>
+            <param name="element">The element.</param>
+        </member>
+        <member name="M:Caliburn.Testability.ValidationVisitor.Visit(Caliburn.Testability.StyleElement)">
+            <summary>
+            Visits the specified element.
+            </summary>
+            <param name="element">The element.</param>
+        </member>
+        <member name="M:Caliburn.Testability.ValidationVisitor.Visit(Caliburn.Testability.GroupStyleElement)">
+            <summary>
+            Visits the specified element.
+            </summary>
+            <param name="element">The element.</param>
+        </member>
+        <member name="M:Caliburn.Testability.ValidationVisitor.Visit(Caliburn.Testability.DataTemplateElement)">
+            <summary>
+            Visits the specified element.
+            </summary>
+            <param name="element">The element.</param>
+        </member>
+        <member name="M:Caliburn.Testability.ValidationVisitor.Visit(Caliburn.Testability.ControlTemplateElement)">
+            <summary>
+            Visits the specified element.
+            </summary>
+            <param name="element">The element.</param>
+        </member>
+        <member name="P:Caliburn.Testability.ValidationVisitor.ShouldStopVisiting">
+            <summary>
+            Gets a value indicating whether the visitor wants the enumerator to stop visiting elements.
+            </summary>
+            <value><c>true</c> if visiting should stop; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Caliburn.Testability.ValidationVisitor.Result">
+            <summary>
+            Gets the result of the validation.
+            </summary>
+            <value>The result.</value>
+        </member>
+        <member name="T:Caliburn.Testability.Validator">
+            <summary>
+            Provides convenience methods for creating data binding validators.
+            </summary>
+        </member>
+        <member name="M:Caliburn.Testability.Validator.For``2">
+            <summary>
+            Creates a validator for a <see cref="T:System.Windows.DependencyObject"/> and a <see cref="T:System.Type"/>.
+            </summary>
+            <typeparam name="Element">The type of the element.</typeparam>
+            <typeparam name="Type">The type of the ype.</typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.Validator.For``2(``0)">
+            <summary>
+            Creates a validator for a <see cref="T:System.Windows.DependencyObject"/> and a <see cref="T:System.Type"/>.
+            </summary>
+            <typeparam name="Element">The type of the lement.</typeparam>
+            <typeparam name="Type">The type of the ype.</typeparam>
+            <param name="element">The element.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.Validator.For(System.Windows.DataTemplate)">
+            <summary>
+            Creates a validator for a <see cref="T:System.Windows.DataTemplate"/>.
+            </summary>
+            <param name="dataTemplate">The data template.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.Validator.For``1(System.Windows.DataTemplate)">
+            <summary>
+            Creates a validator for a <see cref="T:System.Windows.DataTemplate"/>.
+            </summary>
+            <typeparam name="Type">The type of the ype.</typeparam>
+            <param name="dataTemplate">The data template.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.Validator.For``1(System.Windows.Style)">
+            <summary>
+            Creates a validator for a <see cref="T:System.Windows.Style"/>.
+            </summary>
+            <typeparam name="Type">The type of the ype.</typeparam>
+            <param name="style">The style.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.Validator.For``2(System.Object)">
+            <summary>
+            Creates a validator for a resource.
+            </summary>
+            <typeparam name="Resource">The type of the esource.</typeparam>
+            <typeparam name="Type">The type of the ype.</typeparam>
+            <param name="resourceKey">The resource key.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.Testability.Validator.For``1(System.Windows.ResourceDictionary,System.Object)">
+            <summary>
+            Creates a validator for a resource.
+            </summary>
+            <typeparam name="Type">The type of the ype.</typeparam>
+            <param name="resourceDictionary">The resource dictionary.</param>
+            <param name="resourceKey">The resource key.</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

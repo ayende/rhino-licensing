@@ -4,17 +4,19 @@ using System.Runtime.Serialization;
 namespace Rhino.Licensing
 {
     [Serializable]
-	public class LicenseFileNotFoundException : RhinoLicensingException
+    public class LicenseFileNotFoundException : RhinoLicensingException
     {
         public LicenseFileNotFoundException()
         {
         }
 
-        public LicenseFileNotFoundException(string message) : base(message)
+        public LicenseFileNotFoundException(string message) 
+            : base(message)
         {
         }
 
-        public LicenseFileNotFoundException(string message, Exception inner) : base(message, inner)
+        public LicenseFileNotFoundException(string message, Exception inner) 
+            : base(message, inner)
         {
         }
 

@@ -18,43 +18,43 @@ namespace Rhino.Licensing
             this.privateKey = privateKey;
         }
 
-		public string GenerateFloatingLicense(string name, string publicKey)
-		{
-			using (var rsa = new RSACryptoServiceProvider())
-			{
-				rsa.FromXmlString(privateKey);
-				var doc = new XmlDocument();
-				var license = doc.CreateElement("floating-license");
-				doc.AppendChild(license);
+        public string GenerateFloatingLicense(string name, string publicKey)
+        {
+            using (var rsa = new RSACryptoServiceProvider())
+            {
+                rsa.FromXmlString(privateKey);
+                var doc = new XmlDocument();
+                var license = doc.CreateElement("floating-license");
+                doc.AppendChild(license);
 
-				var publicKeyEl = doc.CreateElement("license-server-public-key");
-				license.AppendChild(publicKeyEl);
-				publicKeyEl.InnerText = publicKey;
-				
-				var nameEl = doc.CreateElement("name");
-				license.AppendChild(nameEl);
-				nameEl.InnerText = name;
+                var publicKeyEl = doc.CreateElement("license-server-public-key");
+                license.AppendChild(publicKeyEl);
+                publicKeyEl.InnerText = publicKey;
+                
+                var nameEl = doc.CreateElement("name");
+                license.AppendChild(nameEl);
+                nameEl.InnerText = name;
 
-				var signature = GetXmlDigitalSignature(doc, rsa);
-				doc.FirstChild.AppendChild(doc.ImportNode(signature, true));
+                var signature = GetXmlDigitalSignature(doc, rsa);
+                doc.FirstChild.AppendChild(doc.ImportNode(signature, true));
 
-				var ms = new MemoryStream();
-				var writer = XmlWriter.Create(ms, new XmlWriterSettings
-				{
-					Indent = true,
-					Encoding = Encoding.UTF8
-				});
-				doc.Save(writer);
-				ms.Position = 0;
-				return new StreamReader(ms).ReadToEnd();
-			}
-		}
-		public string Generate(string name, Guid id, DateTime expirationDate, LicenseType licenseType)
-		{
-			return Generate(name, id, expirationDate, new Dictionary<string, string>(), licenseType);
-		}
+                var ms = new MemoryStream();
+                var writer = XmlWriter.Create(ms, new XmlWriterSettings
+                {
+                    Indent = true,
+                    Encoding = Encoding.UTF8
+                });
+                doc.Save(writer);
+                ms.Position = 0;
+                return new StreamReader(ms).ReadToEnd();
+            }
+        }
+        public string Generate(string name, Guid id, DateTime expirationDate, LicenseType licenseType)
+        {
+            return Generate(name, id, expirationDate, new Dictionary<string, string>(), licenseType);
+        }
 
-		public string Generate(string name, Guid id, DateTime expirationDate, IDictionary<string, string> attributes, LicenseType licenseType)
+        public string Generate(string name, Guid id, DateTime expirationDate, IDictionary<string, string> attributes, LicenseType licenseType)
         {
             using (var rsa = new RSACryptoServiceProvider())
             {
@@ -107,14 +107,14 @@ namespace Rhino.Licensing
             license.AppendChild(nameEl);
             nameEl.InnerText = name;
 
-        	foreach (var attribute in attributes)
-        	{
-        		var attrib = doc.CreateAttribute(attribute.Key);
-        		attrib.Value = attribute.Value;
-        		license.Attributes.Append(attrib);
-        	}
+            foreach (var attribute in attributes)
+            {
+                var attrib = doc.CreateAttribute(attribute.Key);
+                attrib.Value = attribute.Value;
+                license.Attributes.Append(attrib);
+            }
 
-        	return doc;
+            return doc;
         }
     }
 }

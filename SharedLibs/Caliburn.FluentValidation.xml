@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Caliburn.FluentValidation</name>
+    </assembly>
+    <members>
+        <member name="T:Caliburn.FluentValidation.ErrorAdapter">
+            <summary>
+            Adapts <see cref="T:FluentValidation.Results.ValidationFailure"/> to <see cref="T:Caliburn.Core.Validation.IError"/>.
+            </summary>
+        </member>
+        <member name="M:Caliburn.FluentValidation.ErrorAdapter.#ctor(System.Object,FluentValidation.Results.ValidationFailure)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.FluentValidation.ErrorAdapter"/> class.
+            </summary>
+            <param name="instance">The instance.</param>
+            <param name="failure">The failure.</param>
+        </member>
+        <member name="P:Caliburn.FluentValidation.ErrorAdapter.Failure">
+            <summary>
+            Gets the failure details.
+            </summary>
+            <value>The failure.</value>
+        </member>
+        <member name="P:Caliburn.FluentValidation.ErrorAdapter.Instance">
+            <summary>
+            Gets the invalid instance.
+            </summary>
+            <value>The instance.</value>
+        </member>
+        <member name="P:Caliburn.FluentValidation.ErrorAdapter.Key">
+            <summary>
+            Gets the name of the invalid property.
+            </summary>
+            <value>The name of the property.</value>
+        </member>
+        <member name="P:Caliburn.FluentValidation.ErrorAdapter.Message">
+            <summary>
+            Gets the error message.
+            </summary>
+            <value>The message.</value>
+        </member>
+        <member name="T:Caliburn.FluentValidation.FluentValidationValidator">
+            <summary>
+            An implementation of <see cref="T:Caliburn.Core.Validation.IValidator"/> that uses FluentValidation.
+            </summary>
+        </member>
+        <member name="M:Caliburn.FluentValidation.FluentValidationValidator.#ctor(Microsoft.Practices.ServiceLocation.IServiceLocator)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.FluentValidation.FluentValidationValidator"/> class.
+            </summary>
+            <param name="serviceLocator">The service locator.</param>
+        </member>
+        <member name="M:Caliburn.FluentValidation.FluentValidationValidator.CreateInstance(System.Type)">
+            <summary>
+            Creates the instance.
+            </summary>
+            <param name="validatorType">Type of the validator.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.FluentValidation.FluentValidationValidator.ShouldValidate(System.Reflection.PropertyInfo)">
+            <summary>
+            Inidcates whether the specified property should be validated.
+            </summary>
+            <param name="property">The property.</param>
+            <returns>
+            true if should be validated; otherwise false
+            </returns>
+        </member>
+        <member name="M:Caliburn.FluentValidation.FluentValidationValidator.Validate(System.Object)">
+            <summary>
+            Validates the specified instance.
+            </summary>
+            <param name="instance">The instance.</param>
+            <returns>The validation errors.</returns>
+        </member>
+        <member name="M:Caliburn.FluentValidation.FluentValidationValidator.Validate(System.Object,System.String)">
+            <summary>
+            Validates the specified property on the instance.
+            </summary>
+            <param name="instance">The instance.</param>
+            <param name="propertyName">Name of the property.</param>
+            <returns>The validation errors.</returns>
+        </member>
+        <member name="M:Caliburn.FluentValidation.FluentValidationValidator.CreateValidatorForInstance(System.Object)">
+            <summary>
+            Creates the validator for instance.
+            </summary>
+            <param name="instance">The instance.</param>
+            <returns>The validator or null if none is found.</returns>
+        </member>
+    </members>
+</doc>
