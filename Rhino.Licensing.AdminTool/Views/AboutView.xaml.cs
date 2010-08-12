@@ -1,11 +1,11 @@
 ﻿namespace Rhino.Licensing.AdminTool.Views
 {
     /// <summary>
-    /// Interaction logic for ShellView.xaml
+    /// Interaction logic for AboutView.xaml
     /// </summary>
-    public partial class ShellView
+    public partial class AboutView
     {
-        public ShellView()
+        public AboutView()
         {
             InitializeComponent();
         }

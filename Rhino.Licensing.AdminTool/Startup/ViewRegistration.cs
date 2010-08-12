@@ -10,7 +10,7 @@ namespace Rhino.Licensing.AdminTool.Startup
         public void Register(IKernel kernel)
         {
             kernel.Register(AllTypes.FromAssemblyContaining<ViewRegistration>()
-                                    .Where(t => t.Namespace.EndsWith("Rhino.Licensing.AdminTool.Views"))
+                                    .Where(t => t.Namespace == "Rhino.Licensing.AdminTool.Views")
                                     .WithService.FirstInterfaceOnClass()
                                     .Configure(c => c.LifeStyle.Transient)
                                     .ConfigureFor<ShellView>(c => c.LifeStyle.Singleton));
