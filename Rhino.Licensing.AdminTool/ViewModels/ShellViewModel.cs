@@ -1,24 +1,26 @@
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
-using Caliburn.PresentationFramework.ViewModels;
+using Rhino.Licensing.AdminTool.Factories;
+using IViewModelFactory = Caliburn.PresentationFramework.ViewModels.IViewModelFactory;
 
 namespace Rhino.Licensing.AdminTool.ViewModels
 {
     public class ShellViewModel : Conductor<Screen>.Collection.OneActive
     {
-        public ShellViewModel()
+        private readonly IViewModelFactory _viewModelFactory;
+        private readonly IProjectFactory _projectFactory;
+        private readonly IWindowManager _windowManager;
+
+        public ShellViewModel(
+            IWindowManager windowManager,
+            IViewModelFactory viewModelFactory, 
+            IProjectFactory projectFactory)
         {
             DisplayName = "Rhino.Licensing.AdminTool";
-        }
 
-        public virtual IWindowManager WindowManager
-        {
-            get; set;
-        }
-
-        public virtual IViewModelFactory Factory
-        { 
-            get; set;
+            _windowManager = windowManager;
+            _viewModelFactory = viewModelFactory;
+            _projectFactory = projectFactory;
         }
 
         protected override void  ChangeActiveItem(Screen newItem, bool closePrevious)
@@ -28,13 +30,15 @@ namespace Rhino.Licensing.AdminTool.ViewModels
 
         public virtual void ShowAboutDialog()
         {
-            var vm = Factory.Create<AboutViewModel>();
-            WindowManager.ShowDialog(vm);
+            _windowManager.ShowDialog(_viewModelFactory.Create<AboutViewModel>());
         }
 
         public virtual void CreateNewProject()
         {
-            var vm = Factory.Create<ProjectViewModel>();
+            var vm = _viewModelFactory.Create<ProjectViewModel>();
+            var project = _projectFactory.Create();
+
+            vm.CurrentProject = project;
             ActiveItem = vm;
         }
     }

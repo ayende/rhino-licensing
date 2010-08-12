@@ -27,7 +27,7 @@ namespace Rhino.Licensing.AdminTool
             locatorAdapter = new WindsorAdapter(guyWire.Container);
         }
 
-        protected virtual void ConfigureFramework()
+        protected void ConfigureFramework()
         {
             CaliburnFramework.Configure(locatorAdapter)
                 .With.Core()
@@ -36,7 +36,7 @@ namespace Rhino.Licensing.AdminTool
                 .Start();
         }
 
-        protected virtual void CreateGuyWire()
+        protected void CreateGuyWire()
         {
             guyWire = new GuyWire();
             guyWire.Wire();

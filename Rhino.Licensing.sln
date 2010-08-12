@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhino.Licensing.Tests", "Rh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhino.Licensing.AdminTool", "Rhino.Licensing.AdminTool\Rhino.Licensing.AdminTool.csproj", "{9C11E95F-82A2-4A40-8E15-33487A64F7D2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhino.Licensing.AdminTool.Tests", "Rhino.Licensing.AdminTool.Tests\Rhino.Licensing.AdminTool.Tests.csproj", "{0E53928C-3A33-4C4A-8B8C-ABA257B0E94E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,16 @@ Global
 		{9C11E95F-82A2-4A40-8E15-33487A64F7D2}.Release|Mixed Platforms.Build.0 = Release|x86
 		{9C11E95F-82A2-4A40-8E15-33487A64F7D2}.Release|x86.ActiveCfg = Release|x86
 		{9C11E95F-82A2-4A40-8E15-33487A64F7D2}.Release|x86.Build.0 = Release|x86
+		{0E53928C-3A33-4C4A-8B8C-ABA257B0E94E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E53928C-3A33-4C4A-8B8C-ABA257B0E94E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E53928C-3A33-4C4A-8B8C-ABA257B0E94E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{0E53928C-3A33-4C4A-8B8C-ABA257B0E94E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{0E53928C-3A33-4C4A-8B8C-ABA257B0E94E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0E53928C-3A33-4C4A-8B8C-ABA257B0E94E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E53928C-3A33-4C4A-8B8C-ABA257B0E94E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E53928C-3A33-4C4A-8B8C-ABA257B0E94E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{0E53928C-3A33-4C4A-8B8C-ABA257B0E94E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{0E53928C-3A33-4C4A-8B8C-ABA257B0E94E}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

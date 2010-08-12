@@ -1,6 +1,4 @@
-using System;
 using System.IO;
-using Microsoft.Win32;
 using Xunit;
 
 namespace Rhino.Licensing.Tests

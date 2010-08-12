@@ -5,20 +5,15 @@ namespace Rhino.Licensing.AdminTool.ViewModels
 {
     public class ProjectViewModel : Screen
     {
-        private Product _product;
+        private Project _project;
 
-        public ProjectViewModel(Product product)
+        public virtual Project CurrentProject
         {
-            _product = product;
-        }
-
-        public virtual Product CurrentProduct
-        {
-            get { return _product; }
+            get { return _project; }
             set
             {
-                _product = value;
-                NotifyOfPropertyChange(() => CurrentProduct);
+                _project = value;
+                NotifyOfPropertyChange(() => CurrentProject);
             }
         }
     }

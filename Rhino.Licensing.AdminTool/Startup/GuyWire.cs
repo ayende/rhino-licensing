@@ -31,7 +31,7 @@ namespace Rhino.Licensing.AdminTool.Startup
         /// Component information to be registered 
         /// in the container
         /// </summary>
-        private IEnumerable<IRegistration> ComponentsInfo
+        public virtual IEnumerable<IRegistration> ComponentsInfo
         {
             get
             {
@@ -66,7 +66,7 @@ namespace Rhino.Licensing.AdminTool.Startup
         /// <summary>
         /// Shows the root view model
         /// </summary>
-        public void ShowRootModel()
+        public virtual void ShowRootModel()
         {
             var root = Container.Resolve<ShellViewModel>();
             var windowManager = Container.Resolve<IWindowManager>();
