@@ -1,30 +1,50 @@
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
 using Rhino.Licensing.AdminTool.Factories;
-using IViewModelFactory = Caliburn.PresentationFramework.ViewModels.IViewModelFactory;
+using Rhino.Licensing.AdminTool.Services;
 
 namespace Rhino.Licensing.AdminTool.ViewModels
 {
-    public class ShellViewModel : Conductor<Screen>.Collection.OneActive
+    public interface IShellViewModel : IConductor
+    {
+        /// <summary>
+        /// Shows about dialog
+        /// </summary>
+        void ShowAboutDialog();
+
+        /// <summary>
+        /// Shows Project view model and 
+        /// create a new project
+        /// </summary>
+        void CreateNewProject();
+    }
+
+    public class ShellViewModel : Conductor<Screen>, IShellViewModel
     {
         private readonly IViewModelFactory _viewModelFactory;
-        private readonly IProjectFactory _projectFactory;
+        private readonly IProjectService _projectService;
         private readonly IWindowManager _windowManager;
 
         public ShellViewModel(
             IWindowManager windowManager,
             IViewModelFactory viewModelFactory, 
-            IProjectFactory projectFactory)
+            IProjectService projectService)
         {
             DisplayName = "Rhino.Licensing.AdminTool";
 
             _windowManager = windowManager;
             _viewModelFactory = viewModelFactory;
-            _projectFactory = projectFactory;
+            _projectService = projectService;
         }
 
         protected override void  ChangeActiveItem(Screen newItem, bool closePrevious)
         {
+            var oldViewModel = ActiveItem;
+            if(oldViewModel != null)
+            {
+                _viewModelFactory.Release(oldViewModel);
+            }
+
             base.ChangeActiveItem(newItem, closePrevious);
         }
 
@@ -36,7 +56,7 @@ namespace Rhino.Licensing.AdminTool.ViewModels
         public virtual void CreateNewProject()
         {
             var vm = _viewModelFactory.Create<ProjectViewModel>();
-            var project = _projectFactory.Create();
+            var project = _projectService.Create();
 
             vm.CurrentProject = project;
             ActiveItem = vm;

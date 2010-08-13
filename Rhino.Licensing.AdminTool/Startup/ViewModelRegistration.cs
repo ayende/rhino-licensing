@@ -14,7 +14,7 @@ namespace Rhino.Licensing.AdminTool.Startup
                                     .Where(t => t.Namespace == "Rhino.Licensing.AdminTool.ViewModels")
                                     .WithService.FirstInterfaceOnClass()
                                     .Configure(c => c.LifeStyle.Transient)
-                                    .ConfigureFor<ShellViewModel>(c => c.LifeStyle.Singleton));
+                                    .ConfigureFor<IShellViewModel>(c => c.LifeStyle.Singleton));
         }
     }
 }

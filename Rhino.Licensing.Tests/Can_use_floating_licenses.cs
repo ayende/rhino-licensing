@@ -84,7 +84,7 @@ namespace Rhino.Licensing.Tests
                 validator.AssertValidLicense();
 
                 var validator2 = new LicenseValidator(public_only, fileName, address, Guid.NewGuid());
-                Assert.Throws<FloatingLicenseNotAvialableException>(validator2.AssertValidLicense);
+                Assert.Throws<FloatingLicenseNotAvialableException>(() => validator2.AssertValidLicense());
             }
             finally
             {

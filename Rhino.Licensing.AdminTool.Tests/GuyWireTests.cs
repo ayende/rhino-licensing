@@ -27,7 +27,7 @@ namespace Rhino.Licensing.AdminTool.Tests
             var guyWire = new GuyWire();
             var count = guyWire.ComponentsInfo.Count();
 
-            Assert.Equal(2, count);
+            Assert.Equal(4, count);
         }
 
         [Fact]
@@ -59,12 +59,12 @@ namespace Rhino.Licensing.AdminTool.Tests
         public void Can_Show_Root_ViewModel()
         {
             var winManager = MockRepository.GenerateMock<IWindowManager>();
-            var shell = MockRepository.GenerateMock<ShellViewModel>();
+            var shell = MockRepository.GenerateMock<IShellViewModel>();
             var container = new WindsorContainer();
             var guyWire = new GuyWire(container);
 
             container.Kernel.AddComponentInstance<IWindowManager>(winManager);
-            container.Kernel.AddComponentInstance<ShellViewModel>(shell);
+            container.Kernel.AddComponentInstance<IShellViewModel>(shell);
 
             guyWire.ShowRootModel();
 

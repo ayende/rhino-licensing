@@ -1,7 +1,9 @@
+using System;
 using Caliburn.PresentationFramework;
 
 namespace Rhino.Licensing.AdminTool.Model
 {
+    [Serializable]
     public class Project : PropertyChangedBase
     {
         private string _name;

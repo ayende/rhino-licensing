@@ -3,17 +3,38 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300" Padding="5">
 
-    <StackPanel Orientation="Vertical">
+    <DockPanel LastChildFill="True">
+        
+        <ToolBarPanel DockPanel.Dock="Top" 
+                      HorizontalAlignment="Left" 
+                      Orientation="Horizontal">
+            
+            <Button Style="{StaticResource ToolButton}"
+                    Content="Save"
+                    cal:Message.Attach="[Event Click]=[Action Save]"/>
+
+            <Button Style="{StaticResource ToolButton}"
+                    Content="Close"
+                    cal:Message.Attach="[Event Click]=[Action TryClose]"/>
+            
+            <Rectangle Style="{StaticResource ToolSeparator}" />
+            
+            <Button Style="{StaticResource ToolButton}"
+                    Content="Generate Key Pair" 
+                    cal:Message.Attach="[Event Click]=[Action GenerateKey]"/>
+            
+        </ToolBarPanel>
         
         <GroupBox Header="Product Information" Margin="5">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -23,22 +44,25 @@
                 <TextBlock Style="{StaticResource Label}" Text="Name: " Grid.Column="0" Grid.Row="0" />
                 <TextBlock Style="{StaticResource Label}" Text="Public Key: " Grid.Column="0" Grid.Row="1"/>
                 <TextBlock Style="{StaticResource Label}" Text="Private Key: " Grid.Column="0" Grid.Row="2"/>
-                
-                <TextBox Text="{Binding Project.Name}" 
+
+                <TextBox Text="{Binding Path=CurrentProject.Product.Name}" 
                          Grid.Column="1" Grid.Row="0"  />
-                
-                <TextBox Text="{Binding Project.PublicKey}" 
+
+                <TextBox Text="{Binding Path=CurrentProject.Product.PublicKey}" 
                          IsReadOnly="True"
+                         TextWrapping="WrapWithOverflow"
+                         ScrollViewer.VerticalScrollBarVisibility="Auto"
                          Grid.Column="1" Grid.Row="1"  />
-                
-                <TextBox Text="{Binding Project.PrivateKey}" 
+
+                <TextBox Text="{Binding Path=CurrentProject.Product.PrivateKey}" 
                          IsReadOnly="True"
+                         TextWrapping="WrapWithOverflow"
+                         ScrollViewer.VerticalScrollBarVisibility="Auto"
                          Grid.Column="1" Grid.Row="2" />
-                
                 
             </Grid>
         </GroupBox>
         
-    </StackPanel>
+    </DockPanel>
 
 </UserControl>

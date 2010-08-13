@@ -1,3 +1,5 @@
+using Caliburn.PresentationFramework.Screens;
+
 namespace Rhino.Licensing.AdminTool.Factories
 {
     public interface IViewModelFactory
@@ -8,14 +10,14 @@ namespace Rhino.Licensing.AdminTool.Factories
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        T Create<T>();
+        T Create<T>() where T : IScreen;
 
         /// <summary>
-        /// Destroys a view model and release 
+        /// Releases a view model and release 
         /// it for garbage collection
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="viewModel"></param>
-        void Destroy<T>(T viewModel);
+        void Release(IScreen viewModel);
     }
 }

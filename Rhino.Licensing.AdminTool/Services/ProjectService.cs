@@ -2,27 +2,24 @@ using System;
 using System.IO;
 using Rhino.Licensing.AdminTool.Model;
 
-namespace Rhino.Licensing.AdminTool.Factories
+namespace Rhino.Licensing.AdminTool.Services
 {
-    public interface IProjectFactory
+    public interface IProjectService
     {
-        /// <summary>
-        /// Creates a new project
-        /// </summary>
-        /// <returns></returns>
+        void Save(Project project);
+
         Project Create();
 
-        /// <summary>
-        /// Loads a project object from
-        /// specified file
-        /// </summary>
-        /// <param name="file"></param>
-        /// <returns></returns>
         Project Load(FileInfo file);
     }
 
-    public class ProjectFactory : IProjectFactory
+    public class ProjectService : IProjectService
     {
+        public void Save(Project project)
+        {
+            
+        }
+
         public Project Create()
         {
             return new Project()
@@ -40,5 +37,6 @@ namespace Rhino.Licensing.AdminTool.Factories
         {
             return null;
         }
+
     }
 }

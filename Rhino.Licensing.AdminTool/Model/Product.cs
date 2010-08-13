@@ -3,6 +3,7 @@ using Caliburn.PresentationFramework;
 
 namespace Rhino.Licensing.AdminTool.Model
 {
+    [Serializable]
     public class Product : PropertyChangedBase
     {
         private string _publicKey;

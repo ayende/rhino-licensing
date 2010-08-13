@@ -37,6 +37,8 @@ namespace Rhino.Licensing.AdminTool.Startup
             {
                 yield return new ViewRegistration();
                 yield return new ViewModelRegistration();
+                yield return new FactoryRegistration();
+                yield return new ServiceRegistration();
             }
         }
 
@@ -68,7 +70,7 @@ namespace Rhino.Licensing.AdminTool.Startup
         /// </summary>
         public virtual void ShowRootModel()
         {
-            var root = Container.Resolve<ShellViewModel>();
+            var root = Container.Resolve<IShellViewModel>();
             var windowManager = Container.Resolve<IWindowManager>();
 
             windowManager.Show(root, null);

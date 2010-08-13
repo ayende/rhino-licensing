@@ -81,7 +81,7 @@ namespace Rhino.Licensing.Tests
             File.WriteAllText(path, hackedLicense);
 
             var validator = new LicenseValidator(public_only, path);
-            Assert.Throws<LicenseNotFoundException>(validator.AssertValidLicense);
+            Assert.Throws<LicenseNotFoundException>(() => validator.AssertValidLicense());
         }
     }
 }
