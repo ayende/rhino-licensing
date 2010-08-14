@@ -9,15 +9,28 @@ using System.Collections.Generic;
 
 namespace Rhino.Licensing
 {
+    /// <summary>
+    /// LicenseGenerator generates and signs license.
+    /// </summary>
     public class LicenseGenerator
     {
         private readonly string privateKey;
 
+        /// <summary>
+        /// Creates a new instance of <seealso cref="LicenseGenerator"/>. 
+        /// </summary>
+        /// <param name="privateKey">private key of the product</param>
         public LicenseGenerator(string privateKey)
         {
             this.privateKey = privateKey;
         }
 
+        /// <summary>
+        /// Generates a new floating license.
+        /// </summary>
+        /// <param name="name">Name of the license holder</param>
+        /// <param name="publicKey">public key of the license server</param>
+        /// <returns>license content</returns>
         public string GenerateFloatingLicense(string name, string publicKey)
         {
             using (var rsa = new RSACryptoServiceProvider())
@@ -49,11 +62,29 @@ namespace Rhino.Licensing
                 return new StreamReader(ms).ReadToEnd();
             }
         }
+
+        /// <summary>
+        /// Generates a new license
+        /// </summary>
+        /// <param name="name">name of the license holder</param>
+        /// <param name="id">Id of the license holder</param>
+        /// <param name="expirationDate">expiry date</param>
+        /// <param name="licenseType">type of the license</param>
+        /// <returns></returns>
         public string Generate(string name, Guid id, DateTime expirationDate, LicenseType licenseType)
         {
             return Generate(name, id, expirationDate, new Dictionary<string, string>(), licenseType);
         }
 
+        /// <summary>
+        /// Generates a new license
+        /// </summary>
+        /// <param name="name">name of the license holder</param>
+        /// <param name="id">Id of the license holder</param>
+        /// <param name="expirationDate">expiry date</param>
+        /// <param name="licenseType">type of the license</param>
+        /// <param name="attributes">extra information stored as key/valye in the license file</param>
+        /// <returns></returns>
         public string Generate(string name, Guid id, DateTime expirationDate, IDictionary<string, string> attributes, LicenseType licenseType)
         {
             using (var rsa = new RSACryptoServiceProvider())
