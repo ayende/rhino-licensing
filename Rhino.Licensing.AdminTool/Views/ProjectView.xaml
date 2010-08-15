@@ -12,18 +12,18 @@
         <ToolBarPanel DockPanel.Dock="Top" 
                       HorizontalAlignment="Left" 
                       Orientation="Horizontal">
-            
-            <Button Style="{StaticResource ToolButton}"
+
+            <Button Style="{DynamicResource ToolButton}"
                     Content="Save"
                     cal:Message.Attach="[Event Click]=[Action Save]"/>
 
-            <Button Style="{StaticResource ToolButton}"
+            <Button Style="{DynamicResource ToolButton}"
                     Content="Close"
                     cal:Message.Attach="[Event Click]=[Action TryClose]"/>
+
+            <Rectangle Style="{DynamicResource ToolSeparator}" />
             
-            <Rectangle Style="{StaticResource ToolSeparator}" />
-            
-            <Button Style="{StaticResource ToolButton}"
+            <Button Style="{DynamicResource ToolButton}"
                     Content="Generate Key Pair" 
                     cal:Message.Attach="[Event Click]=[Action GenerateKey]"/>
             
@@ -40,10 +40,10 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                
-                <TextBlock Style="{StaticResource Label}" Text="Name: " Grid.Column="0" Grid.Row="0" />
-                <TextBlock Style="{StaticResource Label}" Text="Public Key: " Grid.Column="0" Grid.Row="1"/>
-                <TextBlock Style="{StaticResource Label}" Text="Private Key: " Grid.Column="0" Grid.Row="2"/>
+
+                <TextBlock Style="{DynamicResource Label}" Text="Name: " Grid.Column="0" Grid.Row="0" />
+                <TextBlock Style="{DynamicResource Label}" Text="Public Key: " Grid.Column="0" Grid.Row="1"/>
+                <TextBlock Style="{DynamicResource Label}" Text="Private Key: " Grid.Column="0" Grid.Row="2"/>
 
                 <TextBox Text="{Binding Path=CurrentProject.Product.Name}" 
                          Grid.Column="1" Grid.Row="0"  />

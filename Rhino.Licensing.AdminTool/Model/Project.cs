@@ -1,9 +1,10 @@
 using System;
+using System.Runtime.Serialization;
 using Caliburn.PresentationFramework;
 
 namespace Rhino.Licensing.AdminTool.Model
 {
-    [Serializable]
+    [DataContract(Name = "Project", Namespace = "http://schemas.hibernatingrhinos.com/")]
     public class Project : PropertyChangedBase
     {
         private string _name;
@@ -14,7 +15,8 @@ namespace Rhino.Licensing.AdminTool.Model
             Product = new Product();
         }
 
-        public string Name
+        [DataMember]
+        public virtual string Name
         {
             get { return _name; }
             set
@@ -24,7 +26,8 @@ namespace Rhino.Licensing.AdminTool.Model
             }
         }
 
-        public Product Product
+        [DataMember]
+        public virtual Product Product
         {
             get { return _product; }
             set

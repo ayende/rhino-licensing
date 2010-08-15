@@ -1,6 +1,9 @@
+using System.IO;
+using Caliburn.Testability;
 using Rhino.Licensing.AdminTool.Model;
 using Rhino.Licensing.AdminTool.Services;
 using Rhino.Licensing.AdminTool.ViewModels;
+using Rhino.Licensing.AdminTool.Views;
 using Rhino.Mocks;
 using Xunit;
 using Caliburn.Testability.Extensions;
@@ -32,6 +35,17 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
             var vm = CreateViewModel();
 
             vm.AssertThatProperty(x => x.CurrentProject).RaisesChangeNotification();
+        }
+
+        [Fact]
+        public void Properties_Are_Bound()
+        {
+            var validator = Validator.For<ProjectView, ProjectViewModel>()
+                              .Validate();
+
+            validator.AssertWasBound(x => x.CurrentProject.Product.Name);
+            validator.AssertWasBound(x => x.CurrentProject.Product.PrivateKey);
+            validator.AssertWasBound(x => x.CurrentProject.Product.PublicKey);
         }
 
         [Fact]
@@ -81,13 +95,20 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
         {
             var vm = CreateViewModel();
             var project = new Project();
+            var temp = Path.GetTempFileName();
 
-            _dialogService.Expect(x => x.ShowSaveFileDialog(Arg<ISaveFileDialogViewModel>.Is.Anything)).Return(true);
+            _dialogService.Expect(x => x.ShowSaveFileDialog(Arg<ISaveFileDialogViewModel>.Is.Anything))
+                          .WhenCalled(m =>
+                          {
+                              var model = (SaveFileDialogViewModel) m.Arguments[0];
+                              model.FileName = temp;
+                          })
+                          .Return(true);
 
             vm.CurrentProject = project;
             vm.Save();
-
-            _projectService.AssertWasCalled(x => x.Save(Arg.Is(project)));
+            
+            _projectService.AssertWasCalled(x => x.Save(Arg.Is(project), Arg<FileInfo>.Is.Anything));
         }
 
         [Fact]

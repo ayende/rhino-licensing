@@ -10,7 +10,7 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
     public class AboutViewModelTests
     {
         [Fact]
-        public void Version_Is_Bound()
+        public void Properties_Are_Bound()
         {
             var validator = Validator.For<AboutView, AboutViewModel>()
                                      .Validate();

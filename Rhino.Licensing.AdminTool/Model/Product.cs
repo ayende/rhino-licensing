@@ -1,9 +1,10 @@
 using System;
+using System.Runtime.Serialization;
 using Caliburn.PresentationFramework;
 
 namespace Rhino.Licensing.AdminTool.Model
 {
-    [Serializable]
+    [DataContract(Name = "Product", Namespace = "http://schemas.hibernatingrhinos.com/")]
     public class Product : PropertyChangedBase
     {
         private string _publicKey;
@@ -11,6 +12,12 @@ namespace Rhino.Licensing.AdminTool.Model
         private string _privateKey;
         private Guid _id;
 
+        public Product()
+        {
+            Id = Guid.NewGuid();
+        }
+
+        [DataMember]
         public virtual Guid Id
         {
             get { return _id; }
@@ -21,6 +28,7 @@ namespace Rhino.Licensing.AdminTool.Model
             }
         }
 
+        [DataMember]
         public virtual string Name
         {
             get { return _name; }
@@ -31,6 +39,7 @@ namespace Rhino.Licensing.AdminTool.Model
             }
         }
 
+        [DataMember]
         public virtual string PrivateKey
         {
             get { return _privateKey; }
@@ -41,6 +50,7 @@ namespace Rhino.Licensing.AdminTool.Model
             }
         }
 
+        [DataMember]
         public virtual string PublicKey
         {
             get { return _publicKey; }

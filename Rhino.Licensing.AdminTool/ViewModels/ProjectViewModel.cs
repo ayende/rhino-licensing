@@ -1,3 +1,4 @@
+using System.IO;
 using System.Security.Cryptography;
 using Caliburn.PresentationFramework.Filters;
 using Caliburn.PresentationFramework.Screens;
@@ -54,7 +55,7 @@ namespace Rhino.Licensing.AdminTool.ViewModels
 
             if (result.GetValueOrDefault(false))
             {
-                _projectService.Save(CurrentProject);
+                _projectService.Save(CurrentProject, new FileInfo(dialog.FileName));
             }
         }
 
