@@ -11,10 +11,19 @@ using log4net;
 
 namespace Rhino.Licensing
 {
+    /// <summary>
+    /// Base license validator.
+    /// </summary>
     public abstract class AbstractLicenseValidator
     {
+        /// <summary>
+        /// License validator logger
+        /// </summary>
         protected readonly ILog Log = LogManager.GetLogger(typeof(LicenseValidator));
 
+        /// <summary>
+        /// Standard Time servers
+        /// </summary>
         protected readonly string[] TimeServers = new[]
         {
             "time.nist.gov",
@@ -38,43 +47,71 @@ namespace Rhino.Licensing
         private bool disableFutureChecks;
         private bool currentlyValidatingSubscriptionLicense;
 
+
+        /// <summary>
+        /// Fired when license data is invalidated
+        /// </summary>
         public event Action<InvalidationType> LicenseInvalidated;
 
+        /// <summary>
+        /// Gets the expiration date of the license
+        /// </summary>
         public DateTime ExpirationDate
         {
             get; private set;
         }
         
+        /// <summary>
+        /// Gets or Sets the endpoint address of the subscription service
+        /// </summary>
         public string SubscriptionEndpoint
         {
             get; set;
         }
         
+        /// <summary>
+        /// Gets the Type of the license
+        /// </summary>
         public LicenseType LicenseType
         {
             get; private set;
         }
 
+        /// <summary>
+        /// Gets the Id of the license holder
+        /// </summary>
         public Guid UserId
         {
             get; private set;
         }
 
+        /// <summary>
+        /// Gets the name of the license holder
+        /// </summary>
         public string Name
         {
             get; private set;
         }
 
+        /// <summary>
+        /// Gets or Sets Floating license support
+        /// </summary>
         public bool DisableFloatingLicenses
         {
             get; set;
         }
 
+        /// <summary>
+        /// Gets extra license information
+        /// </summary>
         public IDictionary<string, string> LicenseAttributes
         {
             get; private set;
         }
 
+        /// <summary>
+        /// Gets or Sets the license content
+        /// </summary>
         protected abstract string License
         {
             get; set;
@@ -97,6 +134,10 @@ namespace Rhino.Licensing
                                 : InvalidationType.TimeExpired);
         }
 
+        /// <summary>
+        /// Creates a license validator with specfied public key.
+        /// </summary>
+        /// <param name="publicKey">public key</param>
         protected AbstractLicenseValidator(string publicKey)
         {
             LicenseAttributes = new Dictionary<string, string>();
@@ -104,6 +145,13 @@ namespace Rhino.Licensing
             this.publicKey = publicKey;
         }
 
+        /// <summary>
+        /// Creates a license validator using the client information
+        /// and a service endpoint address to validate the license.
+        /// </summary>
+        /// <param name="publicKey"></param>
+        /// <param name="licenseServerUrl"></param>
+        /// <param name="clientId"></param>
         protected AbstractLicenseValidator(string publicKey, string licenseServerUrl, Guid clientId)
         {
             LicenseAttributes = new Dictionary<string, string>();
@@ -113,7 +161,9 @@ namespace Rhino.Licensing
             this.clientId = clientId;
         }
 
-
+        /// <summary>
+        /// Validates loaded license
+        /// </summary>
         public virtual void AssertValidLicense()
         {
             LicenseAttributes.Clear();
@@ -216,6 +266,11 @@ namespace Rhino.Licensing
             }
         }
 
+        /// <summary>
+        /// Loads the license file.
+        /// </summary>
+        /// <param name="newLicense"></param>
+        /// <returns></returns>
         protected bool TryOverwritingWithNewLicense(string newLicense)
         {
             if (string.IsNullOrEmpty(newLicense))
@@ -251,10 +306,17 @@ namespace Rhino.Licensing
             });
         }
 
+        /// <summary>
+        /// Removes existing license from the machine.
+        /// </summary>
         public virtual void RemoveExistingLicense()
         {
         }
 
+        /// <summary>
+        /// Loads license data from validated license file.
+        /// </summary>
+        /// <returns></returns>
         public bool TryLoadingLicenseValuesFromValidatedXml()
         {
             try
@@ -430,6 +492,9 @@ namespace Rhino.Licensing
             return signedXml.CheckSignature(rsa);
         }
 
+        /// <summary>
+        /// Disables further license checks for the session.
+        /// </summary>
         public void DisableFutureChecks()
         {
             disableFutureChecks = true;

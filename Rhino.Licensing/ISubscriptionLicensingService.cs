@@ -2,10 +2,18 @@
 
 namespace Rhino.Licensing
 {
-	[ServiceContract]
-	public interface ISubscriptionLicensingService
-	{
-		[OperationContract]
-		string LeaseLicense(string previousLicense);
-	}
+    /// <summary>
+    /// Service contract of subscription server.
+    /// </summary>
+    [ServiceContract]
+    public interface ISubscriptionLicensingService
+    {
+        /// <summary>
+        /// Issues a leased license
+        /// </summary>
+        /// <param name="previousLicense"></param>
+        /// <returns></returns>
+        [OperationContract]
+        string LeaseLicense(string previousLicense);
+    }
 }

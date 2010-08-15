@@ -7,9 +7,12 @@ namespace Rhino.Licensing
     using System.ServiceModel;
     using System.Linq;
 
-    // because we use this service behavior,
-    // we don't have to worry about multi threading issues.
-    // it is not something that we expect to have to deal with huge load, anyway
+    /// <summary>
+    /// Licensing server implementation.
+    /// Because we use this service behavior, we don't have to worry 
+    /// about multi threading issues. it is not something that we 
+    /// expect to have to deal with huge load, anyway.
+    /// </summary>
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Single)]
     public class LicensingService : ILicensingService
     {
@@ -17,6 +20,9 @@ namespace Rhino.Licensing
         private readonly Dictionary<string, KeyValuePair<DateTime, LicenseValidator>> leasedLicenses = new Dictionary<string, KeyValuePair<DateTime, LicenseValidator>>();
         private readonly string state;
 
+        /// <summary>
+        /// Creates a new instance of <seealso cref="LicensingService"/>.
+        /// </summary>
         public LicensingService()
         {
             if (SoftwarePublicKey == null)
@@ -35,11 +41,17 @@ namespace Rhino.Licensing
             ReadInitialState();
         }
 
+        /// <summary>
+        /// Gets or Sets the public key of the product
+        /// </summary>
         public static string SoftwarePublicKey
         {
             get; set;
         }
 
+        /// <summary>
+        /// Gets or Sets the private key of the license server
+        /// </summary>
         public static string LicenseServerPrivateKey
         {
             get; set;
@@ -149,6 +161,13 @@ namespace Rhino.Licensing
             }
         }
 
+        /// <summary>
+        /// Leases a new license to the client machine.
+        /// </summary>
+        /// <param name="machine">client machine name</param>
+        /// <param name="user">user name</param>
+        /// <param name="id">Id of the license holder</param>
+        /// <returns></returns>
         public string LeaseLicense(string machine, string user, Guid id)
         {
             KeyValuePair<DateTime, LicenseValidator> value;

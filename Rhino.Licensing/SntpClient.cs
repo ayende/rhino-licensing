@@ -4,12 +4,20 @@ using System.Net.Sockets;
 
 namespace Rhino.Licensing
 {
+    /// <summary>
+    /// A SNTP client that is used to load time with server.
+    /// For more information see http://en.wikipedia.org/wiki/SNTP />
+    /// </summary>
     public class SntpClient
     {
         private const byte SntpDataLength = 48;
         private readonly string[] hosts;
         private int index = -1;
 
+        /// <summary>
+        /// Creates a new instance of <seealso cref="SntpClient"/>.
+        /// </summary>
+        /// <param name="hosts">addresses of internet SNTP servers</param>
         public SntpClient(string[] hosts)
         {
             this.hosts = hosts;
@@ -47,6 +55,11 @@ namespace Rhino.Licensing
             return milliseconds;
         }
 
+        /// <summary>
+        /// Starts to get current date/time
+        /// </summary>
+        /// <param name="getTime"></param>
+        /// <param name="failure"></param>
         public void BeginGetDate(Action<DateTime> getTime, Action failure)
         {
             index += 1;
@@ -140,8 +153,18 @@ namespace Rhino.Licensing
 
         #region Nested type: State
 
+        /// <summary>
+        /// Maintains state of the SNTP client.
+        /// </summary>
         public class State
         {
+            /// <summary>
+            /// Creates a new instance of <seealso cref="State"/> object.
+            /// </summary>
+            /// <param name="socket">socket</param>
+            /// <param name="endPoint">server endpoint</param>
+            /// <param name="getTime">action to get the time</param>
+            /// <param name="failure">action to handle errors</param>
             public State(UdpClient socket, IPEndPoint endPoint, Action<DateTime> getTime, Action failure)
             {
                 Socket = socket;
@@ -150,12 +173,24 @@ namespace Rhino.Licensing
                 Failure = failure;
             }
 
+            /// <summary>
+            /// Gets the socket to the time server
+            /// </summary>
             public UdpClient Socket { get; private set; }
 
+            /// <summary>
+            /// Gets the action to do to get the time from the server.
+            /// </summary>
             public Action<DateTime> GetTime { get; private set; }
 
+            /// <summary>
+            /// Gets the action to perform when an error occurs.
+            /// </summary>
             public Action Failure { get; private set; }
 
+            /// <summary>
+            /// Endpoint address of the time server.
+            /// </summary>
             public IPEndPoint EndPoint { get; private set; }
         }
 
