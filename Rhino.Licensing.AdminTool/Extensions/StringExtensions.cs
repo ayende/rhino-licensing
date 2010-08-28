@@ -6,10 +6,5 @@ namespace Rhino.Licensing.AdminTool.Extensions
         {
             return !string.IsNullOrEmpty(value);
         }
-
-        public static bool IsEmpty(this string value)
-        {
-            return string.IsNullOrEmpty(value);
-        }
     }
 }

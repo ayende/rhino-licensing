@@ -11,7 +11,7 @@ namespace Rhino.Licensing.AdminTool.Tests.Services
 {
     public class DialogServiceTests
     {
-        [Fact(Skip = "Not Completed")]
+        [Fact]
         public void Can_Show_OpenFileDialog()
         {
             var model = CreateOpenFileDialogModel();
@@ -19,15 +19,15 @@ namespace Rhino.Licensing.AdminTool.Tests.Services
             var dialog = MockRepository.GenerateMock<OpenFileDialog>(model);
 
             factory.Expect(x => x.Create<OpenFileDialog>(Arg.Is(model))).Return(dialog);
-            dialog.Expect(x => x.ShowDialog()).Return(DialogResult.OK);
             dialog.Expect(x => x.ViewModel).Return(model);
+            dialog.Expect(x => x.ShowDialog()).Return(DialogResult.OK);
 
             new DialogService(factory).ShowOpenFileDialog(model);
 
             dialog.AssertWasCalled(x => x.ShowDialog(), x => x.Repeat.Once());
         }
 
-        [Fact(Skip = "Not Completed")]
+        [Fact]
         public void Can_Show_SaveFileDialog()
         {
             var model = CreateSaveFileDialogModel();
@@ -41,6 +41,56 @@ namespace Rhino.Licensing.AdminTool.Tests.Services
             service.ShowSaveFileDialog(model);
 
             dialog.AssertWasCalled(x => x.ShowDialog(), x => x.Repeat.Once());
+        }
+
+        [Fact]
+        public void Returning_OK_As_DialogResult_Translates_To_True()
+        {
+            var model = CreateOpenFileDialogModel();
+            var factory = MockRepository.GenerateMock<IDialogFactory>();
+            var dialog = MockRepository.GenerateMock<OpenFileDialog>(model);
+
+            factory.Expect(x => x.Create<OpenFileDialog>(Arg.Is(model))).Return(dialog);
+            dialog.Expect(x => x.ViewModel).Return(model);
+            dialog.Expect(x => x.ShowDialog()).Return(DialogResult.OK);
+
+            var result = new DialogService(factory).ShowOpenFileDialog(model);
+
+            Assert.NotNull(result);
+            Assert.True(result.Value);
+        }
+
+        [Fact]
+        public void Returning_Cancel_As_DialogResult_Translates_To_False()
+        {
+            var model = CreateOpenFileDialogModel();
+            var factory = MockRepository.GenerateMock<IDialogFactory>();
+            var dialog = MockRepository.GenerateMock<OpenFileDialog>(model);
+
+            factory.Expect(x => x.Create<OpenFileDialog>(Arg.Is(model))).Return(dialog);
+            dialog.Expect(x => x.ViewModel).Return(model);
+            dialog.Expect(x => x.ShowDialog()).Return(DialogResult.Cancel);
+
+            var result = new DialogService(factory).ShowOpenFileDialog(model);
+
+            Assert.NotNull(result);
+            Assert.False(result.Value);
+        }
+
+        [Fact]
+        public void Returning_Anything_Else_From_DialogResult_Translates_To_Null()
+        {
+            var model = CreateOpenFileDialogModel();
+            var factory = MockRepository.GenerateMock<IDialogFactory>();
+            var dialog = MockRepository.GenerateMock<OpenFileDialog>(model);
+
+            factory.Expect(x => x.Create<OpenFileDialog>(Arg.Is(model))).Return(dialog);
+            dialog.Expect(x => x.ViewModel).Return(model);
+            dialog.Expect(x => x.ShowDialog()).Return(DialogResult.Abort);
+
+            var result = new DialogService(factory).ShowOpenFileDialog(model);
+
+            Assert.Null(result);
         }
 
         private IOpenFileDialogViewModel CreateOpenFileDialogModel()

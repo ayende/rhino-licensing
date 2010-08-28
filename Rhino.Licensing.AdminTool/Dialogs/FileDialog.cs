@@ -6,7 +6,7 @@ namespace Rhino.Licensing.AdminTool.Dialogs
 {
     public abstract class FileDialog : IDisposable
     {
-        public DialogResult ShowDialog()
+        public virtual DialogResult ShowDialog()
         {
             var result = Dialog.ShowDialog();
 

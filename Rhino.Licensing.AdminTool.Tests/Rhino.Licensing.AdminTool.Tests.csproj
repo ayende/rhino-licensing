@@ -92,7 +92,8 @@
     <Compile Include="Dialogs\FileDialogTests.cs" />
     <Compile Include="Dialogs\OpenFileDialogTests.cs" />
     <Compile Include="Dialogs\SaveFileDialogTests.cs" />
-    <Compile Include="GuyWireTests.cs" />
+    <Compile Include="Startup\ContainerTests.cs" />
+    <Compile Include="Startup\GuyWireTests.cs" />
     <Compile Include="Models\ProductModelTests.cs" />
     <Compile Include="Models\ProjectModelTests.cs" />
     <Compile Include="Services\DialogServiceTests.cs" />

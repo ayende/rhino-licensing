@@ -15,14 +15,5 @@ namespace Rhino.Licensing.AdminTool.Extensions
                 return interfaces.Count() != 0 ? new[] { interfaces.First() } : null;
             });
         }
-
-        public static BasedOnDescriptor GenericInterface(this ServiceDescriptor serviceDescriptor)
-        {
-            return serviceDescriptor.Select((t, bt) =>
-            {
-                var baseInterface = t.GetInterfaces();
-                return new[] { baseInterface.FirstOrDefault() };
-            });
-        }
     }
 }

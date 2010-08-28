@@ -14,6 +14,8 @@ namespace Rhino.Licensing.AdminTool.Startup
 
             kernel.Register(Component.For<IViewModelFactory>().AsFactory());
 
+            kernel.Register(Component.For<IDialogFactory>().AsFactory());
+
             kernel.Register(AllTypes.FromAssemblyContaining<ViewModelRegistration>()
                                     .Where(t => t.Namespace == "Rhino.Licensing.AdminTool.Factories")
                                     .WithService.FirstInterfaceOnClass());

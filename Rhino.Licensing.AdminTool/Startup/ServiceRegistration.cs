@@ -1,9 +1,6 @@
-using System;
 using Castle.MicroKernel;
 using Castle.MicroKernel.Registration;
 using Rhino.Licensing.AdminTool.Extensions;
-using Rhino.Licensing.AdminTool.Factories;
-using Rhino.Licensing.AdminTool.ViewModels;
 
 namespace Rhino.Licensing.AdminTool.Startup
 {

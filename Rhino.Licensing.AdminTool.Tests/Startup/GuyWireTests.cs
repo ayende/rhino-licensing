@@ -9,7 +9,7 @@ using Rhino.Mocks;
 using Xunit;
 using System.Linq;
 
-namespace Rhino.Licensing.AdminTool.Tests
+namespace Rhino.Licensing.AdminTool.Tests.Startup
 {
     public class GuyWireTests
     {
