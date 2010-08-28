@@ -3,7 +3,6 @@ using System.Security.Cryptography;
 using Caliburn.PresentationFramework.Filters;
 using Caliburn.PresentationFramework.Screens;
 using Rhino.Licensing.AdminTool.Extensions;
-using Rhino.Licensing.AdminTool.Factories;
 using Rhino.Licensing.AdminTool.Model;
 using Rhino.Licensing.AdminTool.Services;
 
@@ -57,11 +56,6 @@ namespace Rhino.Licensing.AdminTool.ViewModels
             {
                 _projectService.Save(CurrentProject, new FileInfo(dialog.FileName));
             }
-        }
-
-        public override void TryClose(bool? dialogResult)
-        {
-            base.TryClose(dialogResult);
         }
     }
 }

@@ -23,6 +23,16 @@ namespace Rhino.Licensing.AdminTool.Tests.Dialogs
             Assert.Equal("Open File Dialog", dialogForm.Title);
         }
 
+        [Fact]
+        public void OpenFileDialog_ViewModel_Property()
+        {
+            var model = CreateOpenFileDialogModel();
+            var dialog = new OpenFileDialogStub(model);
+
+            Assert.NotNull(dialog.ViewModel);
+            Assert.Same(model, dialog.ViewModel);
+        }
+
         private IOpenFileDialogViewModel CreateOpenFileDialogModel()
         {
             var model = new OpenFileDialogViewModel

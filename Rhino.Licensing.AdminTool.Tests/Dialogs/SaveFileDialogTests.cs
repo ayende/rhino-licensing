@@ -9,8 +9,8 @@ namespace Rhino.Licensing.AdminTool.Tests.Dialogs
         [Fact]
         public void Dialog_Wires_Model_Properties()
         {
-            var model = CreateOpenFileDialogModel();
-            var dialog = new OpenFileDialogStub(model);
+            var model = CreateSaveFileDialogModel();
+            var dialog = new SaveFileDialogStub(model);
             var dialogForm = dialog.GetCoreDialog();
 
             Assert.True(dialogForm.AddExtension);
@@ -24,7 +24,17 @@ namespace Rhino.Licensing.AdminTool.Tests.Dialogs
             Assert.Equal("Save File Dialog", dialogForm.Title);
         }
 
-        private ISaveFileDialogViewModel CreateOpenFileDialogModel()
+        [Fact]
+        public void OpenFileDialog_ViewModel_Property()
+        {
+            var model = CreateSaveFileDialogModel();
+            var dialog = new SaveFileDialogStub(model);
+
+            Assert.NotNull(dialog.ViewModel);
+            Assert.Same(model, dialog.ViewModel);
+        }
+
+        private ISaveFileDialogViewModel CreateSaveFileDialogModel()
         {
             var model = new SaveFileDialogViewModel
             {
@@ -42,9 +52,9 @@ namespace Rhino.Licensing.AdminTool.Tests.Dialogs
             return model;
         }
 
-        public class OpenFileDialogStub : SaveFileDialog
+        public class SaveFileDialogStub : SaveFileDialog
         {
-            public OpenFileDialogStub(ISaveFileDialogViewModel viewModel)
+            public SaveFileDialogStub(ISaveFileDialogViewModel viewModel)
                 : base(viewModel)
             {
             }
