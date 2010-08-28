@@ -8,7 +8,7 @@ namespace Rhino.Licensing.AdminTool.Startup
 {
     public class FactoryRegistration : IRegistration
     {
-        public void Register(IKernel kernel)
+        public virtual void Register(IKernel kernel)
         {
             kernel.AddFacility<TypedFactoryFacility>();
 

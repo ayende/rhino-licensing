@@ -7,7 +7,7 @@ namespace Rhino.Licensing.AdminTool.Startup
 {
     public class ViewRegistration : IRegistration
     {
-        public void Register(IKernel kernel)
+        public virtual void Register(IKernel kernel)
         {
             kernel.Register(AllTypes.FromAssemblyContaining<ViewRegistration>()
                                     .Where(t => t.Namespace == "Rhino.Licensing.AdminTool.Views")

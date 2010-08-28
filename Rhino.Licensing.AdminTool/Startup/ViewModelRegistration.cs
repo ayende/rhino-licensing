@@ -1,4 +1,3 @@
-using System;
 using Castle.MicroKernel;
 using Castle.MicroKernel.Registration;
 using Rhino.Licensing.AdminTool.Extensions;
@@ -8,7 +7,7 @@ namespace Rhino.Licensing.AdminTool.Startup
 {
     public class ViewModelRegistration : IRegistration
     {
-        public void Register(IKernel kernel)
+        public virtual void Register(IKernel kernel)
         {
             kernel.Register(AllTypes.FromAssemblyContaining<ViewModelRegistration>()
                                     .Where(t => t.Namespace == "Rhino.Licensing.AdminTool.ViewModels")

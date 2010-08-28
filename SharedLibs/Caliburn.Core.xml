@@ -967,6 +967,12 @@
             Initializes a new instance of the <see cref="T:Caliburn.Core.IoC.SimpleContainer"/> class.
             </summary>
         </member>
+        <member name="M:Caliburn.Core.IoC.SimpleContainer.#ctor(System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Caliburn.Core.IoC.SimpleContainer"/> class.
+            </summary>
+            <param name="performPropertyInjection">Specify if null settable properties of resolved instance should be injected with dependencies</param>
+        </member>
         <member name="M:Caliburn.Core.IoC.SimpleContainer.Register``2">
             <summary>
             Registers the specified service.

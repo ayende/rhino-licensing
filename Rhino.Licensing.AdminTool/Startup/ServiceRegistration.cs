@@ -6,7 +6,7 @@ namespace Rhino.Licensing.AdminTool.Startup
 {
     public class ServiceRegistration : IRegistration
     {
-        public void Register(IKernel kernel)
+        public virtual void Register(IKernel kernel)
         {
             kernel.Register(AllTypes.FromAssemblyContaining<ServiceRegistration>()
                                     .Where(t => t.Namespace == "Rhino.Licensing.AdminTool.Services")

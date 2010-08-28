@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Castle.MicroKernel;
@@ -6,6 +7,7 @@ using Castle.Windsor;
 using Rhino.Licensing.AdminTool.Startup;
 using Rhino.Licensing.AdminTool.ViewModels;
 using Rhino.Mocks;
+using Rhino.Mocks.Interfaces;
 using Xunit;
 using System.Linq;
 

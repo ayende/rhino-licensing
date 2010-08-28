@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using Rhino.Licensing.AdminTool.Model;
 using Rhino.Licensing.AdminTool.Services;
@@ -24,7 +23,7 @@ namespace Rhino.Licensing.AdminTool.Tests.Services
             Assert.NotEmpty(content);
         }
 
-        [Fact(Skip = "Won't run due to reported bug in Caliburn")]
+        [Fact]
         public void Can_Load_Project_Graph()
         {
             var p = CreateNewProject();
@@ -41,6 +40,16 @@ namespace Rhino.Licensing.AdminTool.Tests.Services
             Assert.Equal("Rhino Mocks", project.Product.Name);
             Assert.Equal("Private Key", project.Product.PrivateKey);
             Assert.Equal("Public Key", project.Product.PublicKey);
+        }
+
+        [Fact]
+        public void Can_Create_New_Project()
+        {
+            var service = new ProjectService() as IProjectService;
+
+            var project = service.Create();
+
+            Assert.NotNull(project);
         }
 
         private Project CreateNewProject()
