@@ -88,8 +88,6 @@ task Release -depends Test {
 	& $tools_dir\zip.exe -9 -A -j `
 		$release_dir\Rhino.Licensing-AdminTool-$humanReadableversion-Build-$env:ccnetnumericlabel.zip `
 		$build_dir\Caliburn.Core.dll `
-		$build_dir\Caliburn.DynamicProxy.dll `
-		$build_dir\Caliburn.FluentValidation.dll `
 		$build_dir\Caliburn.PresentationFramework.dll `
 		$build_dir\Caliburn.ShellFramework.dll `
 		$build_dir\Caliburn.Windsor.dll `
