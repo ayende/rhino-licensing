@@ -51,7 +51,7 @@ namespace Rhino.Licensing.AdminTool.ViewModels
         {
             var dialogModel = _dialogService.ShowSaveFileDialog();
 
-            if (dialogModel.Result.GetValueOrDefault(false) && File.Exists(dialogModel.FileName))
+            if (dialogModel.Result.GetValueOrDefault(false) && dialogModel.FileName.IsNotEmpty())
             {
                 _projectService.Save(CurrentProject, new FileInfo(dialogModel.FileName));
             }
