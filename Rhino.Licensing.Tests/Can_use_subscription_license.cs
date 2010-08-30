@@ -8,8 +8,7 @@ namespace Rhino.Licensing.Tests
 {
     public class Can_use_subscription_license : BaseLicenseTest
     {
-        private const string expected = @"<license id=""ffd0c62c-b953-403e-8457-e90f1085170d"" expiration=""2010-10-10T00:00:00.0000000"" type=""Subscription"" version=""2.0"">
-  <name>ayende</name>";
+        
 
         [Fact]
         public void Can_generate_subscription_license()
@@ -18,7 +17,12 @@ namespace Rhino.Licensing.Tests
             var license = generator.Generate("ayende", new Guid("FFD0C62C-B953-403e-8457-E90F1085170D"),
                                              new DateTime(2010, 10, 10),
                                              new Dictionary<string, string> {{"version", "2.0"}}, LicenseType.Subscription);
-            Assert.Contains(expected, license);
+
+            var license_header = @"<license id=""ffd0c62c-b953-403e-8457-e90f1085170d"" expiration=""2010-10-10T00:00:00.0000000"" type=""Subscription"" version=""2.0"">";
+            var owner_name = "<name>ayende</name>";
+
+            Assert.Contains(license_header, license);
+            Assert.Contains(owner_name, license);
         }
 
         [Fact]
