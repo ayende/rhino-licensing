@@ -1,4 +1,3 @@
-using System.Windows.Forms;
 using Rhino.Licensing.AdminTool.Factories;
 using Rhino.Licensing.AdminTool.Services;
 using Rhino.Licensing.AdminTool.ViewModels;
@@ -14,15 +13,14 @@ namespace Rhino.Licensing.AdminTool.Tests.Services
         [Fact]
         public void Can_Show_OpenFileDialog()
         {
-            var model = CreateOpenFileDialogModel();
+            var model = CreateOpenFileDialogModel(true);
             var factory = MockRepository.GenerateMock<IDialogFactory>();
             var dialog = MockRepository.GenerateMock<OpenFileDialog>(model);
 
-            factory.Expect(x => x.Create<OpenFileDialog>(Arg.Is(model))).Return(dialog);
+            factory.Expect(x => x.Create<OpenFileDialog>()).Return(dialog);
             dialog.Expect(x => x.ViewModel).Return(model);
-            dialog.Expect(x => x.ShowDialog()).Return(DialogResult.OK);
 
-            new DialogService(factory).ShowOpenFileDialog(model);
+            new DialogService(factory).ShowOpenFileDialog();
 
             dialog.AssertWasCalled(x => x.ShowDialog(), x => x.Repeat.Once());
         }
@@ -30,70 +28,20 @@ namespace Rhino.Licensing.AdminTool.Tests.Services
         [Fact]
         public void Can_Show_SaveFileDialog()
         {
-            var model = CreateSaveFileDialogModel();
+            var model = CreateSaveFileDialogModel(true);
             var factory = MockRepository.GenerateMock<IDialogFactory>();
             var dialog = MockRepository.GenerateMock<SaveFileDialog>(model);
 
             var service = new DialogService(factory) as IDialogService;
 
-            factory.Expect(x => x.Create<SaveFileDialog>(Arg.Is(model))).Return(dialog);
+            factory.Expect(x => x.Create<SaveFileDialog>()).Return(dialog);
 
-            service.ShowSaveFileDialog(model);
+            service.ShowSaveFileDialog();
 
             dialog.AssertWasCalled(x => x.ShowDialog(), x => x.Repeat.Once());
         }
 
-        [Fact]
-        public void Returning_OK_As_DialogResult_Translates_To_True()
-        {
-            var model = CreateOpenFileDialogModel();
-            var factory = MockRepository.GenerateMock<IDialogFactory>();
-            var dialog = MockRepository.GenerateMock<OpenFileDialog>(model);
-
-            factory.Expect(x => x.Create<OpenFileDialog>(Arg.Is(model))).Return(dialog);
-            dialog.Expect(x => x.ViewModel).Return(model);
-            dialog.Expect(x => x.ShowDialog()).Return(DialogResult.OK);
-
-            var result = new DialogService(factory).ShowOpenFileDialog(model);
-
-            Assert.NotNull(result);
-            Assert.True(result.Value);
-        }
-
-        [Fact]
-        public void Returning_Cancel_As_DialogResult_Translates_To_False()
-        {
-            var model = CreateOpenFileDialogModel();
-            var factory = MockRepository.GenerateMock<IDialogFactory>();
-            var dialog = MockRepository.GenerateMock<OpenFileDialog>(model);
-
-            factory.Expect(x => x.Create<OpenFileDialog>(Arg.Is(model))).Return(dialog);
-            dialog.Expect(x => x.ViewModel).Return(model);
-            dialog.Expect(x => x.ShowDialog()).Return(DialogResult.Cancel);
-
-            var result = new DialogService(factory).ShowOpenFileDialog(model);
-
-            Assert.NotNull(result);
-            Assert.False(result.Value);
-        }
-
-        [Fact]
-        public void Returning_Anything_Else_From_DialogResult_Translates_To_Null()
-        {
-            var model = CreateOpenFileDialogModel();
-            var factory = MockRepository.GenerateMock<IDialogFactory>();
-            var dialog = MockRepository.GenerateMock<OpenFileDialog>(model);
-
-            factory.Expect(x => x.Create<OpenFileDialog>(Arg.Is(model))).Return(dialog);
-            dialog.Expect(x => x.ViewModel).Return(model);
-            dialog.Expect(x => x.ShowDialog()).Return(DialogResult.Abort);
-
-            var result = new DialogService(factory).ShowOpenFileDialog(model);
-
-            Assert.Null(result);
-        }
-
-        private IOpenFileDialogViewModel CreateOpenFileDialogModel()
+        private IOpenFileDialogViewModel CreateOpenFileDialogModel(bool? result)
         {
             return new OpenFileDialogViewModel
             {
@@ -104,11 +52,12 @@ namespace Rhino.Licensing.AdminTool.Tests.Services
                 Filter = "Rhino License Project|*.rlic",
                 InitialDirectory = "C:\\",
                 MultiSelect = false,
-                Title = "Open File Dialog"
+                Title = "Open File Dialog",
+                Result = result
             };
         }
 
-        private ISaveFileDialogViewModel CreateSaveFileDialogModel()
+        private ISaveFileDialogViewModel CreateSaveFileDialogModel(bool? result)
         {
             return new SaveFileDialogViewModel
             {
@@ -118,7 +67,8 @@ namespace Rhino.Licensing.AdminTool.Tests.Services
                 DefaultExtension = "rlic",
                 Filter = "Rhino License Project|*.rlic",
                 InitialDirectory = "C:\\",
-                Title = "Open File Dialog"
+                Title = "Open File Dialog",
+                Result = result
             };
         }
 

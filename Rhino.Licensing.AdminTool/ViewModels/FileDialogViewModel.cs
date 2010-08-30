@@ -15,6 +15,7 @@ namespace Rhino.Licensing.AdminTool.ViewModels
         string Title { get; set; }
         string DisplayName { get; set; }
         IEnumerable<string> FileNames { get; set; }
+        bool? Result { get; set; }
     }
 
     public abstract class FileDialogViewModel : Screen, IFileDialogViewModel
@@ -28,6 +29,7 @@ namespace Rhino.Licensing.AdminTool.ViewModels
         private string _filter;
         private string _initialDirectory;
         private string _title;
+        private bool? _result;
 
         public virtual bool AddExtension
         {
@@ -86,6 +88,16 @@ namespace Rhino.Licensing.AdminTool.ViewModels
             {
                 _fileNames = value;
                 NotifyOfPropertyChange(() => FileNames);
+            }
+        }
+
+        public virtual bool? Result
+        {
+            get { return _result; }
+            set
+            {
+                _result = value;
+                NotifyOfPropertyChange(() => Result);
             }
         }
 

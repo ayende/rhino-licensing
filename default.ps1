@@ -57,6 +57,7 @@ task Init -depends Clean {
 		-company "Hibernating Rhinos" `
 		-product "Rhino Licensing $version" `
 		-version $version `
+		-clsCompliant "false" `
 		-copyright "Hibernating Rhinos & Ayende Rahien 2004 - 2009"
 		
 	new-item $release_dir -itemType directory 

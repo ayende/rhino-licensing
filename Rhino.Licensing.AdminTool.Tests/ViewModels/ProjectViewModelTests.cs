@@ -83,32 +83,52 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
         [Fact]
         public void Save_Action_Will_Open_SaveDialog()
         {
-            var vm = CreateViewModel();
+            _dialogService.Expect(x => x.ShowSaveFileDialog())
+                          .Return(new SaveFileDialogViewModel
+                          {
+                              Result = true
+                          });
 
+            var vm = CreateViewModel();
             vm.Save();
 
-            _dialogService.AssertWasCalled(x => x.ShowSaveFileDialog(Arg<ISaveFileDialogViewModel>.Is.Anything), x => x.Repeat.Once());
+            _dialogService.AssertWasCalled(x => x.ShowSaveFileDialog(), x => x.Repeat.Once());
         }
 
         [Fact]
-        public void Will_Proceed_To_Save_When_Dialog_Successfully_Closes()
+        public void Save_Action_Will_Call_ProjectService_If_Proper_Result_Is_Set()
+        {
+            var existingFile = Path.GetTempFileName();
+            var choosenFile = new FileInfo(existingFile);
+
+            _dialogService.Expect(x => x.ShowSaveFileDialog())
+              .Return(new SaveFileDialogViewModel
+              {
+                  Result = true,
+                  FileName = existingFile
+              });
+
+            var vm = CreateViewModel();
+            vm.Save();
+
+            _projectService.Expect(x => x.Save(Arg<Project>.Is.Anything, Arg.Is(choosenFile))).Repeat.Once();
+        }
+
+        [Fact]
+        public void Will_Not_Proceed_To_Save_When_No_File_Is_Selected()
         {
             var vm = CreateViewModel();
-            var project = new Project();
-            var temp = Path.GetTempFileName();
 
-            _dialogService.Expect(x => x.ShowSaveFileDialog(Arg<ISaveFileDialogViewModel>.Is.Anything))
-                          .WhenCalled(m =>
+            _dialogService.Expect(x => x.ShowSaveFileDialog())
+                          .Return(new SaveFileDialogViewModel
                           {
-                              var model = (SaveFileDialogViewModel) m.Arguments[0];
-                              model.FileName = temp;
-                          })
-                          .Return(true);
+                              Result = true,
+                              FileName = null
+                          });
 
-            vm.CurrentProject = project;
             vm.Save();
             
-            _projectService.AssertWasCalled(x => x.Save(Arg.Is(project), Arg<FileInfo>.Is.Anything));
+            _projectService.AssertWasNotCalled(x => x.Save(Arg<Project>.Is.Anything, Arg<FileInfo>.Is.Anything));
         }
 
         [Fact]

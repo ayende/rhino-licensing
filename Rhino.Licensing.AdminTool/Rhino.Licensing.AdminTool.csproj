@@ -108,6 +108,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controls\FXPopup.cs" />
     <Compile Include="Dialogs\FileDialog.cs" />
     <Compile Include="Dialogs\OpenFileDialog.cs" />
     <Compile Include="Dialogs\SaveFileDialog.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="Startup\ServiceRegistration.cs" />
     <Compile Include="Startup\ViewModelRegistration.cs" />
     <Compile Include="Startup\ViewRegistration.cs" />
+    <Compile Include="ValueConverters\BoolToVisibilityCollapsedConverter.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\FileDialogViewModel.cs" />
     <Compile Include="ViewModels\OpenFileDialogViewModel.cs" />
@@ -148,6 +150,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Theme\ExpressionDark.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AboutView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

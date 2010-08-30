@@ -6,14 +6,13 @@ namespace Rhino.Licensing.AdminTool.Dialogs
 {
     public abstract class FileDialog : IDisposable
     {
-        public virtual DialogResult ShowDialog()
+        public virtual void ShowDialog()
         {
             var result = Dialog.ShowDialog();
 
             ViewModel.FileName = Dialog.FileName;
             ViewModel.FileNames = Dialog.FileNames;
-
-            return result;
+            ViewModel.Result = MappedResult(result);
         }
 
         protected abstract System.Windows.Forms.FileDialog Dialog
@@ -46,6 +45,21 @@ namespace Rhino.Licensing.AdminTool.Dialogs
                     Dialog.Dispose();
                 }
             }
+        }
+
+        private static bool? MappedResult(DialogResult result)
+        {
+            if (result == DialogResult.OK)
+            {
+                return true;
+            }
+
+            if (result == DialogResult.Cancel)
+            {
+                return false;
+            }
+
+            return null;
         }
     }
 }

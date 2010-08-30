@@ -1,4 +1,3 @@
-using System.Windows.Forms;
 using Rhino.Licensing.AdminTool.Factories;
 using Rhino.Licensing.AdminTool.ViewModels;
 using OpenFileDialog = Rhino.Licensing.AdminTool.Dialogs.OpenFileDialog;
@@ -11,16 +10,14 @@ namespace Rhino.Licensing.AdminTool.Services
         /// <summary>
         /// Shows a OpenFileDialog
         /// </summary>
-        /// <param name="dialogModel"></param>
         /// <returns></returns>
-        bool? ShowOpenFileDialog(IOpenFileDialogViewModel dialogModel);
+        IOpenFileDialogViewModel ShowOpenFileDialog();
 
         /// <summary>
         /// Shows a SaveFileDialog
         /// </summary>
-        /// <param name="dialogModel"></param>
         /// <returns></returns>
-        bool? ShowSaveFileDialog(ISaveFileDialogViewModel dialogModel);
+        ISaveFileDialogViewModel ShowSaveFileDialog();
     }
 
     public class DialogService : IDialogService
@@ -32,39 +29,27 @@ namespace Rhino.Licensing.AdminTool.Services
             _dialogFactory = dialogFactory;
         }
 
-        public bool? ShowOpenFileDialog(IOpenFileDialogViewModel dialogModel)
+        public virtual IOpenFileDialogViewModel ShowOpenFileDialog()
         {
-            var dialog = _dialogFactory.Create<OpenFileDialog>(dialogModel);
-            var result = dialog.ShowDialog();
-
-            _dialogFactory.Release(dialog);
-
-            return MappedResult(result);
-        }
-
-        public bool? ShowSaveFileDialog(ISaveFileDialogViewModel dialogModel)
-        {
-            var dialog = _dialogFactory.Create<SaveFileDialog>(dialogModel);
-            var result = dialog.ShowDialog();
-
-            _dialogFactory.Release(dialog);
+            var dialog = _dialogFactory.Create<OpenFileDialog>();
             
-            return MappedResult(result);
+            dialog.ShowDialog();
+
+            _dialogFactory.Release(dialog);
+
+            return dialog.ViewModel as IOpenFileDialogViewModel;
         }
 
-        private static bool? MappedResult(DialogResult result)
+        public virtual ISaveFileDialogViewModel ShowSaveFileDialog()
         {
-            if (result == DialogResult.OK)
-            {
-                return true;
-            }
+            var dialog = _dialogFactory.Create<SaveFileDialog>();
+            
+            dialog.ShowDialog();
 
-            if (result == DialogResult.Cancel)
-            {
-                return false;
-            }
+            _dialogFactory.Release(dialog);
 
-            return null;
+            return dialog.ViewModel as ISaveFileDialogViewModel;
         }
+
     }
 }

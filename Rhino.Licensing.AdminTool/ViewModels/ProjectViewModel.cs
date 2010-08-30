@@ -49,12 +49,11 @@ namespace Rhino.Licensing.AdminTool.ViewModels
         [AutoCheckAvailability]
         public virtual void Save()
         {
-            var dialog = new SaveFileDialogViewModel();
-            var result = _dialogService.ShowSaveFileDialog(dialog);
+            var dialogModel = _dialogService.ShowSaveFileDialog();
 
-            if (result.GetValueOrDefault(false))
+            if (dialogModel.Result.GetValueOrDefault(false) && File.Exists(dialogModel.FileName))
             {
-                _projectService.Save(CurrentProject, new FileInfo(dialog.FileName));
+                _projectService.Save(CurrentProject, new FileInfo(dialogModel.FileName));
             }
         }
     }

@@ -8,10 +8,9 @@ namespace Rhino.Licensing.AdminTool.Factories
         /// <summary>
         /// Creates a new FileDialog
         /// </summary>
-        /// <param name="dialogModel"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        T Create<T>(IFileDialogViewModel dialogModel) where T : FileDialog;
+        T Create<T>() where T : FileDialog;
 
         /// <summary>
         /// Releases file dialog for garbage collection
