@@ -10,10 +10,8 @@ namespace Rhino.Licensing.Tests
         [Fact]
         public void Can_generate_floating_license()
         {
-            const string expected = @"
-  <license-server-public-key>&lt;RSAKeyValue&gt;&lt;Modulus&gt;tOAa81fDkKAIcmBx5SybBQM34OG12Qsbm0V8H10Q5iL3bFIco1S6BFyKRK84LKitSPczY3z62imwNkanDVfXhnhl2UFTS0MTkhXM+yG9xFRGc3QwIcNE1j7UFAENo7RS1eguVQaYm26uaqgYXWHJn352CzddV7Lv4M3lAe6oh2M=&lt;/Modulus&gt;&lt;Exponent&gt;AQAB&lt;/Exponent&gt;&lt;/RSAKeyValue&gt;</license-server-public-key>
-  <name>ayende</name>
-";
+            const string expected = @"<license-server-public-key>&lt;RSAKeyValue&gt;&lt;Modulus&gt;tOAa81fDkKAIcmBx5SybBQM34OG12Qsbm0V8H10Q5iL3bFIco1S6BFyKRK84LKitSPczY3z62imwNkanDVfXhnhl2UFTS0MTkhXM+yG9xFRGc3QwIcNE1j7UFAENo7RS1eguVQaYm26uaqgYXWHJn352CzddV7Lv4M3lAe6oh2M=&lt;/Modulus&gt;&lt;Exponent&gt;AQAB&lt;/Exponent&gt;&lt;/RSAKeyValue&gt;</license-server-public-key>
+  <name>ayende</name>";
 
             var generator = new LicenseGenerator(public_and_private);
             var license = generator.GenerateFloatingLicense("ayende", floating_public);
