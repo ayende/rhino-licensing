@@ -8,8 +8,8 @@
         Title="{Binding DisplayName}"
         d:DesignHeight="300" d:DesignWidth="300"
         Height="480" Width="640">
-    
-    <DockPanel>
+
+    <DockPanel Background="{DynamicResource DialogBackgroundBrush}">
         
         <Menu DockPanel.Dock="Top">
             <Menu.Items>

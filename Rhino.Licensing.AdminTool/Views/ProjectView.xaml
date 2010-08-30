@@ -13,23 +13,23 @@
                       HorizontalAlignment="Left" 
                       Orientation="Horizontal">
 
-            <Button Style="{DynamicResource ToolButton}"
+            <Button 
                     Content="Save"
                     cal:Message.Attach="[Event Click]=[Action Save]"/>
 
-            <Button Style="{DynamicResource ToolButton}"
+            <Button 
                     Content="Close"
                     cal:Message.Attach="[Event Click]=[Action TryClose]"/>
 
             <Rectangle Style="{DynamicResource ToolSeparator}" />
             
-            <Button Style="{DynamicResource ToolButton}"
+            <Button 
                     Content="Generate Key Pair" 
                     cal:Message.Attach="[Event Click]=[Action GenerateKey]"/>
             
         </ToolBarPanel>
         
-        <GroupBox Header="Product Information" Margin="5">
+        <GroupBox Header="Product Information">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -41,12 +41,12 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Style="{DynamicResource Label}" Text="Name: " Grid.Column="0" Grid.Row="0" />
-                <TextBlock Style="{DynamicResource Label}" Text="Public Key: " Grid.Column="0" Grid.Row="1"/>
-                <TextBlock Style="{DynamicResource Label}" Text="Private Key: " Grid.Column="0" Grid.Row="2"/>
+                <Label Content="Name: " Grid.Column="0" Grid.Row="0" />
+                <Label Content="Public Key: " Grid.Column="0" Grid.Row="1"/>
+                <Label Content="Private Key: " Grid.Column="0" Grid.Row="2"/>
 
                 <TextBox Text="{Binding Path=CurrentProject.Product.Name}" 
-                         Grid.Column="1" Grid.Row="0"  />
+                         Grid.Column="1" Grid.Row="0" />
 
                 <TextBox Text="{Binding Path=CurrentProject.Product.PublicKey}" 
                          IsReadOnly="True"

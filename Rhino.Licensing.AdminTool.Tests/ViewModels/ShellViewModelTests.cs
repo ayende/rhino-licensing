@@ -16,7 +16,6 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
         private readonly IWindowManager _windowManager;
         private readonly IProjectService _projectService;
         private readonly IDialogService _dialogService;
-        
 
         public ShellViewModelTests()
         {
