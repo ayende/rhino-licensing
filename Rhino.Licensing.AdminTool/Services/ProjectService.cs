@@ -24,7 +24,7 @@ namespace Rhino.Licensing.AdminTool.Services
         /// </summary>
         /// <param name="path">path to load the project from</param>
         /// <returns></returns>
-        Project Load(FileInfo path);
+        Project Open(FileInfo path);
     }
 
     public class ProjectService : IProjectService
@@ -40,14 +40,14 @@ namespace Rhino.Licensing.AdminTool.Services
 
                 try
                 {
-                    writer = path.OpenWrite();
+                    writer = path.Create();
                     writer.Write(stream.GetBuffer(), 0, (int) stream.Length);
+                    writer.Flush();
                 }
                 finally
                 {
                     if (writer != null)
                     {
-                        writer.Flush();
                         writer.Close();
                         writer.Dispose();
                     }
@@ -60,7 +60,7 @@ namespace Rhino.Licensing.AdminTool.Services
             return new Project();
         }
 
-        public Project Load(FileInfo path)
+        public Project Open(FileInfo path)
         {
             var reader = path.OpenRead();
             var serializer = new DataContractSerializer(typeof(Project));

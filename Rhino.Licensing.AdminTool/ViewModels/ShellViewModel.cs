@@ -59,6 +59,16 @@ namespace Rhino.Licensing.AdminTool.ViewModels
             var project = _projectService.Create();
 
             vm.CurrentProject = project;
+
+            ActiveItem = vm;
+        }
+
+        public virtual void OpenProject()
+        {
+            var vm = _viewModelFactory.Create<ProjectViewModel>();
+
+            vm.Open();
+
             ActiveItem = vm;
         }
     }

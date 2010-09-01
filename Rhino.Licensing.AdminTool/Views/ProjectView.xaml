@@ -49,17 +49,17 @@
                          Grid.Column="1" Grid.Row="0" />
 
                 <DockPanel Grid.Column="1" Grid.Row="1">
-                    <Button DockPanel.Dock="Right" Margin="2" Height="20" Width="20">
+                    <Button DockPanel.Dock="Right" Margin="2" Height="20" Width="20" cal:Message.Attach="[Event Click]=[Action CopyToClipboard(publicKey.Text)]">
                         <Image Source="/Images/Copy.png" />
                     </Button>
-                    <TextBox Text="{Binding Path=CurrentProject.Product.PublicKey}"  IsReadOnly="True" />
+                    <TextBox x:Name="publicKey"  Text="{Binding Path=CurrentProject.Product.PublicKey}"  IsReadOnly="True" />
                 </DockPanel>
 
                 <DockPanel Grid.Column="1" Grid.Row="2">
-                    <Button DockPanel.Dock="Right" Margin="2" Height="20" Width="20">
+                    <Button DockPanel.Dock="Right" Margin="2" Height="20" Width="20" cal:Message.Attach="[Event Click]=[Action CopyToClipboard(privateKey.Text)]">
                         <Image Source="/Images/Copy.png" />
                     </Button>
-                    <TextBox Text="{Binding Path=CurrentProject.Product.PrivateKey}" IsReadOnly="True" />
+                    <TextBox x:Name="privateKey" Text="{Binding Path=CurrentProject.Product.PrivateKey}" IsReadOnly="True" />
                 </DockPanel>
             </Grid>
         </GroupBox>

@@ -32,11 +32,10 @@ namespace Rhino.Licensing.AdminTool.Tests.Services
 
             service.Save(p, fileInfo);
 
-            var project = service.Load(fileInfo);
+            var project = service.Open(fileInfo);
             
             Assert.NotNull(project);
             Assert.NotNull(project.Product);
-            Assert.Equal("New Project", project.Name);
             Assert.Equal("Rhino Mocks", project.Product.Name);
             Assert.Equal("Private Key", project.Product.PrivateKey);
             Assert.Equal("Public Key", project.Product.PublicKey);
@@ -56,7 +55,6 @@ namespace Rhino.Licensing.AdminTool.Tests.Services
         {
             return new Project
             {
-                Name = "New Project",
                 Product = new Product
                 {
                     Name = "Rhino Mocks",

@@ -7,23 +7,11 @@ namespace Rhino.Licensing.AdminTool.Model
     [DataContract(Name = "Project", Namespace = "http://schemas.hibernatingrhinos.com/")]
     public class Project : PropertyChangedBase
     {
-        private string _name;
         private Product _product;
 
         public Project()
         {
             Product = new Product();
-        }
-
-        [DataMember]
-        public virtual string Name
-        {
-            get { return _name; }
-            set
-            {
-                _name = value;
-                NotifyOfPropertyChange(() => Name);
-            }
         }
 
         [DataMember]

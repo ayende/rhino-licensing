@@ -1,4 +1,5 @@
 using System.IO;
+using System.Windows;
 using Caliburn.Testability;
 using Rhino.Licensing.AdminTool.Model;
 using Rhino.Licensing.AdminTool.Services;
@@ -141,6 +142,19 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
 
             Assert.Equal("Rhino License|*.rlic", dialogModel.Filter);
             Assert.True(dialogModel.OverwritePrompt);
+        }
+
+        [Fact]
+        public void Can_Copy_Keys_To_Clipboard()
+        {
+            var keyContent = "Key Content";
+            var vm = CreateViewModel();
+
+            vm.CopyToClipboard(keyContent);
+
+            var readback = Clipboard.GetText(TextDataFormat.UnicodeText);
+
+            Assert.Equal(keyContent, readback);
         }
 
         private ProjectViewModel CreateViewModel(ISaveFileDialogViewModel model)

@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Security.Cryptography;
+using System.Windows;
 using Caliburn.PresentationFramework.Filters;
 using Caliburn.PresentationFramework.Screens;
 using Rhino.Licensing.AdminTool.Extensions;
@@ -12,8 +13,10 @@ namespace Rhino.Licensing.AdminTool.ViewModels
     public class ProjectViewModel : Screen
     {
         private Project _project;
+
         private readonly IProjectService _projectService;
         private readonly IDialogService _dialogService;
+        private string _filePath;
 
         public ProjectViewModel(
             IProjectService projectService,
@@ -52,12 +55,41 @@ namespace Rhino.Licensing.AdminTool.ViewModels
         {
             var model = CreateSaveDialogModel();
 
-            _dialogService.ShowSaveFileDialog(model);
-
-            if (model.Result.GetValueOrDefault(false) && model.FileName.IsNotEmpty())
+            if(_filePath == null)
             {
-                _projectService.Save(CurrentProject, new FileInfo(model.FileName));
+                _dialogService.ShowSaveFileDialog(model);
+                if (model.Result.GetValueOrDefault(false) && model.FileName.IsNotEmpty())
+                {
+                    _filePath = model.FileName;
+                }
             }
+            
+            if(_filePath != null)
+            {
+                _projectService.Save(CurrentProject, new FileInfo(_filePath));
+            }
+        }
+
+        [AutoCheckAvailability]
+        public virtual void Open()
+        {
+            var model = CreateOpenDialogModel();
+
+            _dialogService.ShowOpenFileDialog(model);
+
+            if(model.Result.GetValueOrDefault(false) && model.FileName.IsNotEmpty())
+            {
+                _filePath = model.FileName;
+                CurrentProject = _projectService.Open(new FileInfo(_filePath));
+            }
+        }
+
+        public virtual IOpenFileDialogViewModel CreateOpenDialogModel()
+        {
+            return new OpenFileDialogViewModel
+            {
+                Filter = "Rhino License|*.rlic",
+            };
         }
 
         public virtual ISaveFileDialogViewModel CreateSaveDialogModel()
@@ -67,6 +99,11 @@ namespace Rhino.Licensing.AdminTool.ViewModels
                 Filter = "Rhino License|*.rlic",
                 OverwritePrompt = true,
             };
+        }
+
+        public virtual void CopyToClipboard(string text)
+        {
+            Clipboard.SetText(text, TextDataFormat.UnicodeText);
         }
     }
 }
