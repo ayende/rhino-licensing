@@ -5,9 +5,9 @@
 
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Theme/ExpressionDark.xaml" />
-                <ResourceDictionary Source="/Theme/AppStyles.xaml" />
-                <ResourceDictionary Source="/Theme/Animations.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Rhino.Licensing.AdminTool;component/Theme/ExpressionDark.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Rhino.Licensing.AdminTool;component/Theme/AppStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Rhino.Licensing.AdminTool;component/Theme/Animations.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
         

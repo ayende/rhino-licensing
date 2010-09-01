@@ -3,6 +3,7 @@ using Caliburn.PresentationFramework.Screens;
 using Caliburn.Testability;
 using Rhino.Licensing.AdminTool.Factories;
 using Rhino.Licensing.AdminTool.Services;
+using Rhino.Licensing.AdminTool.Tests.Base;
 using Rhino.Licensing.AdminTool.ViewModels;
 using Rhino.Licensing.AdminTool.Views;
 using Rhino.Mocks;
@@ -10,7 +11,7 @@ using Xunit;
 
 namespace Rhino.Licensing.AdminTool.Tests.ViewModels
 {
-    public class ShellViewModelTests
+    public class ShellViewModelTests : TestBase
     {
         private readonly IViewModelFactory _viewModelFactory;
         private readonly IWindowManager _windowManager;
@@ -59,7 +60,34 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
             shell.CreateNewProject();
 
             Assert.NotNull(shell.ActiveItem);
-            Assert.Equal(vm, shell.ActiveItem);
+            Assert.Same(vm, shell.ActiveItem);
+        }
+
+        [Fact]
+        public void OpenProject_Opens_ProjectViewModel()
+        {
+            var shell = CreateShellViewModel();
+            var projectViewModel = MockRepository.GenerateMock<ProjectViewModel>(_projectService, _dialogService);
+            
+            _viewModelFactory.Expect(x => x.Create<ProjectViewModel>()).Return(projectViewModel);
+
+            shell.OpenProject();
+
+            Assert.NotNull(shell.ActiveItem);
+            Assert.Same(projectViewModel, shell.ActiveItem);
+        }
+
+        [Fact]
+        public void OpenProject_Calls_Open_On_ProjectViewModel()
+        {
+            var shell = CreateShellViewModel();
+            var projectViewModel = MockRepository.GenerateMock<ProjectViewModel>(_projectService, _dialogService);
+
+            _viewModelFactory.Expect(x => x.Create<ProjectViewModel>()).Return(projectViewModel);
+
+            shell.OpenProject();
+
+            projectViewModel.AssertWasCalled(x => x.Open(), options => options.Repeat.Once());
         }
 
         [Fact]

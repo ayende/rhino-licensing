@@ -145,6 +145,15 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
         }
 
         [Fact]
+        public void Default_Project_Open_Dialog()
+        {
+            var vm = new ProjectViewModel(_projectService, _dialogService);
+            var dialogModel = vm.CreateOpenDialogModel();
+
+            Assert.Equal("Rhino License|*.rlic", dialogModel.Filter);
+        }
+
+        [Fact]
         public void Can_Copy_Keys_To_Clipboard()
         {
             var keyContent = "Key Content";
@@ -157,29 +166,80 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
             Assert.Equal(keyContent, readback);
         }
 
+        [Fact]
+        public void Calling_Save_For_Second_Time_Wont_Show_SaveDialog()
+        {
+            var dialogModel = new SaveFileDialogViewModel {Result = true, FileName = "C:\\"};
+            var vm = CreateViewModel(dialogModel);
+            
+            vm.Save(); //For the first time, opens the dialog
+
+            vm.Save(); //For the second time saves on the same file
+
+            _dialogService.AssertWasCalled(x => x.ShowSaveFileDialog(Arg.Is(dialogModel)), options => options.Repeat.Once());
+        }
+
+        [Fact]
+        public void Open_Shows_OpenDialog()
+        {
+            var dialogModel = new OpenFileDialogViewModel { Result = true, FileName = "C:\\" };
+            var vm = CreateViewModel(dialogModel);
+            
+            vm.Open();
+
+            _dialogService.AssertWasCalled(x => x.ShowOpenFileDialog(Arg.Is(dialogModel)), options => options.Repeat.Once());
+        }
+
+        [Fact]
+        public void Open_Loads_Project()
+        {
+            var p = new Project();
+            _projectService.Expect(x => x.Open(Arg<FileInfo>.Is.Anything)).Return(p);
+
+            var dialogModel = new OpenFileDialogViewModel { Result = true, FileName = "C:\\" };
+            var vm = CreateViewModel(dialogModel);
+
+            vm.Open();
+
+            Assert.NotNull(vm.CurrentProject);
+            Assert.Same(p, vm.CurrentProject);
+        }
+
         private ProjectViewModel CreateViewModel(ISaveFileDialogViewModel model)
         {
-            return new TestProjectViewModel(_projectService, _dialogService, model);
+            return new TestProjectViewModel(_projectService, _dialogService, model, null);
+        }
+
+        private ProjectViewModel CreateViewModel(IOpenFileDialogViewModel model)
+        {
+            return new TestProjectViewModel(_projectService, _dialogService, null, model);
         }
 
         private ProjectViewModel CreateViewModel()
         {
-            return new TestProjectViewModel(_projectService, _dialogService, null);
+            return new TestProjectViewModel(_projectService, _dialogService, null, null);
         }
 
         public class TestProjectViewModel : ProjectViewModel
         {
-            private readonly ISaveFileDialogViewModel _dialogModel;
+            private readonly ISaveFileDialogViewModel _saveDialogModel;
+            private readonly IOpenFileDialogViewModel _openDialogModel;
 
-            public TestProjectViewModel(IProjectService projectService, IDialogService dialogService, ISaveFileDialogViewModel model) 
+            public TestProjectViewModel(IProjectService projectService, IDialogService dialogService, ISaveFileDialogViewModel saveModel, IOpenFileDialogViewModel openModel) 
                 : base(projectService, dialogService)
             {
-                _dialogModel = model;
+                _saveDialogModel = saveModel;
+                _openDialogModel = openModel;
             }
 
             public override ISaveFileDialogViewModel CreateSaveDialogModel()
             {
-                return _dialogModel; 
+                return _saveDialogModel; 
+            }
+
+            public override IOpenFileDialogViewModel CreateOpenDialogModel()
+            {
+                return _openDialogModel;
             }
         }
     }

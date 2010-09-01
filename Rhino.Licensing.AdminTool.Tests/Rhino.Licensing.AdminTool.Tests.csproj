@@ -58,6 +58,12 @@
     <Reference Include="Castle.Windsor">
       <HintPath>..\SharedLibs\Castle.Windsor.dll</HintPath>
     </Reference>
+    <Reference Include="J832.Common">
+      <HintPath>..\SharedLibs\J832.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="J832.Wpf.BagOTricksLib">
+      <HintPath>..\SharedLibs\J832.Wpf.BagOTricksLib.dll</HintPath>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\SharedLibs\log4net.dll</HintPath>
     </Reference>
@@ -86,9 +92,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\TestBase.cs" />
     <Compile Include="Dialogs\FileDialogTests.cs" />
     <Compile Include="Dialogs\OpenFileDialogTests.cs" />
     <Compile Include="Dialogs\SaveFileDialogTests.cs" />
+    <Compile Include="Services\BoolToVisibilityConverterTests.cs" />
     <Compile Include="Startup\ContainerTests.cs" />
     <Compile Include="Startup\GuyWireTests.cs" />
     <Compile Include="Models\ProductModelTests.cs" />

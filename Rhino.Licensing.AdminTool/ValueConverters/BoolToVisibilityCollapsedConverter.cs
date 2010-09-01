@@ -26,11 +26,6 @@ namespace Rhino.Licensing.AdminTool.ValueConverters
                 return collapsed;
             }
 
-            if (o is bool && ((bool)o) ^ InvertBoolean)
-            {
-                collapsed = Visibility.Visible;
-            }
-
             return collapsed;
         }
 
