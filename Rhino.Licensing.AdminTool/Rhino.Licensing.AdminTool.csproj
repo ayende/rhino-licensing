@@ -79,6 +79,12 @@
     <Reference Include="Castle.Windsor">
       <HintPath>..\SharedLibs\Castle.Windsor.dll</HintPath>
     </Reference>
+    <Reference Include="J832.Common">
+      <HintPath>..\SharedLibs\J832.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="J832.Wpf.BagOTricksLib">
+      <HintPath>..\SharedLibs\J832.Wpf.BagOTricksLib.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\SharedLibs\log4net.dll</HintPath>
@@ -150,6 +156,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Theme\Animations.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Theme\AppStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

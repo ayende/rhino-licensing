@@ -4,6 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:cal="http://www.caliburnproject.org"
+        xmlns:lib="clr-namespace:Microsoft.Samples.KMoore.WPFSamples.Transition;assembly=J832.Wpf.BagOTricksLib"
         mc:Ignorable="d" 
         Title="{Binding DisplayName}"
         d:DesignHeight="300" d:DesignWidth="300"
@@ -24,8 +25,9 @@
                 </MenuItem>
             </Menu.Items>
         </Menu>
-        
-        <ContentControl cal:View.Model="{Binding ActiveItem}" />
+
+        <lib:TransitionPresenter Transition="{StaticResource ContentSwitchAnimation}"
+                                 cal:View.Model="{Binding ActiveItem}" />
         
     </DockPanel>
     

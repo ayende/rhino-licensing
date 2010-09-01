@@ -1,0 +1,43 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:lib="clr-namespace:Microsoft.Samples.KMoore.WPFSamples.Transition;assembly=J832.Wpf.BagOTricksLib">
+
+    <lib:StoryboardTransition x:Key="ContentSwitchAnimation" IsNewContentTopmost="False">
+        <lib:StoryboardTransition.OldContentStyle>
+            <Style TargetType="ContentPresenter">
+                <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+                <Setter Property="RenderTransform">
+                    <Setter.Value>
+                        <ScaleTransform ScaleX="1" ScaleY="1"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </lib:StoryboardTransition.OldContentStyle>
+        <lib:StoryboardTransition.OldContentStoryboard>
+            <Storyboard>
+                <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:0.25"/>
+                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="1" To="1.2" Duration="0:0:0.25"/>
+                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="1" To="1.2" Duration="0:0:0.25"/>
+            </Storyboard>
+        </lib:StoryboardTransition.OldContentStoryboard>
+
+        <lib:StoryboardTransition.NewContentStyle>
+            <Style TargetType="ContentPresenter">
+                <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+                <Setter Property="RenderTransform">
+                    <Setter.Value>
+                        <ScaleTransform ScaleX="1" ScaleY="1"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </lib:StoryboardTransition.NewContentStyle>
+        <lib:StoryboardTransition.NewContentStoryboard>
+            <Storyboard>
+                <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.25"/>
+                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="0.8" To="1" Duration="0:0:0.25"/>
+                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="0.8" To="1" Duration="0:0:0.25"/>
+            </Storyboard>
+        </lib:StoryboardTransition.NewContentStoryboard>
+    </lib:StoryboardTransition>
+
+</ResourceDictionary>
