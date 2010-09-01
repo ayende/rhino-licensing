@@ -53,8 +53,8 @@ namespace Rhino.Licensing.AdminTool.Tests.Dialogs
         public class OpenFileDialogStub : OpenFileDialog
         {
             public OpenFileDialogStub(IOpenFileDialogViewModel viewModel) 
-                : base(viewModel)
             {
+                base.ViewModel = viewModel;
             }
 
             public System.Windows.Forms.OpenFileDialog GetCoreDialog()

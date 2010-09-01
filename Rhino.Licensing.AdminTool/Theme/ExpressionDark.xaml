@@ -7,6 +7,8 @@
     xmlns:cnv="clr-namespace:Rhino.Licensing.AdminTool.ValueConverters">
 
     <cnv:BoolToVisibilityCollapsedConverter x:Key="DefaultBoolToVisibilityCollapsedConverter" />
+    <BorderGapMaskConverter x:Key="BorderGapMaskConverter" />
+    <DropShadowBitmapEffect x:Key="PopupDropShadow" ShadowDepth="1.5" Softness="0.15" />
 
     <FontFamily x:Key="IconFontFamily">Tahoma</FontFamily>
     <FontWeight x:Key="IconFontWeight">Normal</FontWeight>
@@ -79,7 +81,9 @@
     <Color x:Key="SliderGradEnd">#FF4C4C4C</Color>
     <Color x:Key="TabSelectionColor">#808080</Color>
     <Color x:Key="MenuTextColor">#FFFFFFFF</Color>
-
+    <Color x:Key="ControlBackgroundColor">#FF333333</Color>
+    
+    <SolidColorBrush x:Key="ControlBackgroundBrush" Color="{StaticResource ControlBackgroundColor}" />
     <SolidColorBrush x:Key="MenuTextBrush" Color="{StaticResource MenuTextColor}" />
     <SolidColorBrush x:Key="TabSelectionBrush" Color="{StaticResource TabSelectionColor}" />
     <SolidColorBrush x:Key="LayerChild0Brush" Color="{StaticResource LayerChild0Color}" />
@@ -151,66 +155,6 @@
             <GradientStop Color="{StaticResource SliderGradStart}" Offset="0" />
             <GradientStop Color="{StaticResource SliderGradEnd}" Offset="1" />
         </LinearGradientBrush.GradientStops>
-    </LinearGradientBrush>
-
-    <LinearGradientBrush x:Key="ProgressBarBackground" EndPoint="1,0" StartPoint="0,0">
-        <GradientStop Color="#BABABA" Offset="0"/>
-        <GradientStop Color="#C7C7C7" Offset="0.5"/>
-        <GradientStop Color="#BABABA" Offset="1"/>
-    </LinearGradientBrush>
-
-    <LinearGradientBrush x:Key="ProgressBarBorderBrush" EndPoint="0,1" StartPoint="0,0">
-        <GradientStop Color="#B2B2B2" Offset="0"/>
-        <GradientStop Color="#8C8C8C" Offset="1"/>
-    </LinearGradientBrush>
-
-    <LinearGradientBrush x:Key="ProgressBarGlassyHighlight" EndPoint="0,1" StartPoint="0,0">
-        <GradientStop Color="#50FFFFFF" Offset="0.5385"/>
-        <GradientStop Color="#00FFFFFF" Offset="0.5385"/>
-    </LinearGradientBrush>
-
-    <LinearGradientBrush x:Key="ProgressBarTopHighlight" EndPoint="0,1" StartPoint="0,0">
-        <GradientStop Color="#80FFFFFF" Offset="0.05"/>
-        <GradientStop Color="#00FFFFFF" Offset="0.25"/>
-    </LinearGradientBrush>
-
-    <LinearGradientBrush x:Key="ProgressBarIndicatorAnimatedFill" EndPoint="0,0" StartPoint="-100,0" MappingMode="Absolute">
-        <GradientStop Color="#00000000" Offset="0"/>
-        <GradientStop Color="#FF000000" Offset="0.4"/>
-        <GradientStop Color="#FF000000" Offset="0.6"/>
-        <GradientStop Color="#00000000" Offset="1"/>
-    </LinearGradientBrush>
-
-    <LinearGradientBrush x:Key="ProgressBarIndicatorDarkEdgeLeft" EndPoint="1,0" StartPoint="0,0">
-        <GradientStop Color="#0C000000" Offset="0"/>
-        <GradientStop Color="#20000000" Offset="0.3"/>
-        <GradientStop Color="#00000000" Offset="1"/>
-    </LinearGradientBrush>
-
-    <LinearGradientBrush x:Key="ProgressBarIndicatorDarkEdgeRight" EndPoint="1,0" StartPoint="0,0">
-        <GradientStop Color="#00000000" Offset="0"/>
-        <GradientStop Color="#20000000" Offset="0.7"/>
-        <GradientStop Color="#0C000000" Offset="1"/>
-    </LinearGradientBrush>
-
-    <RadialGradientBrush x:Key="ProgressBarIndicatorLightingEffectLeft" RelativeTransform="1,0,0,1,0.5,0.5" RadiusX="1" RadiusY="1">
-        <GradientStop Color="#60FFFFC4" Offset="0"/>
-        <GradientStop Color="#00FFFFC4" Offset="1"/>
-    </RadialGradientBrush>
-
-    <LinearGradientBrush x:Key="ProgressBarIndicatorLightingEffect" EndPoint="0,0" StartPoint="0,1">
-        <GradientStop Color="#60FFFFC4" Offset="0"/>
-        <GradientStop Color="#00FFFFC4" Offset="1"/>
-    </LinearGradientBrush>
-
-    <RadialGradientBrush x:Key="ProgressBarIndicatorLightingEffectRight" RelativeTransform="1,0,0,1,-0.5,0.5" RadiusX="1" RadiusY="1">
-        <GradientStop Color="#60FFFFC4" Offset="0"/>
-        <GradientStop Color="#00FFFFC4" Offset="1"/>
-    </RadialGradientBrush>
-
-    <LinearGradientBrush x:Key="ProgressBarIndicatorGlassyHighlight" EndPoint="0,1" StartPoint="0,0">
-        <GradientStop Color="#90FFFFFF" Offset="0.5385"/>
-        <GradientStop Color="#00FFFFFF" Offset="0.5385"/>
     </LinearGradientBrush>
 
     <!--Window Close Button-->
@@ -325,11 +269,73 @@
     
     <!--GroupBox-->
     <Style TargetType="{x:Type GroupBox}">
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="BorderBrush" Value="{StaticResource ButtonDefaultBorderBrush}"/>
-        <Setter Property="BorderThickness" Value="0.5"/>
+        <Setter Property="BorderBrush" Value="#D5DFE5" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type GroupBox}">
+                    <Grid SnapsToDevicePixels="true">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="6" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="6" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="6" />
+                        </Grid.RowDefinitions>
+                        <Border Grid.ColumnSpan="4" Grid.RowSpan="4" Background="{DynamicResource LightBrush}" CornerRadius="4,4,4,4" BorderThickness="1,1,1,1" />
+                        <Border Grid.ColumnSpan="4" Grid.Row="1" Grid.RowSpan="3" BorderThickness="1,1,1,1" CornerRadius="4" BorderBrush="{DynamicResource NormalBorderBrush}">
+                            <Border.OpacityMask>
+                                <MultiBinding Converter="{StaticResource BorderGapMaskConverter}" ConverterParameter="7">
+                                    <Binding Path="ActualWidth" ElementName="Header" />
+                                    <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
+                                    <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}" />
+                                </MultiBinding>
+                            </Border.OpacityMask>
+                            <Border BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3">
+                                <Border.BorderBrush>
+                                    <SolidColorBrush Color="{DynamicResource MainColor}" />
+                                </Border.BorderBrush>
+                                <Border BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="2">
+                                    <Border.BorderBrush>
+                                        <SolidColorBrush Color="{DynamicResource MainColor}" />
+                                    </Border.BorderBrush>
+                                </Border>
+                            </Border>
+                        </Border>
+                        <Border Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="1" Grid.RowSpan="3" Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="4" />
+                        <Border Grid.ColumnSpan="4" Grid.RowSpan="2" Background="{DynamicResource NormalBrush}" BorderThickness="1,1,1,0" CornerRadius="2,2,0,0" x:Name="Main" BorderBrush="{DynamicResource NormalBorderBrush}" />
+                        <Rectangle Opacity="1" Stroke="{x:Null}" RadiusX="3" RadiusY="3" VerticalAlignment="Stretch" Height="Auto" x:Name="Shine" Grid.ColumnSpan="4" Grid.RowSpan="2" Margin="1,1,1,1">
+                            <Rectangle.Fill>
+                                <LinearGradientBrush EndPoint="0.5,0.971" StartPoint="0.5,0.042">
+                                    <GradientStop Color="#26FFFFFF" Offset="0" />
+                                    <GradientStop Color="#00FFFFFF" Offset="1" />
+                                    <GradientStop Color="#26FFFFFF" Offset="0.467" />
+                                    <GradientStop Color="#00FFFFFF" Offset="0.475" />
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+
+                        <Border x:Name="Header" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Padding="3,1,3,0">
+                            <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" ContentSource="Header" RecognizesAccessKey="True" Margin="0,4,0,4" />
+                        </Border>
+
+                        <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="{TemplateBinding Padding}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Foreground">
+            <Setter.Value>
+                <SolidColorBrush Color="{DynamicResource WhiteColor}" />
+            </Setter.Value>
+        </Setter>
     </Style>
-    
+
     <!--TextBlock-->
     <Style TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="{StaticResource Text1Brush}"/>
@@ -1291,16 +1297,14 @@
     </Style>
 
     <!--StatusBar Separator-->
-    <Style x:Key="{x:Static StatusBar.SeparatorStyleKey}" TargetType="{x:Type Separator}">
-        <Setter Property="MinWidth" Value="1"/>
-        <Setter Property="MinHeight" Value="1"/>
-        <Setter Property="Margin" Value="2"/>
+    <Style TargetType="{x:Type Separator}">
+        <Setter Property="Height" Value="1" />
+        <Setter Property="Margin" Value="0,2,0,2" />
         <Setter Property="Focusable" Value="false" />
-        <Setter Property="SnapsToDevicePixels" Value="true"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Separator}">
-                    <Border SnapsToDevicePixels="true" Background="{DynamicResource MenuTextBrush}" />
+                    <Border BorderBrush="{DynamicResource SolidBorderBrush}" BorderThickness="1" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -1340,22 +1344,28 @@
     </Style>
 
     <!--Menu-->
-    <Style x:Key="{x:Type Menu}" TargetType="{x:Type Menu}">
-        <Setter Property="Background" Value="{DynamicResource MenuBackgroundBrush}" />
-        <Setter Property="SnapsToDevicePixels" Value="true" />
+    <Style TargetType="{x:Type Menu}">
+        <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource NormalBorderBrush}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Menu}">
-                    <StackPanel Background="{TemplateBinding Background}" IsItemsHost="true" ClipToBounds="true" Orientation="Horizontal" />
+                    <Grid>
+                        <Border Margin="1" x:Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" />
+                        <StackPanel Background="{TemplateBinding Background}" IsItemsHost="True" ClipToBounds="True" Orientation="Horizontal" />
+                    </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled" Value="false">
-                            <Setter Value="{DynamicResource MenuBackgroundBrush}" Property="Background" />
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="{DynamicResource DisabledBackgroundBrush}" TargetName="Border" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource DisabledBorderBrush}" TargetName="Border" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+
 
     <!--Menu Items-->
     <ControlTemplate TargetType="{x:Type MenuItem}" x:Key="SubmenuHeaderStyle">
@@ -1562,6 +1572,64 @@
         <Setter Property="Padding" Value="{DynamicResource LargeMargin}" />
         <Setter Property="BorderBrush" Value="{DynamicResource Text1Brush}" />
         <Setter Property="SnapsToDevicePixels" Value="true" />
+    </Style>
+
+    <Style x:Key="{x:Static ToolBar.ButtonStyleKey}" TargetType="{x:Type Button}" BasedOn="{x:Null}">
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource NuclearButtonFocusVisual}" />
+        <Setter Property="Background" Value="{DynamicResource NormalBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource NormalBorderBrush}" />
+        <Setter Property="Template" Value="{DynamicResource ButtonTemplate}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+        <Setter Property="FontSize" Value="10"/>
+        <Setter Property="MinHeight" Value="18"/>
+        <Setter Property="MinWidth" Value="50"/>
+    </Style>
+
+    <Style x:Key="{x:Static ToolBar.CheckBoxStyleKey}" TargetType="{x:Type CheckBox}">
+        <Setter Property="FontSize" Value="10"/>
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource CheckBoxFocusVisual}" />
+        <Setter Property="Background" Value="{DynamicResource NormalBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource NormalBorderBrush}" />
+        <Setter Property="Template" Value="{DynamicResource CheckBoxTemplate}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+    </Style>
+
+    <Style x:Key="{x:Static ToolBar.RadioButtonStyleKey}" TargetType="{x:Type RadioButton}">
+        <Setter Property="FontSize" Value="10"/>
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource RadioButtonFocusVisual}" />
+        <Setter Property="Background" Value="{DynamicResource NormalBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource NormalBorderBrush}" />
+        <Setter Property="Template" Value="{DynamicResource RadioButtonTemplate}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground">
+                    <Setter.Value>
+                        <SolidColorBrush Color="{DynamicResource TopGradientSelectColor}" />
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="{x:Static ToolBar.ComboBoxStyleKey}" TargetType="{x:Type ComboBox}">
+        <Setter Property="FontSize" Value="10"/>
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="Template" Value="{DynamicResource ComboBoxTemplate}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+    </Style>
+
+    <Style x:Key="{x:Static ToolBar.TextBoxStyleKey}" TargetType="{x:Type TextBox}">
+        <Setter Property="FontSize" Value="10"/>
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="AllowDrop" Value="true" />
+        <Setter Property="Template" Value="{DynamicResource TextBoxTemplate}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+        <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}"/>
+        <Setter Property="BorderBrush" Value="#FF000000"/>
     </Style>
 
 </ResourceDictionary>

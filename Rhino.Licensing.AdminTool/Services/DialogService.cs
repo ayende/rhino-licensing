@@ -11,13 +11,13 @@ namespace Rhino.Licensing.AdminTool.Services
         /// Shows a OpenFileDialog
         /// </summary>
         /// <returns></returns>
-        IOpenFileDialogViewModel ShowOpenFileDialog();
+        void ShowOpenFileDialog(IOpenFileDialogViewModel model);
 
         /// <summary>
         /// Shows a SaveFileDialog
         /// </summary>
         /// <returns></returns>
-        ISaveFileDialogViewModel ShowSaveFileDialog();
+        void ShowSaveFileDialog(ISaveFileDialogViewModel model);
     }
 
     public class DialogService : IDialogService
@@ -29,26 +29,24 @@ namespace Rhino.Licensing.AdminTool.Services
             _dialogFactory = dialogFactory;
         }
 
-        public virtual IOpenFileDialogViewModel ShowOpenFileDialog()
+        public virtual void ShowOpenFileDialog(IOpenFileDialogViewModel model)
         {
-            var dialog = _dialogFactory.Create<OpenFileDialog>();
-            
+            var dialog = _dialogFactory.Create<OpenFileDialog, IOpenFileDialogViewModel>(model);
+
+            dialog.ViewModel = model;
             dialog.ShowDialog();
 
             _dialogFactory.Release(dialog);
-
-            return dialog.ViewModel as IOpenFileDialogViewModel;
         }
 
-        public virtual ISaveFileDialogViewModel ShowSaveFileDialog()
+        public virtual void ShowSaveFileDialog(ISaveFileDialogViewModel model)
         {
-            var dialog = _dialogFactory.Create<SaveFileDialog>();
-            
+            var dialog = _dialogFactory.Create<SaveFileDialog, ISaveFileDialogViewModel>(model);
+
+            dialog.ViewModel = model;
             dialog.ShowDialog();
 
             _dialogFactory.Release(dialog);
-
-            return dialog.ViewModel as ISaveFileDialogViewModel;
         }
 
     }

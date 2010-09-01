@@ -4,8 +4,11 @@ using Rhino.Licensing.AdminTool.ViewModels;
 
 namespace Rhino.Licensing.AdminTool.Dialogs
 {
-    public abstract class FileDialog : IDisposable
+    public abstract class FileDialog<T> : IDisposable 
+        where T : IFileDialogViewModel
     {
+        private T _viewModel;
+
         public virtual void ShowDialog()
         {
             var result = Dialog.ShowDialog();
@@ -15,14 +18,23 @@ namespace Rhino.Licensing.AdminTool.Dialogs
             ViewModel.Result = MappedResult(result);
         }
 
-        protected abstract System.Windows.Forms.FileDialog Dialog
+        protected abstract FileDialog Dialog
         {
             get;
         }
 
-        public abstract IFileDialogViewModel ViewModel
+        public virtual T ViewModel
         {
-            get; 
+            get { return _viewModel; }
+            set
+            {
+                _viewModel = value;
+                BindDialogToViewModel();
+            }
+        }
+
+        protected virtual void BindDialogToViewModel()
+        {
         }
 
         public void Dispose()

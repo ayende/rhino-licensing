@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Security.Cryptography;
 using Caliburn.PresentationFramework.Filters;
@@ -49,12 +50,23 @@ namespace Rhino.Licensing.AdminTool.ViewModels
         [AutoCheckAvailability]
         public virtual void Save()
         {
-            var dialogModel = _dialogService.ShowSaveFileDialog();
+            var model = CreateSaveDialogModel();
 
-            if (dialogModel.Result.GetValueOrDefault(false) && dialogModel.FileName.IsNotEmpty())
+            _dialogService.ShowSaveFileDialog(model);
+
+            if (model.Result.GetValueOrDefault(false) && model.FileName.IsNotEmpty())
             {
-                _projectService.Save(CurrentProject, new FileInfo(dialogModel.FileName));
+                _projectService.Save(CurrentProject, new FileInfo(model.FileName));
             }
+        }
+
+        public virtual ISaveFileDialogViewModel CreateSaveDialogModel()
+        {
+            return new SaveFileDialogViewModel
+            {
+                Filter = "Rhino License|*.rlic",
+                OverwritePrompt = true,
+            };
         }
     }
 }

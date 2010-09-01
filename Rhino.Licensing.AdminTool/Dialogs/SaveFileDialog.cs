@@ -1,41 +1,38 @@
+using System.Windows.Forms;
 using Rhino.Licensing.AdminTool.ViewModels;
 using SaveDialog = System.Windows.Forms.SaveFileDialog;
 
-
 namespace Rhino.Licensing.AdminTool.Dialogs
 {
-    public class SaveFileDialog : FileDialog
+    public class SaveFileDialog : FileDialog<ISaveFileDialogViewModel>
     {
-        private readonly ISaveFileDialogViewModel _viewModel;
         private readonly SaveDialog _dialog;
 
-        public SaveFileDialog(ISaveFileDialogViewModel viewModel)
+        public SaveFileDialog()
         {
-            _viewModel = viewModel;
-            _dialog = new SaveDialog
-            {
-                AddExtension = viewModel.AddExtension,
-                CheckFileExists = viewModel.CheckFileExists,
-                CheckPathExists = viewModel.CheckPathExists,
-                DefaultExt = viewModel.DefaultExtension,
-                FileName = viewModel.FileName,
-                Filter = viewModel.Filter,
-                InitialDirectory = viewModel.InitialDirectory,
-                Title = viewModel.Title,
-                AutoUpgradeEnabled = true,
-                OverwritePrompt = viewModel.OverwritePrompt,
-                SupportMultiDottedExtensions = viewModel.SupportMultiDottedExtensions,
-            };
+            _dialog = new SaveDialog();
         }
 
-        protected override System.Windows.Forms.FileDialog Dialog
+        protected override FileDialog Dialog
         {
             get { return _dialog; }
         }
 
-        public override IFileDialogViewModel ViewModel
+        protected override void BindDialogToViewModel()
         {
-            get { return _viewModel; }
+            base.BindDialogToViewModel();
+
+            _dialog.AddExtension = ViewModel.AddExtension;
+            _dialog.CheckFileExists = ViewModel.CheckFileExists;
+            _dialog.CheckPathExists = ViewModel.CheckPathExists;
+            _dialog.DefaultExt = ViewModel.DefaultExtension;
+            _dialog.FileName = ViewModel.FileName;
+            _dialog.Filter = ViewModel.Filter;
+            _dialog.InitialDirectory = ViewModel.InitialDirectory;
+            _dialog.Title = ViewModel.Title;
+            _dialog.AutoUpgradeEnabled = true;
+            _dialog.OverwritePrompt = ViewModel.OverwritePrompt;
+            _dialog.SupportMultiDottedExtensions = ViewModel.SupportMultiDottedExtensions;
         }
     }
 }

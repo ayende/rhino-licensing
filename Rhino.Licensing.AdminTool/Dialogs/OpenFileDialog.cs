@@ -1,38 +1,36 @@
+using System.Windows.Forms;
 using Rhino.Licensing.AdminTool.ViewModels;
 using OpenDialog = System.Windows.Forms.OpenFileDialog;
 
 namespace Rhino.Licensing.AdminTool.Dialogs
 {
-    public class OpenFileDialog : FileDialog
+    public class OpenFileDialog : FileDialog<IOpenFileDialogViewModel>
     {
         private readonly OpenDialog _openFileDialog;
-        private readonly IOpenFileDialogViewModel _viewModel;
 
-        public OpenFileDialog(IOpenFileDialogViewModel viewModel)
+        public OpenFileDialog()
         {
-            _viewModel = viewModel;
-            _openFileDialog = new OpenDialog
-            {
-                AddExtension = viewModel.AddExtension,
-                CheckFileExists = viewModel.CheckFileExists,
-                CheckPathExists = viewModel.CheckPathExists,
-                DefaultExt = viewModel.DefaultExtension,
-                FileName = viewModel.FileName,
-                Filter = viewModel.Filter,
-                InitialDirectory = viewModel.InitialDirectory,
-                Multiselect = viewModel.MultiSelect,
-                Title = viewModel.Title
-            };
+            _openFileDialog = new OpenDialog();
         }
 
-        protected override System.Windows.Forms.FileDialog Dialog
+        protected override FileDialog Dialog
         {
             get { return _openFileDialog; }
         }
 
-        public override IFileDialogViewModel ViewModel
+        protected override void BindDialogToViewModel()
         {
-            get { return _viewModel; }
+            base.BindDialogToViewModel();
+
+            _openFileDialog.AddExtension = ViewModel.AddExtension;
+            _openFileDialog.CheckFileExists = ViewModel.CheckFileExists;
+            _openFileDialog.CheckPathExists = ViewModel.CheckPathExists;
+            _openFileDialog.DefaultExt = ViewModel.DefaultExtension;
+            _openFileDialog.FileName = ViewModel.FileName;
+            _openFileDialog.Filter = ViewModel.Filter;
+            _openFileDialog.InitialDirectory = ViewModel.InitialDirectory;
+            _openFileDialog.Multiselect = ViewModel.MultiSelect;
+            _openFileDialog.Title = ViewModel.Title;
         }
     }
 }

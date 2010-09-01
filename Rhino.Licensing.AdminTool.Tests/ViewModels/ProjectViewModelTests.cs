@@ -83,16 +83,13 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
         [Fact]
         public void Save_Action_Will_Open_SaveDialog()
         {
-            _dialogService.Expect(x => x.ShowSaveFileDialog())
-                          .Return(new SaveFileDialogViewModel
-                          {
-                              Result = true
-                          });
+            var dialogModel = new SaveFileDialogViewModel {Result = true};
+            _dialogService.Expect(x => x.ShowSaveFileDialog(dialogModel));
 
-            var vm = CreateViewModel();
+            var vm = CreateViewModel(dialogModel);
             vm.Save();
 
-            _dialogService.AssertWasCalled(x => x.ShowSaveFileDialog(), x => x.Repeat.Once());
+            _dialogService.AssertWasCalled(x => x.ShowSaveFileDialog(Arg.Is(dialogModel)), x => x.Repeat.Once());
         }
 
         [Fact]
@@ -100,15 +97,11 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
         {
             var existingFile = Path.GetTempFileName();
             var choosenFile = new FileInfo(existingFile);
+            var model = new SaveFileDialogViewModel {Result = true, FileName = existingFile};
 
-            _dialogService.Expect(x => x.ShowSaveFileDialog())
-              .Return(new SaveFileDialogViewModel
-              {
-                  Result = true,
-                  FileName = existingFile
-              });
+            _dialogService.Expect(x => x.ShowSaveFileDialog(model));
 
-            var vm = CreateViewModel();
+            var vm = CreateViewModel(model);
             vm.Save();
 
             _projectService.Expect(x => x.Save(Arg<Project>.Is.Anything, Arg.Is(choosenFile))).Repeat.Once();
@@ -117,15 +110,10 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
         [Fact]
         public void Will_Not_Proceed_To_Save_When_No_File_Is_Selected()
         {
-            var vm = CreateViewModel();
+            var dialogModel = new SaveFileDialogViewModel {Result = true, FileName = null};
+            _dialogService.Expect(x => x.ShowSaveFileDialog(dialogModel));
 
-            _dialogService.Expect(x => x.ShowSaveFileDialog())
-                          .Return(new SaveFileDialogViewModel
-                          {
-                              Result = true,
-                              FileName = null
-                          });
-
+            var vm = CreateViewModel(dialogModel);
             vm.Save();
             
             _projectService.AssertWasNotCalled(x => x.Save(Arg<Project>.Is.Anything, Arg<FileInfo>.Is.Anything));
@@ -145,9 +133,40 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
             Assert.Contains("<Modulus>", vm.CurrentProject.Product.PublicKey); //Makes sure it is public
         }
 
+        [Fact]
+        public void Default_Project_Save_Dialog()
+        {
+            var vm = new ProjectViewModel(_projectService, _dialogService);
+            var dialogModel = vm.CreateSaveDialogModel();
+
+            Assert.Equal("Rhino License|*.rlic", dialogModel.Filter);
+            Assert.True(dialogModel.OverwritePrompt);
+        }
+
+        private ProjectViewModel CreateViewModel(ISaveFileDialogViewModel model)
+        {
+            return new TestProjectViewModel(_projectService, _dialogService, model);
+        }
+
         private ProjectViewModel CreateViewModel()
         {
-            return new ProjectViewModel(_projectService, _dialogService);
+            return new TestProjectViewModel(_projectService, _dialogService, null);
+        }
+
+        public class TestProjectViewModel : ProjectViewModel
+        {
+            private readonly ISaveFileDialogViewModel _dialogModel;
+
+            public TestProjectViewModel(IProjectService projectService, IDialogService dialogService, ISaveFileDialogViewModel model) 
+                : base(projectService, dialogService)
+            {
+                _dialogModel = model;
+            }
+
+            public override ISaveFileDialogViewModel CreateSaveDialogModel()
+            {
+                return _dialogModel; 
+            }
         }
     }
 }

@@ -1,17 +1,16 @@
-using System.Windows.Forms;
 using Rhino.Licensing.AdminTool.ViewModels;
 using Rhino.Mocks;
 using Xunit;
 using System.Linq;
 using Xunit.Extensions;
-using FileDialog = Rhino.Licensing.AdminTool.Dialogs.FileDialog;
 using DialogForm = System.Windows.Forms.FileDialog;
+using OpenFileDialog = Rhino.Licensing.AdminTool.Dialogs.OpenFileDialog;
 
 namespace Rhino.Licensing.AdminTool.Tests.Dialogs
 {
     public class FileDialogTests
     {
-        private DialogForm _dialogForm;
+        private readonly DialogForm _dialogForm;
 
         public FileDialogTests()
         {
@@ -22,9 +21,9 @@ namespace Rhino.Licensing.AdminTool.Tests.Dialogs
         public void ShowDialog_Sets_Selected_Files()
         {
             var model = new OpenFileDialogViewModel();
-            var dialog = new TestFileDialog(_dialogForm, model);
+            var dialog = new TestOpenFileDialog(_dialogForm) { ViewModel = model };
 
-            _dialogForm.Expect(x => x.ShowDialog()).Return(DialogResult.OK);
+            _dialogForm.Expect(x => x.ShowDialog()).Return(System.Windows.Forms.DialogResult.OK);
             _dialogForm.Expect(x => x.FileName).Return("License.lic");
             _dialogForm.Expect(x => x.FileNames).Return(new[] {"License.lic", "License2.lic"});
 
@@ -40,7 +39,7 @@ namespace Rhino.Licensing.AdminTool.Tests.Dialogs
         public void Dialog_Disposes_Upon_Destruction()
         {
             var model = new OpenFileDialogViewModel();
-            var dialog = new TestFileDialog(_dialogForm, model);
+            var dialog = new TestOpenFileDialog(_dialogForm) { ViewModel = model };
 
             dialog.ShowDialog();
             dialog.Dispose();
@@ -49,13 +48,13 @@ namespace Rhino.Licensing.AdminTool.Tests.Dialogs
         }
 
         [Theory]
-        [InlineData(DialogResult.OK, true)]
-        [InlineData(DialogResult.Cancel, false)]
-        [InlineData(DialogResult.Abort, null)]
-        public void DialogResult_Maps_To_ViewModel_Result(DialogResult dialogResult, bool? mappedResult)
+        [InlineData(System.Windows.Forms.DialogResult.OK, true)]
+        [InlineData(System.Windows.Forms.DialogResult.Cancel, false)]
+        [InlineData(System.Windows.Forms.DialogResult.Abort, null)]
+        public void DialogResult_Maps_To_ViewModel_Result(System.Windows.Forms.DialogResult dialogResult, bool? mappedResult)
         {
             var model = new OpenFileDialogViewModel();
-            var dialog = new TestFileDialog(_dialogForm, model);
+            var dialog = new TestOpenFileDialog(_dialogForm) { ViewModel = model };
 
             _dialogForm.Expect(x => x.ShowDialog()).Return(dialogResult);
 
@@ -64,25 +63,18 @@ namespace Rhino.Licensing.AdminTool.Tests.Dialogs
             Assert.Equal(mappedResult, model.Result);
         }
 
-        public class TestFileDialog : FileDialog
+        public class TestOpenFileDialog : OpenFileDialog
         {
-            private readonly System.Windows.Forms.FileDialog _dialog;
-            private readonly IFileDialogViewModel _viewModel;
+            private readonly DialogForm _form;
 
-            public TestFileDialog(System.Windows.Forms.FileDialog dialog, IFileDialogViewModel viewModel)
+            public TestOpenFileDialog(DialogForm form)
             {
-                _dialog = dialog;
-                _viewModel = viewModel;
+                _form = form;
             }
 
-            protected override System.Windows.Forms.FileDialog Dialog
+            protected override DialogForm Dialog
             {
-                get { return _dialog; }
-            }
-
-            public override IFileDialogViewModel ViewModel
-            {
-                get { return _viewModel; }
+                get { return _form; }
             }
         }
     }

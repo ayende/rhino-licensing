@@ -13,19 +13,19 @@
                       HorizontalAlignment="Left" 
                       Orientation="Horizontal">
 
-            <Button 
-                    Content="Save"
-                    cal:Message.Attach="[Event Click]=[Action Save]"/>
+            <Button cal:Message.Attach="[Event Click]=[Action Save]" ToolTip="Save" Margin="2">
+                <Image Source="/Images/Save.png" Width="32" Height="32" Style="{DynamicResource ToolbarImageStyle}"/>
+            </Button>
 
-            <Button 
-                    Content="Close"
-                    cal:Message.Attach="[Event Click]=[Action TryClose]"/>
+            <Button cal:Message.Attach="[Event Click]=[Action TryClose]" ToolTip="Close" Margin="2">
+                <Image Source="/Images/Close.png" Width="32" Height="32" Style="{DynamicResource ToolbarImageStyle}"/>
+            </Button>
 
-            <Rectangle Style="{DynamicResource ToolSeparator}" />
-            
-            <Button 
-                    Content="Generate Key Pair" 
-                    cal:Message.Attach="[Event Click]=[Action GenerateKey]"/>
+            <Separator Margin="2"/>
+
+            <Button cal:Message.Attach="[Event Click]=[Action GenerateKey]" ToolTip="Generate Key" Margin="2">
+                <Image Source="/Images/GenerateKey.png" Width="32" Height="32" Style="{DynamicResource ToolbarImageStyle}"/>
+            </Button>
             
         </ToolBarPanel>
         
@@ -33,8 +33,8 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -48,18 +48,19 @@
                 <TextBox Text="{Binding Path=CurrentProject.Product.Name}" 
                          Grid.Column="1" Grid.Row="0" />
 
-                <TextBox Text="{Binding Path=CurrentProject.Product.PublicKey}" 
-                         IsReadOnly="True"
-                         TextWrapping="WrapWithOverflow"
-                         ScrollViewer.VerticalScrollBarVisibility="Auto"
-                         Grid.Column="1" Grid.Row="1"  />
+                <DockPanel Grid.Column="1" Grid.Row="1">
+                    <Button DockPanel.Dock="Right" Margin="2" Height="20" Width="20">
+                        <Image Source="/Images/Copy.png" />
+                    </Button>
+                    <TextBox Text="{Binding Path=CurrentProject.Product.PublicKey}"  IsReadOnly="True" />
+                </DockPanel>
 
-                <TextBox Text="{Binding Path=CurrentProject.Product.PrivateKey}" 
-                         IsReadOnly="True"
-                         TextWrapping="WrapWithOverflow"
-                         ScrollViewer.VerticalScrollBarVisibility="Auto"
-                         Grid.Column="1" Grid.Row="2" />
-                
+                <DockPanel Grid.Column="1" Grid.Row="2">
+                    <Button DockPanel.Dock="Right" Margin="2" Height="20" Width="20">
+                        <Image Source="/Images/Copy.png" />
+                    </Button>
+                    <TextBox Text="{Binding Path=CurrentProject.Product.PrivateKey}" IsReadOnly="True" />
+                </DockPanel>
             </Grid>
         </GroupBox>
         

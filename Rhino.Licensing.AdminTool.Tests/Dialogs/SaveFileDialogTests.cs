@@ -55,8 +55,8 @@ namespace Rhino.Licensing.AdminTool.Tests.Dialogs
         public class SaveFileDialogStub : SaveFileDialog
         {
             public SaveFileDialogStub(ISaveFileDialogViewModel viewModel)
-                : base(viewModel)
             {
+                base.ViewModel = viewModel;
             }
 
             public System.Windows.Forms.SaveFileDialog GetCoreDialog()

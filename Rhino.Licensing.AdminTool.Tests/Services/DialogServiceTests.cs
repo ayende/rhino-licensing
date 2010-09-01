@@ -15,12 +15,12 @@ namespace Rhino.Licensing.AdminTool.Tests.Services
         {
             var model = CreateOpenFileDialogModel(true);
             var factory = MockRepository.GenerateMock<IDialogFactory>();
-            var dialog = MockRepository.GenerateMock<OpenFileDialog>(model);
+            var dialog = MockRepository.GenerateMock<OpenFileDialog>();
 
-            factory.Expect(x => x.Create<OpenFileDialog>()).Return(dialog);
+            factory.Expect(x => x.Create<OpenFileDialog, IOpenFileDialogViewModel>(Arg.Is(model))).Return(dialog);
             dialog.Expect(x => x.ViewModel).Return(model);
 
-            new DialogService(factory).ShowOpenFileDialog();
+            new DialogService(factory).ShowOpenFileDialog(model);
 
             dialog.AssertWasCalled(x => x.ShowDialog(), x => x.Repeat.Once());
         }
@@ -30,13 +30,13 @@ namespace Rhino.Licensing.AdminTool.Tests.Services
         {
             var model = CreateSaveFileDialogModel(true);
             var factory = MockRepository.GenerateMock<IDialogFactory>();
-            var dialog = MockRepository.GenerateMock<SaveFileDialog>(model);
+            var dialog = MockRepository.GenerateMock<SaveFileDialog>();
 
             var service = new DialogService(factory) as IDialogService;
 
-            factory.Expect(x => x.Create<SaveFileDialog>()).Return(dialog);
+            factory.Expect(x => x.Create<SaveFileDialog, ISaveFileDialogViewModel>(Arg.Is(model))).Return(dialog);
 
-            service.ShowSaveFileDialog();
+            service.ShowSaveFileDialog(model);
 
             dialog.AssertWasCalled(x => x.ShowDialog(), x => x.Repeat.Once());
         }
