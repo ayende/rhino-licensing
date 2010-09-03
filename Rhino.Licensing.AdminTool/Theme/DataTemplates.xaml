@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <DataTemplate x:Key="IssuedLicenseTemplate">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding OwnerName}" Margin="2" />
+            <TextBlock Text="{Binding ExpirationDate}" Margin="2" />
+            <TextBlock Text="{Binding LicenseType}" Margin="2" />
+        </StackPanel>
+    </DataTemplate>
+
+</ResourceDictionary>

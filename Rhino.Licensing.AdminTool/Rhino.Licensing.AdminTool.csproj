@@ -123,9 +123,11 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Factories\IDialogFactory.cs" />
     <Compile Include="Factories\IViewModelFactory.cs" />
+    <Compile Include="Model\License.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Model\Project.cs" />
     <Compile Include="Services\DialogService.cs" />
+    <Compile Include="Services\StatusService.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Startup\FactoryRegistration.cs" />
     <Compile Include="Startup\GuyWire.cs" />
@@ -161,6 +163,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Theme\AppStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Theme\DataTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -214,6 +220,12 @@
   <ItemGroup>
     <Resource Include="Images\Copy.png" />
     <Resource Include="Images\Paste.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Rhino.Licensing\Rhino.Licensing.csproj">
+      <Project>{05EFD7EB-F0FB-4B65-8E4A-C8FF8DDC6A78}</Project>
+      <Name>Rhino.Licensing</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

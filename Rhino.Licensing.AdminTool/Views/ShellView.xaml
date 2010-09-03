@@ -26,9 +26,13 @@
             </Menu.Items>
         </Menu>
 
+        <StatusBar DockPanel.Dock="Bottom" Height="22">
+            <StatusBarItem Content="{Binding Path=StatusMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </StatusBar>
+
         <lib:TransitionPresenter Transition="{StaticResource ContentSwitchAnimation}"
                                  cal:View.Model="{Binding ActiveItem}" />
-        
+                
     </DockPanel>
     
 </Window>

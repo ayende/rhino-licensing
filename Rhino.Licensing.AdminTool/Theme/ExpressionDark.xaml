@@ -1536,8 +1536,13 @@
     </Style>
 
     <!--StatusBar-->
-    <Style x:Key="{x:Type StatusBar}" TargetType="{x:Type StatusBar}">
+    <Style TargetType="{x:Type StatusBar}">
         <Setter Property="Background" Value="{DynamicResource RecessedBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource Text1Brush}" />
+    </Style>
+    
+    <!--StatusBarItem-->
+    <Style TargetType="{x:Type StatusBarItem}">
         <Setter Property="Foreground" Value="{DynamicResource Text1Brush}" />
     </Style>
 

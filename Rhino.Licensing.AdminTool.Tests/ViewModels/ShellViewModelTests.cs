@@ -17,6 +17,8 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
         private readonly IWindowManager _windowManager;
         private readonly IProjectService _projectService;
         private readonly IDialogService _dialogService;
+        private readonly IStatusService _statusService;
+        private readonly ProjectViewModel _projectViewModel;
 
         public ShellViewModelTests()
         {
@@ -24,6 +26,8 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
             _windowManager = MockRepository.GenerateMock<IWindowManager>();
             _projectService = MockRepository.GenerateMock<IProjectService>();
             _dialogService = MockRepository.GenerateMock<IDialogService>();
+            _statusService = MockRepository.GenerateMock<IStatusService>();
+            _projectViewModel = MockRepository.GenerateMock<ProjectViewModel>(_projectService, _dialogService, _statusService);
         }
 
         [Fact]
@@ -34,6 +38,7 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
 
             validator.AssertNoErrors();
             validator.AssertWasBound(x => x.DisplayName);
+            validator.AssertWasBound(x => x.StatusMessage);
         }
 
         [Fact]
@@ -64,30 +69,42 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
         }
 
         [Fact]
-        public void OpenProject_Opens_ProjectViewModel()
+        public void OpenProject_Opens_ProjectViewModel_When_User_Accepts_The_Open_Dialog()
         {
             var shell = CreateShellViewModel();
-            var projectViewModel = MockRepository.GenerateMock<ProjectViewModel>(_projectService, _dialogService);
-            
-            _viewModelFactory.Expect(x => x.Create<ProjectViewModel>()).Return(projectViewModel);
+
+            _projectViewModel.Expect(x => x.Open()).Return(true);
+            _viewModelFactory.Expect(x => x.Create<ProjectViewModel>()).Return(_projectViewModel);
 
             shell.OpenProject();
 
             Assert.NotNull(shell.ActiveItem);
-            Assert.Same(projectViewModel, shell.ActiveItem);
+            Assert.Same(_projectViewModel, shell.ActiveItem);
+        }
+
+        [Fact]
+        public void OpenProject_Wont_Show_ProjectViewModel_When_User_Cancels_The_Open_Dialog()
+        {
+            var shell = CreateShellViewModel();
+
+            _projectViewModel.Expect(x => x.Open()).Return(false);
+            _viewModelFactory.Expect(x => x.Create<ProjectViewModel>()).Return(_projectViewModel);
+
+            shell.OpenProject();
+
+            Assert.Null(shell.ActiveItem);
         }
 
         [Fact]
         public void OpenProject_Calls_Open_On_ProjectViewModel()
         {
             var shell = CreateShellViewModel();
-            var projectViewModel = MockRepository.GenerateMock<ProjectViewModel>(_projectService, _dialogService);
 
-            _viewModelFactory.Expect(x => x.Create<ProjectViewModel>()).Return(projectViewModel);
+            _viewModelFactory.Expect(x => x.Create<ProjectViewModel>()).Return(_projectViewModel);
 
             shell.OpenProject();
 
-            projectViewModel.AssertWasCalled(x => x.Open(), options => options.Repeat.Once());
+            _projectViewModel.AssertWasCalled(x => x.Open(), options => options.Repeat.Once());
         }
 
         [Fact]
@@ -105,7 +122,7 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
 
         private ProjectViewModel CreateProjectViewModel()
         {
-            return new ProjectViewModel(_projectService, _dialogService);
+            return new ProjectViewModel(_projectService, _dialogService, _statusService);
         }
 
         private ShellViewModel CreateShellViewModel()

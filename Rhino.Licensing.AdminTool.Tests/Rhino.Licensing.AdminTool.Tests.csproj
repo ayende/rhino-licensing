@@ -96,7 +96,9 @@
     <Compile Include="Dialogs\FileDialogTests.cs" />
     <Compile Include="Dialogs\OpenFileDialogTests.cs" />
     <Compile Include="Dialogs\SaveFileDialogTests.cs" />
+    <Compile Include="Models\LicenseModelTests.cs" />
     <Compile Include="Services\BoolToVisibilityConverterTests.cs" />
+    <Compile Include="Services\StatusServiceTests.cs" />
     <Compile Include="Startup\ContainerTests.cs" />
     <Compile Include="Startup\GuyWireTests.cs" />
     <Compile Include="Models\ProductModelTests.cs" />

@@ -16,14 +16,17 @@ namespace Rhino.Licensing.AdminTool.ViewModels
 
         private readonly IProjectService _projectService;
         private readonly IDialogService _dialogService;
+        private readonly IStatusService _statusService;
         private string _filePath;
 
         public ProjectViewModel(
             IProjectService projectService,
-            IDialogService dialogService)
+            IDialogService dialogService,
+            IStatusService statusService)
         {
             _projectService = projectService;
             _dialogService = dialogService;
+            _statusService = statusService;
         }
 
         public virtual Project CurrentProject
@@ -33,6 +36,15 @@ namespace Rhino.Licensing.AdminTool.ViewModels
             {
                 _project = value;
                 NotifyOfPropertyChange(() => CurrentProject);
+                OnCurrentProjectChanged();
+            }
+        }
+
+        protected virtual void OnCurrentProjectChanged()
+        {
+            if(_project != null)
+            {
+                _statusService.Update("Loaded {0} license(s).", _project.Product.IssuedLicenses.Count);
             }
         }
 
@@ -46,7 +58,8 @@ namespace Rhino.Licensing.AdminTool.ViewModels
 
         public virtual bool CanSave()
         {
-            return CurrentProject.Product != null &&
+            return CurrentProject != null &&
+                   CurrentProject.Product != null &&
                    CurrentProject.Product.Name.IsNotEmpty();
         }
 
@@ -71,7 +84,7 @@ namespace Rhino.Licensing.AdminTool.ViewModels
         }
 
         [AutoCheckAvailability]
-        public virtual void Open()
+        public virtual bool Open()
         {
             var model = CreateOpenDialogModel();
 
@@ -81,7 +94,29 @@ namespace Rhino.Licensing.AdminTool.ViewModels
             {
                 _filePath = model.FileName;
                 CurrentProject = _projectService.Open(new FileInfo(_filePath));
+
+                return true;
             }
+
+            return false;
+        }
+
+        [AutoCheckAvailability]
+        public virtual void AddLicense()
+        {
+            CurrentProject.Product.IssuedLicenses.Add(new License
+            {
+                ExpirationDate = DateTime.Now.AddDays(30),
+                LicenseType = LicenseType.Trial,
+                OwnerName = "John Doe"
+            });
+        }
+
+        public bool CanAddLicense()
+        {
+            return CurrentProject != null &&
+                   CurrentProject.Product.PublicKey.IsNotEmpty() &&
+                   CurrentProject.Product.PrivateKey.IsNotEmpty();
         }
 
         public virtual IOpenFileDialogViewModel CreateOpenDialogModel()

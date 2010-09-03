@@ -27,43 +27,59 @@
                 <Image Source="/Images/GenerateKey.png" Width="32" Height="32" Style="{DynamicResource ToolbarImageStyle}"/>
             </Button>
             
+            <Button cal:Message.Attach="[Event Click]=[Action AddLicense]" ToolTip="Add License" Margin="2">
+                <Image Source="/Images/NewLicense.png" Width="32" Height="32" Style="{DynamicResource ToolbarImageStyle}"/>
+            </Button>
+            
         </ToolBarPanel>
         
-        <GroupBox Header="Product Information">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+        <Grid>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <GroupBox Header="Product Information" Grid.Row="0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-                <Label Content="Name: " Grid.Column="0" Grid.Row="0" />
-                <Label Content="Public Key: " Grid.Column="0" Grid.Row="1"/>
-                <Label Content="Private Key: " Grid.Column="0" Grid.Row="2"/>
+                    <Label Content="Name: " Grid.Column="0" Grid.Row="0" />
+                    <Label Content="Public Key: " Grid.Column="0" Grid.Row="1"/>
+                    <Label Content="Private Key: " Grid.Column="0" Grid.Row="2"/>
 
-                <TextBox Text="{Binding Path=CurrentProject.Product.Name}" 
-                         Grid.Column="1" Grid.Row="0" />
+                    <TextBox Text="{Binding Path=CurrentProject.Product.Name}" 
+                             Grid.Column="1" Grid.Row="0" />
 
-                <DockPanel Grid.Column="1" Grid.Row="1">
-                    <Button DockPanel.Dock="Right" Margin="2" Height="20" Width="20" cal:Message.Attach="[Event Click]=[Action CopyToClipboard(publicKey.Text)]">
-                        <Image Source="/Images/Copy.png" />
-                    </Button>
-                    <TextBox x:Name="publicKey"  Text="{Binding Path=CurrentProject.Product.PublicKey}"  IsReadOnly="True" />
-                </DockPanel>
+                    <DockPanel Grid.Column="1" Grid.Row="1">
+                        <Button DockPanel.Dock="Right" Margin="2" Height="20" Width="20" cal:Message.Attach="[Event Click]=[Action CopyToClipboard(publicKey.Text)]">
+                            <Image Source="/Images/Copy.png" />
+                        </Button>
+                        <TextBox x:Name="publicKey" Text="{Binding Path=CurrentProject.Product.PublicKey}"  IsReadOnly="True" />
+                    </DockPanel>
 
-                <DockPanel Grid.Column="1" Grid.Row="2">
-                    <Button DockPanel.Dock="Right" Margin="2" Height="20" Width="20" cal:Message.Attach="[Event Click]=[Action CopyToClipboard(privateKey.Text)]">
-                        <Image Source="/Images/Copy.png" />
-                    </Button>
-                    <TextBox x:Name="privateKey" Text="{Binding Path=CurrentProject.Product.PrivateKey}" IsReadOnly="True" />
-                </DockPanel>
-            </Grid>
-        </GroupBox>
+                    <DockPanel Grid.Column="1" Grid.Row="2">
+                        <Button DockPanel.Dock="Right" Margin="2" Height="20" Width="20" cal:Message.Attach="[Event Click]=[Action CopyToClipboard(privateKey.Text)]">
+                            <Image Source="/Images/Copy.png" />
+                        </Button>
+                        <TextBox x:Name="privateKey" Text="{Binding Path=CurrentProject.Product.PrivateKey}" IsReadOnly="True" />
+                    </DockPanel>
+                </Grid>
+            </GroupBox>
         
+            <GroupBox Header="Issued Licenses" Grid.Row="1">
+                <ListBox ItemsSource="{Binding CurrentProject.Product.IssuedLicenses}"
+                         ItemTemplate="{DynamicResource IssuedLicenseTemplate}" />
+            </GroupBox>
+        </Grid>
     </DockPanel>
 
 </UserControl>

@@ -17,13 +17,19 @@ namespace Rhino.Licensing.AdminTool.ViewModels
         /// create a new project
         /// </summary>
         void CreateNewProject();
+
+        /// <summary>
+        /// Sets the status message on shell
+        /// </summary>
+        string StatusMessage { get; set; }
     }
 
-    public class ShellViewModel : Conductor<Screen>, IShellViewModel
+    public class ShellViewModel : Conductor<Screen>, IShellViewModel, IStatusService
     {
         private readonly IViewModelFactory _viewModelFactory;
         private readonly IProjectService _projectService;
         private readonly IWindowManager _windowManager;
+        private string _statusMessage;
 
         public ShellViewModel(
             IWindowManager windowManager,
@@ -31,6 +37,7 @@ namespace Rhino.Licensing.AdminTool.ViewModels
             IProjectService projectService)
         {
             DisplayName = "Rhino.Licensing.AdminTool";
+            StatusMessage = "Ready.";
 
             _windowManager = windowManager;
             _viewModelFactory = viewModelFactory;
@@ -67,9 +74,30 @@ namespace Rhino.Licensing.AdminTool.ViewModels
         {
             var vm = _viewModelFactory.Create<ProjectViewModel>();
 
-            vm.Open();
+            if (vm.Open())
+            {
+                ActiveItem = vm;
+            }
+        }
 
-            ActiveItem = vm;
+        public virtual string StatusMessage
+        {
+            get { return _statusMessage; }
+            set
+            {
+                _statusMessage = value;
+                NotifyOfPropertyChange(() => StatusMessage);
+            }
+        }
+
+        public virtual void Update(string message)
+        {
+            StatusMessage = message;
+        }
+
+        public virtual void Update(string message, params object[] args)
+        {
+            Update(string.Format(message, args));
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Rhino.Licensing.AdminTool.Model
 
         public Project()
         {
-            Product = new Product();
+            _product = new Product();
         }
 
         [DataMember]

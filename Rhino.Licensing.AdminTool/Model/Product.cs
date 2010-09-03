@@ -1,4 +1,5 @@
 using System;
+using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Caliburn.PresentationFramework;
 
@@ -11,10 +12,12 @@ namespace Rhino.Licensing.AdminTool.Model
         private string _name;
         private string _privateKey;
         private Guid _id;
+        private ObservableCollection<License> _issuedLicenses;
 
         public Product()
         {
-            Id = Guid.NewGuid();
+            _id = Guid.NewGuid();
+            _issuedLicenses = new ObservableCollection<License>();
         }
 
         [DataMember]
@@ -58,6 +61,17 @@ namespace Rhino.Licensing.AdminTool.Model
             {
                 _publicKey = value;
                 NotifyOfPropertyChange(() => PublicKey);
+            }
+        }
+
+        [DataMember]
+        public virtual ObservableCollection<License> IssuedLicenses
+        {
+            get { return _issuedLicenses; }
+            private set
+            {
+                _issuedLicenses = value;
+                NotifyOfPropertyChange(() => IssuedLicenses);
             }
         }
     }
