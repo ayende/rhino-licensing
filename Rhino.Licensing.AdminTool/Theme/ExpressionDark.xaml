@@ -562,6 +562,111 @@
     </Style>
     <Style TargetType="{x:Type ResizeGrip}" BasedOn="{StaticResource DefaultGripStyle}" />
 
+    <Style x:Key="GridViewColumnHeaderGripper" TargetType="Thumb">
+        <Setter Property="Width" Value="18"/>
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border Padding="{TemplateBinding Padding}" Background="Transparent">
+                        <Rectangle HorizontalAlignment="Center" Width="1" Fill="{TemplateBinding Background}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="{x:Type GridViewColumnHeader}" TargetType="{x:Type GridViewColumnHeader}">
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Background" Value="{DynamicResource MenuBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource MenuTextBrush}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="GridViewColumnHeader">
+                    <Grid>
+                        <Border Name="HeaderBorder"
+                                BorderThickness="0"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                Background="{TemplateBinding Background}"
+                                Padding="2,0,2,0">
+                            <ContentPresenter Name="HeaderContent"
+                                              TextElement.Foreground="White"
+                                              Margin="0,0,0,1"
+                                              RecognizesAccessKey="True"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Border>
+                        <Thumb x:Name="PART_HeaderGripper"
+                               HorizontalAlignment="Right"
+                               Margin="0,0,-9,0"
+                               Style="{StaticResource GridViewColumnHeaderGripper}"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="{x:Type ListView}" TargetType="{x:Type ListView}">
+        <Setter Property="BorderBrush" Value="{DynamicResource NormalBorderBrush}" />
+        <Setter Property="Background" Value="{DynamicResource RecessedBrush}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MessageFontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource MessageFontSize}" />
+        <Setter Property="FontWeight" Value="{DynamicResource MessageFontWeight}" />
+        <!--<Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </Setter.Value>
+        </Setter>-->
+    </Style>
+    
+    <Style x:Key="{x:Type ListViewItem}" TargetType="{x:Type ListViewItem}">
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Background" Value="{DynamicResource RecessedBrush}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MessageFontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource MessageFontSize}" />
+        <Setter Property="FontWeight" Value="{DynamicResource MessageFontWeight}" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="Padding" Value="4,2,4,2" />
+        <Setter Property="MinHeight" Value="20" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource ListItemFocusVisualStyle}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                    <Border Name="ListViewItemRoot" CornerRadius="2" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
+                        <GridViewRowPresenter Name="ListViewItemContent" 
+                                              Content="{TemplateBinding Content}" 
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                              Margin="{TemplateBinding Padding}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="true" />
+                    <Condition Property="IsSelected" Value="false" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource ButtonOverBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource BackgroundBrush}" />
+            </MultiTrigger>
+            <Trigger Property="IsSelected" Value="true">
+                <Setter Property="Background" Value="{DynamicResource ListSelectionGrad}" />
+                <Setter Property="Foreground" Value="{DynamicResource ListSelectedTextBrush}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource DisabledTextBrush}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
     <!--ListBox Item-->
     <Style x:Key="{x:Type ListBoxItem}" TargetType="{x:Type ListBoxItem}">
         <Setter Property="BorderBrush" Value="Transparent" />
