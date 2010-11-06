@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:cal="http://www.caliburnproject.org"
-             mc:Ignorable="d" 
+             xmlns:cal="http://www.caliburnproject.org" xmlns:ctrl="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit" mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" Padding="5">
 
     <DockPanel LastChildFill="True">
@@ -76,8 +75,12 @@
             </GroupBox>
         
             <GroupBox Header="Issued Licenses" Grid.Row="1">
-                <ListBox ItemsSource="{Binding CurrentProject.Product.IssuedLicenses}"
-                         ItemTemplate="{DynamicResource IssuedLicenseTemplate}" />
+                <!--<ListBox ItemsSource="{Binding CurrentProject.Product.IssuedLicenses}"
+                         ItemTemplate="{DynamicResource IssuedLicenseTemplate}" />-->
+
+                <ctrl:DataGrid ItemsSource="{Binding CurrentProject.Product.IssuedLicenses}" AutoGenerateColumns="True">
+                </ctrl:DataGrid>
+                
             </GroupBox>
         </Grid>
     </DockPanel>

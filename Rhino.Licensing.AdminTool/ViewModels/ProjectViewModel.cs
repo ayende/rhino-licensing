@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Windows;
 using Caliburn.PresentationFramework.Filters;
@@ -138,7 +139,14 @@ namespace Rhino.Licensing.AdminTool.ViewModels
 
         public virtual void CopyToClipboard(string text)
         {
-            Clipboard.SetText(text, TextDataFormat.UnicodeText);
+            try
+            {
+                Clipboard.SetText(text, TextDataFormat.UnicodeText);
+            }
+            catch(COMException)
+            {
+                //May thorw COM exception
+            }
         }
     }
 }
