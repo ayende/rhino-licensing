@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FarsiLibrary.Resources</name>
+    </assembly>
+    <members>
+        <member name="T:FarsiLibrary.Resources.ARLocalizer">
+            <summary>
+            Localizer class used to get string values of Arabic language.
+            </summary>
+        </member>
+        <member name="T:FarsiLibrary.Resources.FALocalizer">
+            <summary>
+            Farsi Localizer
+            </summary>
+        </member>
+        <member name="M:FarsiLibrary.Resources.ARLocalizer.GetLocalizedString(FarsiLibrary.Resources.StringID)">
+            <summary>
+            Gets a localized string for Arabic culture, for specified <see cref="T:FarsiLibrary.Resources.StringID"/>.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:FarsiLibrary.Resources.StringID">
+            <summary>
+            Various Strings that could be translater in Localizers.
+            </summary>
+        </member>
+        <member name="T:FarsiLibrary.Resources.FALocalizeManager">
+            <summary>
+            Localizer class to work with internal localized strings.
+            </summary>
+        </member>
+        <member name="M:FarsiLibrary.Resources.FALocalizeManager.GetLocalizer">
+            <summary>
+            Returns an instance of the localized based on CurrentUICulture of the thread.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FarsiLibrary.Resources.FALocalizeManager.GetLocalizerByCulture(System.Globalization.CultureInfo)">
+            <summary>
+            Returns a localizer instance based on the culture.
+            </summary>
+        </member>
+        <member name="M:FarsiLibrary.Resources.FALocalizeManager.OnLocalizerChanged(System.EventArgs)">
+            <summary>
+            Fires the LocalizerChanged event.
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="E:FarsiLibrary.Resources.FALocalizeManager.LocalizerChanged">
+            <summary>
+            Fired when Localizer has changed.
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.Resources.FALocalizeManager.Instance">
+            <summary>
+            Singleton Instance of FALocalizeManager.
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.Resources.FALocalizeManager.CustomCulture">
+            <summary>
+            Custom culture, when set , is used across all controls.
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.Resources.FALocalizeManager.FarsiCulture">
+            <summary>
+            Farsi Culture
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.Resources.FALocalizeManager.ArabicCulture">
+            <summary>
+            Arabic Culture
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.Resources.FALocalizeManager.InvariantCulture">
+            <summary>
+            Invariant Culture
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.Resources.FALocalizeManager.CustomLocalizer">
+            <summary>
+            Gets or Sets a new instance of Localizer. If this value is initialized (default is null), Localize Manager class will use the custom class provided, to interpret localized strings.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -10,6 +10,23 @@ namespace Rhino.Licensing.AdminTool.Model
         private string _ownerName;
         private DateTime? _expirationDate;
         private LicenseType _licenseType;
+        private Guid _id;
+
+        public License()
+        {
+            _id = Guid.NewGuid();
+        }
+
+        [DataMember]
+        public virtual Guid ID
+        {
+            get { return _id; }
+            set
+            {
+                _id = value;
+                NotifyOfPropertyChange(() => ID);
+            }
+        }
 
         [DataMember]
         public virtual string OwnerName

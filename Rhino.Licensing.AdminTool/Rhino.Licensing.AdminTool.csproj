@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Rhino.Licensing.AdminTool</RootNamespace>
     <AssemblyName>Rhino.Licensing.AdminTool</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -79,6 +79,15 @@
     <Reference Include="Castle.Windsor">
       <HintPath>..\SharedLibs\Castle.Windsor.dll</HintPath>
     </Reference>
+    <Reference Include="FarsiLibrary.Resources">
+      <HintPath>..\SharedLibs\FarsiLibrary.Resources.dll</HintPath>
+    </Reference>
+    <Reference Include="FarsiLibrary.Utils">
+      <HintPath>..\SharedLibs\FarsiLibrary.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="FarsiLibrary.WPF">
+      <HintPath>..\SharedLibs\FarsiLibrary.WPF.dll</HintPath>
+    </Reference>
     <Reference Include="J832.Common">
       <HintPath>..\SharedLibs\J832.Common.dll</HintPath>
     </Reference>
@@ -99,6 +108,7 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -129,14 +139,21 @@
     <Compile Include="Services\DialogService.cs" />
     <Compile Include="Services\StatusService.cs" />
     <Compile Include="Services\ProjectService.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Startup\FactoryRegistration.cs" />
     <Compile Include="Startup\GuyWire.cs" />
     <Compile Include="Startup\ServiceRegistration.cs" />
     <Compile Include="Startup\ViewModelRegistration.cs" />
     <Compile Include="Startup\ViewRegistration.cs" />
     <Compile Include="ValueConverters\BoolToVisibilityCollapsedConverter.cs" />
+    <Compile Include="ValueConverters\ExpirationDateConverter.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\FileDialogViewModel.cs" />
+    <Compile Include="ViewModels\IssueLicenseViewModel.cs" />
     <Compile Include="ViewModels\OpenFileDialogViewModel.cs" />
     <Compile Include="ViewModels\ProjectViewModel.cs" />
     <Compile Include="ViewModels\SaveFileDialogViewModel.cs" />
@@ -170,6 +187,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Theme\DataTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Theme\DatePickerStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -233,6 +254,13 @@
       <Project>{05EFD7EB-F0FB-4B65-8E4A-C8FF8DDC6A78}</Project>
       <Name>Rhino.Licensing</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

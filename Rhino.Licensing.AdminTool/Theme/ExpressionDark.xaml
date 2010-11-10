@@ -437,6 +437,66 @@
         </Setter>
     </Style>
 
+    <!--Repeat Button-->
+    <Style x:Key="{x:Type RepeatButton}" TargetType="{x:Type RepeatButton}">
+        <Setter Property="Background" Value="{DynamicResource ButtonDefaultBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ButtonDefaultBorderBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ButtonDefaultTextBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="FontFamily" Value="{DynamicResource MessageFontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource MessageFontSize}" />
+        <Setter Property="FontWeight" Value="{DynamicResource MessageFontWeight}" />
+        <Setter Property="Padding" Value="1" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource ButtonBaseFocusVisualStyle}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Border x:Name="ButtonTemplateGrid" Background="{TemplateBinding Background}" CornerRadius="3" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Border x:Name="HighlightBackground" CornerRadius="2" RenderTransformOrigin="0.5,1" Grid.Row="0" Margin="1,1,1,0" Background="{DynamicResource ButtonSelectionGrad}" Opacity="0.15" />
+                            <ContentPresenter x:Name="Content" Grid.RowSpan="2" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}" RecognizesAccessKey="true" />
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="true">
+                            <Setter Value="{DynamicResource ButtonDefaultBackgroundBrush}" Property="Background" />
+                            <Setter Value="{DynamicResource ButtonDefaultTextBrush}" Property="Foreground" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Value="{DynamicResource ButtonMouseOverBackgroundBrush}" Property="Background" />
+                            <Setter Value="{DynamicResource ButtonMouseOverBorderBrush}" Property="BorderBrush" />
+                            <Setter Value="{DynamicResource ButtonMouseOverTextBrush}" Property="Foreground" />
+                            <Setter TargetName="HighlightBackground" Property="Opacity" Value="0.4" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Value="{DynamicResource ButtonPressedBackgroundBrush}" Property="Background" />
+                            <Setter Value="{DynamicResource ButtonPressedBorderBrush}" Property="BorderBrush" />
+                            <Setter Value="{DynamicResource ButtonDefaultTextBrush}" Property="Foreground" />
+                            <Setter TargetName="HighlightBackground" Property="Opacity" Value="0.1" />
+                            <Setter TargetName="HighlightBackground" Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="1" ScaleY="-1" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Value="{DynamicResource ButtonDisabledBackgroundBrush}" Property="Background" />
+                            <Setter Value="{DynamicResource ButtonDisabledBorderBrush}" Property="BorderBrush" />
+                            <Setter Value="{DynamicResource DisabledTextBrush}" Property="Foreground" />
+                            <Setter TargetName="HighlightBackground" Property="Visibility" Value="Hidden" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!--Buttons-->
     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type ButtonBase}}">
         <Setter Property="Template">
@@ -987,6 +1047,7 @@
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="Padding" Value="1" />
+        <Setter Property="Margin" Value="5" />
         <Setter Property="MinWidth" Value="40" />
         <Setter Property="MinHeight" Value="20" />
         <Setter Property="FontFamily" Value="{DynamicResource MessageFontFamily}" />
@@ -1268,6 +1329,8 @@
         <Setter Property="Foreground" Value="{DynamicResource Text1Brush}" />
         <Setter Property="BorderBrush" Value="{x:Null}" />
         <Setter Property="MinHeight" Value="20" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="FontFamily" Value="{DynamicResource MessageFontFamily}" />
         <Setter Property="FontSize" Value="{DynamicResource MessageFontSize}" />
         <Setter Property="FontWeight" Value="{DynamicResource MessageFontWeight}" />
@@ -1289,7 +1352,6 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsSelected" Value="true">
-                <Setter Property="Canvas.ZIndex" Value="100" />
                 <Setter Property="Background" Value="{DynamicResource TabSelectionBrush}" />
                 <Setter Property="Foreground" Value="{DynamicResource WhiteBrush}" />
             </Trigger>

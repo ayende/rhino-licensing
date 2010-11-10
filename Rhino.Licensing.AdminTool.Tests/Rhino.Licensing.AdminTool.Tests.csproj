@@ -10,8 +10,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Rhino.Licensing.AdminTool.Tests</RootNamespace>
     <AssemblyName>Rhino.Licensing.AdminTool.Tests</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -58,6 +59,15 @@
     <Reference Include="Castle.Windsor">
       <HintPath>..\SharedLibs\Castle.Windsor.dll</HintPath>
     </Reference>
+    <Reference Include="FarsiLibrary.Resources">
+      <HintPath>..\SharedLibs\FarsiLibrary.Resources.dll</HintPath>
+    </Reference>
+    <Reference Include="FarsiLibrary.Utils">
+      <HintPath>..\SharedLibs\FarsiLibrary.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="FarsiLibrary.WPF">
+      <HintPath>..\SharedLibs\FarsiLibrary.WPF.dll</HintPath>
+    </Reference>
     <Reference Include="J832.Common">
       <HintPath>..\SharedLibs\J832.Common.dll</HintPath>
     </Reference>
@@ -78,6 +88,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />

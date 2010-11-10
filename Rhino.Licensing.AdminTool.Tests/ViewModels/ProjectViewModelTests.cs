@@ -1,6 +1,8 @@
 using System.IO;
 using System.Windows;
+using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.Testability;
+using Rhino.Licensing.AdminTool.Factories;
 using Rhino.Licensing.AdminTool.Model;
 using Rhino.Licensing.AdminTool.Services;
 using Rhino.Licensing.AdminTool.Tests.Base;
@@ -17,12 +19,16 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
         private readonly IDialogService _dialogService;
         private readonly IProjectService _projectService;
         private readonly IStatusService _statusService;
+        private readonly IWindowManager _windowManager;
+        private readonly IViewModelFactory _viewModelFactory;
 
         public ProjectViewModelTests()
         {
             _dialogService = MockRepository.GenerateMock<IDialogService>();
             _projectService = MockRepository.GenerateMock<IProjectService>();
             _statusService = MockRepository.GenerateMock<IStatusService>();
+            _windowManager = MockRepository.GenerateMock<IWindowManager>();
+            _viewModelFactory = MockRepository.GenerateMock<IViewModelFactory>();
         }
 
         [Fact]
@@ -51,19 +57,6 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
             validator.AssertWasBound(x => x.CurrentProject.Product.PrivateKey);
             validator.AssertWasBound(x => x.CurrentProject.Product.PublicKey);
             validator.AssertWasBound(x => x.CurrentProject.Product.IssuedLicenses);
-        }
-
-        [Fact]
-        public void IssuedLicense_List_Is_Bound()
-        {
-            var template = Application.Current.FindResource("IssuedLicenseTemplate") as DataTemplate;
-            var validator = Validator.For<License>(template);
-
-            var result = validator.Validate();
-            
-            result.AssertWasBound(x => x.LicenseType);
-            result.AssertWasBound(x => x.OwnerName);
-            result.AssertWasBound(x => x.ExpirationDate);
         }
 
         [Fact]
@@ -154,7 +147,7 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
         [Fact]
         public void Default_Project_Save_Dialog()
         {
-            var vm = new ProjectViewModel(_projectService, _dialogService, _statusService);
+            var vm = CreateProjectViewModel();
             var dialogModel = vm.CreateSaveDialogModel();
 
             Assert.Equal("Rhino License|*.rlic", dialogModel.Filter);
@@ -164,7 +157,7 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
         [Fact]
         public void Default_Project_Open_Dialog()
         {
-            var vm = new ProjectViewModel(_projectService, _dialogService, _statusService);
+            var vm = CreateProjectViewModel();
             var dialogModel = vm.CreateOpenDialogModel();
 
             Assert.Equal("Rhino License|*.rlic", dialogModel.Filter);
@@ -257,11 +250,15 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
         }
 
         [Fact]
-        public void AddLicense_Issues_New_License()
+        public void Can_Issues_New_License()
         {
             var vm = CreateViewModel();
+            var issueVm = new IssueLicenseViewModel();
 
-            vm.CurrentProject = new Project();
+            _viewModelFactory.Expect(f => f.Create<IssueLicenseViewModel>()).Return(issueVm);
+            _windowManager.Expect(w => w.ShowDialog(Arg.Is(issueVm), Arg<object>.Is.Null)).Return(true);
+
+            vm.CurrentProject = new Project { Product = new Product() };
             vm.AddLicense();
 
             Assert.Equal(1, vm.CurrentProject.Product.IssuedLicenses.Count);
@@ -269,17 +266,22 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
 
         private ProjectViewModel CreateViewModel(ISaveFileDialogViewModel model)
         {
-            return new TestProjectViewModel(_projectService, _dialogService, model, null, _statusService);
+            return new TestProjectViewModel(_projectService, _dialogService, model, null, _statusService, _viewModelFactory, _windowManager);
         }
 
         private ProjectViewModel CreateViewModel(IOpenFileDialogViewModel model)
         {
-            return new TestProjectViewModel(_projectService, _dialogService, null, model, _statusService);
+            return new TestProjectViewModel(_projectService, _dialogService, null, model, _statusService, _viewModelFactory, _windowManager);
+        }
+
+        private ProjectViewModel CreateProjectViewModel()
+        {
+            return new ProjectViewModel(_projectService, _dialogService, _statusService, _viewModelFactory, _windowManager);
         }
 
         private ProjectViewModel CreateViewModel()
         {
-            return new TestProjectViewModel(_projectService, _dialogService, null, null, _statusService);
+            return new TestProjectViewModel(_projectService, _dialogService, null, null, _statusService, _viewModelFactory, _windowManager);
         }
 
         public class TestProjectViewModel : ProjectViewModel
@@ -292,8 +294,10 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
                 IDialogService dialogService, 
                 ISaveFileDialogViewModel saveModel, 
                 IOpenFileDialogViewModel openModel,
-                IStatusService statusService) 
-                : base(projectService, dialogService, statusService)
+                IStatusService statusService,
+                IViewModelFactory viewModelFactory, 
+                IWindowManager windowManager) 
+                : base(projectService, dialogService, statusService, viewModelFactory, windowManager)
             {
                 _saveDialogModel = saveModel;
                 _openDialogModel = openModel;

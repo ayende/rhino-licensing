@@ -3,9 +3,11 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Windows;
+using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Filters;
 using Caliburn.PresentationFramework.Screens;
 using Rhino.Licensing.AdminTool.Extensions;
+using Rhino.Licensing.AdminTool.Factories;
 using Rhino.Licensing.AdminTool.Model;
 using Rhino.Licensing.AdminTool.Services;
 
@@ -18,16 +20,22 @@ namespace Rhino.Licensing.AdminTool.ViewModels
         private readonly IProjectService _projectService;
         private readonly IDialogService _dialogService;
         private readonly IStatusService _statusService;
+        private readonly IViewModelFactory _viewModelFactory;
+        private readonly IWindowManager _windowManager;
         private string _filePath;
 
         public ProjectViewModel(
             IProjectService projectService,
             IDialogService dialogService,
-            IStatusService statusService)
+            IStatusService statusService,
+            IViewModelFactory viewModelFactory,
+            IWindowManager windowManager)
         {
             _projectService = projectService;
             _dialogService = dialogService;
             _statusService = statusService;
+            _viewModelFactory = viewModelFactory;
+            _windowManager = windowManager;
         }
 
         public virtual Project CurrentProject
@@ -105,12 +113,13 @@ namespace Rhino.Licensing.AdminTool.ViewModels
         [AutoCheckAvailability]
         public virtual void AddLicense()
         {
-            CurrentProject.Product.IssuedLicenses.Add(new License
+            var vm = _viewModelFactory.Create<IssueLicenseViewModel>();
+            var dialogResult = _windowManager.ShowDialog(vm);
+
+            if (dialogResult.GetValueOrDefault(false))
             {
-                ExpirationDate = DateTime.Now.AddDays(30),
-                LicenseType = LicenseType.Trial,
-                OwnerName = "John Doe"
-            });
+                CurrentProject.Product.IssuedLicenses.Add(vm.CurrentLicense);
+            }
         }
 
         public bool CanAddLicense()

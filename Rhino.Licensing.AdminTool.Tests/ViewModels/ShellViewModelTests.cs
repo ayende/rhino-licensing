@@ -27,7 +27,7 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
             _projectService = MockRepository.GenerateMock<IProjectService>();
             _dialogService = MockRepository.GenerateMock<IDialogService>();
             _statusService = MockRepository.GenerateMock<IStatusService>();
-            _projectViewModel = MockRepository.GenerateMock<ProjectViewModel>(_projectService, _dialogService, _statusService);
+            _projectViewModel = MockRepository.GenerateMock<ProjectViewModel>(_projectService, _dialogService, _statusService, _viewModelFactory, _windowManager);
         }
 
         [Fact]
@@ -122,7 +122,7 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
 
         private ProjectViewModel CreateProjectViewModel()
         {
-            return new ProjectViewModel(_projectService, _dialogService, _statusService);
+            return new ProjectViewModel(_projectService, _dialogService, _statusService, _viewModelFactory, _windowManager);
         }
 
         private ShellViewModel CreateShellViewModel()

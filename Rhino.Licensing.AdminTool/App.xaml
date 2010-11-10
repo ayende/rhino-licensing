@@ -9,6 +9,7 @@
                 <ResourceDictionary Source="pack://application:,,,/Rhino.Licensing.AdminTool;component/Theme/AppStyles.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Rhino.Licensing.AdminTool;component/Theme/Animations.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Rhino.Licensing.AdminTool;component/Theme/DataTemplates.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Rhino.Licensing.AdminTool;component/Theme/DatePickerStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
         
