@@ -131,12 +131,11 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
         }
 
         [Fact]
-        public void Can_Generate_Key_Pair()
+        public void Key_Pair_Is_Generated_When_A_Product_Is_Created()
         {
             var vm = CreateViewModel();
 
             vm.CurrentProject = new Project {Product = new Product()};
-            vm.GenerateKey();
 
             Assert.NotNull(vm.CurrentProject.Product.PublicKey);
             Assert.NotNull(vm.CurrentProject.Product.PrivateKey);
@@ -227,23 +226,11 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
         }
 
         [Fact]
-        public void Can_Not_Issue_New_License_If_Keys_Are_Not_Generated()
+        public void Can_Issue_New_License_When_Keys_Are_Generated()
         {
             var vm = CreateViewModel();
 
             vm.CurrentProject = new Project();
-            var canAdd = vm.CanAddLicense();
-
-            Assert.False(canAdd);
-        }
-
-        [Fact]
-        public void Can_Issue_New_License_If_Keys_Are_Generated()
-        {
-            var vm = CreateViewModel();
-
-            vm.CurrentProject = new Project();
-            vm.GenerateKey();
             var canAdd = vm.CanAddLicense();
 
             Assert.True(canAdd);

@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Windows;
 using Caliburn.Core;
 using Caliburn.Core.Configuration;
 using Caliburn.PresentationFramework;
@@ -42,14 +43,14 @@ namespace Rhino.Licensing.AdminTool
             guyWire.Wire();
         }
 
-        protected override void OnStartup(System.Windows.StartupEventArgs e)
+        protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
             guyWire.ShowRootModel();
         }
 
-        protected override void OnExit(System.Windows.ExitEventArgs e)
+        protected override void OnExit(ExitEventArgs e)
         {
             guyWire.Dewire();
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
+using System.Security.Cryptography;
 using Caliburn.PresentationFramework;
 
 namespace Rhino.Licensing.AdminTool.Model
@@ -8,6 +9,7 @@ namespace Rhino.Licensing.AdminTool.Model
     [DataContract(Name = "Product", Namespace = "http://schemas.hibernatingrhinos.com/")]
     public class Product : PropertyChangedBase
     {
+        private readonly RSA _key;
         private string _publicKey;
         private string _name;
         private string _privateKey;
@@ -16,8 +18,11 @@ namespace Rhino.Licensing.AdminTool.Model
 
         public Product()
         {
+            _key = RSA.Create();
             _id = Guid.NewGuid();
             _issuedLicenses = new ObservableCollection<License>();
+            _publicKey = _key.ToXmlString(false);
+            _privateKey = _key.ToXmlString(true);
         }
 
         [DataMember]

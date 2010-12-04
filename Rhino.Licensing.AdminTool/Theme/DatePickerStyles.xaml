@@ -123,7 +123,7 @@
     </Style>
 
     <!--Today Button Style-->
-    <Style x:Key="{x:Type FL:FXMonthViewButton}" TargetType="{x:Type FL:FXMonthViewButton}" BasedOn="{DynamicResource {x:Type Button}}">
+    <Style x:Key="{x:Type FL:FXMonthViewButton}" TargetType="{x:Type FL:FXMonthViewButton}">
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="FontFamily" Value="Tahoma" />

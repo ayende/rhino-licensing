@@ -15,13 +15,13 @@
         
         <Menu DockPanel.Dock="Top">
             <Menu.Items>
-                <MenuItem Header="File">
-                    <MenuItem Header="New Project" cal:Message.Attach="[Event Click]=[Action CreateNewProject]" />
-                    <MenuItem Header="Open Project" cal:Message.Attach="[Event Click]=[Action OpenProject]" />
+                <MenuItem Header="_File">
+                    <MenuItem Header="_New Project"  InputGestureText="Ctrl+N" cal:Message.Attach="[Gesture MouseAction: LeftClick]=[Action CreateNewProject];[Gesture Key:N, Modifiers:Control]=[Action CreateNewProject]" />
+                    <MenuItem Header="_Open Project" InputGestureText="Ctrl+O" cal:Message.Attach="[Gesture MouseAction: LeftClick]" />
                     <Separator />
-                    <MenuItem Header="Exit" cal:Message.Attach="[Event Click]=[Action TryClose]" />
+                    <MenuItem Header="E_xit" InputGestureText="Ctrl+X" cal:Message.Attach="[Gesture MouseAction: LeftClick]=[Action TryClose]" />
                 </MenuItem>
-                <MenuItem Header="Help">
+                <MenuItem Header="_Help">
                     <MenuItem Header="About..." cal:Message.Attach="[Event Click]=[Action ShowAboutDialog]"/>
                 </MenuItem>
             </Menu.Items>

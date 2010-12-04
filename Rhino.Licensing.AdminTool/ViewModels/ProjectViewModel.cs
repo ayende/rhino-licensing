@@ -1,7 +1,5 @@
-using System;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Security.Cryptography;
 using System.Windows;
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Filters;
@@ -55,14 +53,6 @@ namespace Rhino.Licensing.AdminTool.ViewModels
             {
                 _statusService.Update("Loaded {0} license(s).", _project.Product.IssuedLicenses.Count);
             }
-        }
-
-        public virtual void GenerateKey()
-        {
-            var key = RSA.Create();
-
-            CurrentProject.Product.PublicKey = key.ToXmlString(false);
-            CurrentProject.Product.PrivateKey = key.ToXmlString(true);
         }
 
         public virtual bool CanSave()

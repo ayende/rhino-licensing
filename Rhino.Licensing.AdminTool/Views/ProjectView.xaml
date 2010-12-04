@@ -22,16 +22,12 @@
 
             <Separator Margin="2"/>
 
-            <Button cal:Message.Attach="[Event Click]=[Action GenerateKey]" ToolTip="Generate Key" Margin="2">
-                <Image Source="/Images/GenerateKey.png" Width="32" Height="32" Style="{DynamicResource ToolbarImageStyle}"/>
-            </Button>
-            
             <Button cal:Message.Attach="[Event Click]=[Action AddLicense]" ToolTip="Add License" Margin="2">
                 <Image Source="/Images/NewLicense.png" Width="32" Height="32" Style="{DynamicResource ToolbarImageStyle}"/>
             </Button>
             
         </ToolBarPanel>
-        
+
         <Grid>
             
             <Grid.RowDefinitions>
@@ -40,7 +36,7 @@
             </Grid.RowDefinitions>
             
             <GroupBox Header="Product Information" Grid.Row="0">
-                <Grid>
+                <Grid FocusManager.FocusedElement="{Binding ElementName=productName}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -55,11 +51,15 @@
                     <Label Content="Public Key: " Grid.Column="0" Grid.Row="1"/>
                     <Label Content="Private Key: " Grid.Column="0" Grid.Row="2"/>
 
-                    <TextBox Text="{Binding Path=CurrentProject.Product.Name}" 
+                    <TextBox x:Name="productName"
+                             Text="{Binding Path=CurrentProject.Product.Name, UpdateSourceTrigger=PropertyChanged}" 
                              Grid.Column="1" Grid.Row="0" />
 
                     <DockPanel Grid.Column="1" Grid.Row="1">
                         <Button DockPanel.Dock="Right" Margin="2" Height="20" Width="20" cal:Message.Attach="[Event Click]=[Action CopyToClipboard(publicKey.Text)]">
+                            <Button.ToolTip>
+                                <ToolTip Content="Copy to Clipboard" />
+                            </Button.ToolTip>
                             <Image Source="/Images/Copy.png" />
                         </Button>
                         <TextBox x:Name="publicKey" Text="{Binding Path=CurrentProject.Product.PublicKey}"  IsReadOnly="True" />
@@ -67,6 +67,9 @@
 
                     <DockPanel Grid.Column="1" Grid.Row="2">
                         <Button DockPanel.Dock="Right" Margin="2" Height="20" Width="20" cal:Message.Attach="[Event Click]=[Action CopyToClipboard(privateKey.Text)]">
+                            <Button.ToolTip>
+                                <ToolTip Content="Copy to Clipboard" />
+                            </Button.ToolTip>
                             <Image Source="/Images/Copy.png" />
                         </Button>
                         <TextBox x:Name="privateKey" Text="{Binding Path=CurrentProject.Product.PrivateKey}" IsReadOnly="True" />

@@ -965,7 +965,7 @@
     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseTextBox}" />
 
     <!--ComboBox Item-->
-    <Style x:Key="{x:Type ComboBoxItem}" TargetType="{x:Type ComboBoxItem}" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
+    <Style x:Key="{x:Type ComboBoxItem}" TargetType="{x:Type ComboBoxItem}">
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="Background" Value="{DynamicResource RecessedBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource Text1Brush}" />
