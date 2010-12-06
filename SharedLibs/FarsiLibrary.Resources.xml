@@ -21,11 +21,6 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="T:FarsiLibrary.Resources.StringID">
-            <summary>
-            Various Strings that could be translater in Localizers.
-            </summary>
-        </member>
         <member name="T:FarsiLibrary.Resources.FALocalizeManager">
             <summary>
             Localizer class to work with internal localized strings.
@@ -81,6 +76,11 @@
         <member name="P:FarsiLibrary.Resources.FALocalizeManager.CustomLocalizer">
             <summary>
             Gets or Sets a new instance of Localizer. If this value is initialized (default is null), Localize Manager class will use the custom class provided, to interpret localized strings.
+            </summary>
+        </member>
+        <member name="T:FarsiLibrary.Resources.StringID">
+            <summary>
+            Various Strings that could be translater in Localizers.
             </summary>
         </member>
     </members>
