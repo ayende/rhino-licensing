@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractLicenseValidator.cs" />
+    <Compile Include="LicenseExpiredException.cs" />
     <Compile Include="InvalidationType.cs" />
     <Compile Include="StringLicenseValidator.cs" />
     <Compile Include="FloatingLicenseNotAvialableException.cs" />

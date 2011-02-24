@@ -55,6 +55,26 @@ namespace Rhino.Licensing.Tests
         }
 
         [Fact]
+        public void Throws_date_exception_when_license_is_expired()
+        {
+            var guid = Guid.NewGuid();
+            var generator = new LicenseGenerator(public_and_private);
+            var expiration = DateTime.Now.AddDays(-1);
+            var key = generator.Generate("Oren Eini", guid, expiration,
+                                         new Dictionary<string, string>
+                                         {
+                                            {"prof", "llb"},
+                                            {"reporting", "on"}
+                                         }, LicenseType.Trial);
+
+            var path = Path.GetTempFileName();
+            File.WriteAllText(path, key);
+
+            var validator = new LicenseValidator(public_only, path);
+            Assert.Throws<LicenseExpiredException>(() => validator.AssertValidLicense());
+        }
+
+        [Fact]
         public void Cannot_validate_hacked_license()
         {
             const string hackedLicense =

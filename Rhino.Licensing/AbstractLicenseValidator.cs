@@ -192,8 +192,9 @@ namespace Rhino.Licensing
 
                 if (result)
                     ValidateUsingNetworkTime();
-
-                return result;
+                else
+                    throw new LicenseExpiredException("Expiration Date : " + ExpirationDate);
+                return true;
             }
             catch (RhinoLicensingException)
             {
