@@ -74,7 +74,7 @@ namespace Rhino.Licensing.Tests
             File.WriteAllText(path, license);
 
 
-            Assert.Throws<LicenseNotFoundException>(() => new LicenseValidator(public_only, path)
+            Assert.Throws<LicenseExpiredException>(() => new LicenseValidator(public_only, path)
             {
                 SubscriptionEndpoint = "http://localhost/" + Guid.NewGuid()
             }.AssertValidLicense());
@@ -125,7 +125,7 @@ namespace Rhino.Licensing.Tests
 
             host.Open();
 
-            Assert.Throws<LicenseNotFoundException>(() => new LicenseValidator(public_only, path)
+            Assert.Throws<LicenseExpiredException>(() => new LicenseValidator(public_only, path)
             {
                 SubscriptionEndpoint = address
             }.AssertValidLicense());
