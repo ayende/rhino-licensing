@@ -156,14 +156,14 @@ namespace Rhino.Licensing
 			{
 				Debug.WriteLine(id + " is already leased, so extending lease");
 				var licenseValidator = value.Value;
-				return GenerateLicenseAndRenewLease(identifier, id, licenseValidator);
+				return GenerateLicenseAndRenewLease(identifier, id, licenseValidator, value.Value.LicenseAttributes);
 			}
 			if (availableLicenses.Count > 0)
 			{
 				var availableLicense = availableLicenses[availableLicenses.Count - 1];
 				availableLicenses.RemoveAt(availableLicenses.Count - 1);
 				Debug.WriteLine("Found available license to give, leasing it");
-				return GenerateLicenseAndRenewLease(identifier, id, availableLicense);
+				return GenerateLicenseAndRenewLease(identifier, id, availableLicense, availableLicense.LicenseAttributes);
 			}
 			foreach (var kvp in leasedLicenses)
 			{
@@ -171,26 +171,26 @@ namespace Rhino.Licensing
 					continue;
 				leasedLicenses.Remove(kvp.Key);
 				Debug.WriteLine("Found expired leased license, leasing it");
-				return GenerateLicenseAndRenewLease(identifier, id, kvp.Value.Value);
+				return GenerateLicenseAndRenewLease(identifier, id, kvp.Value.Value, kvp.Value.Value.LicenseAttributes);
 			}
 			Debug.WriteLine("Could not find license to lease");
 			return null;
 		}
 
-		private string GenerateLicenseAndRenewLease(string identifier, Guid id, LicenseValidator licenseValidator)
+		private string GenerateLicenseAndRenewLease(string identifier, Guid id, LicenseValidator licenseValidator, IDictionary<string, string> attributes)
 		{
 			leasedLicenses[identifier] = new KeyValuePair<DateTime, LicenseValidator>(DateTime.UtcNow.AddMinutes(30), licenseValidator);
 			using (var file = new FileStream(state, FileMode.Create, FileAccess.ReadWrite))
 			{
 				WriteState(file);
 			}
-			return GenerateLicense(id, licenseValidator);
+			return GenerateLicense(id, licenseValidator, attributes);
 		}
 
-		private static string GenerateLicense(Guid id, LicenseValidator validator)
+		private static string GenerateLicense(Guid id, LicenseValidator validator, IDictionary<string, string> attributes)
 		{
 			var generator = new LicenseGenerator(LicenseServerPrivateKey);
-			return generator.Generate(validator.Name, id, DateTime.UtcNow.AddMinutes(45), LicenseType.Floating);
+			return generator.Generate(validator.Name, id, DateTime.UtcNow.AddMinutes(45), attributes ,LicenseType.Floating);
 		}
 	}
 }
