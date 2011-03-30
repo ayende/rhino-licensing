@@ -41,6 +41,25 @@ task Init -depends Clean {
 		-version $version `
 		-copyright "Hibernating Rhinos & Ayende Rahien 2004 - 2009"
 		
+	Generate-Assembly-Info `
+		-file "$base_dir\Rhino.Licensing.AdminTool\Properties\AssemblyInfo.cs" `
+		-title "Rhino Licensing $version" `
+		-description "Licensing Framework for .NET" `
+		-company "Hibernating Rhinos" `
+		-product "Rhino Licensing $version" `
+		-version $version `
+		-copyright "Hibernating Rhinos & Ayende Rahien 2004 - 2009"
+		
+	Generate-Assembly-Info `
+		-file "$base_dir\Rhino.Licensing.AdminTool.Tests\Properties\AssemblyInfo.cs" `
+		-title "Rhino Licensing $version" `
+		-description "Licensing Framework for .NET" `
+		-company "Hibernating Rhinos" `
+		-product "Rhino Licensing $version" `
+		-version $version `
+		-clsCompliant "false" `
+		-copyright "Hibernating Rhinos & Ayende Rahien 2004 - 2009"
+		
 	new-item $release_dir -itemType directory 
 	new-item $buildartifacts_dir -itemType directory 
 	cp $tools_dir\xunit\*.* $build_dir
@@ -54,6 +73,7 @@ task Test -depends Compile {
   $old = pwd
   cd $build_dir
   exec "$tools_dir\xUnit\xunit.console.exe" "$build_dir\Rhino.Licensing.Tests.dll"
+  exec "$tools_dir\xUnit\xunit.console.exe" "$build_dir\Rhino.Licensing.AdminTool.Tests.dll"
   cd $old		
 }
 
@@ -65,6 +85,23 @@ task Release -depends Test {
 		$build_dir\Rhino.Licensing.xml `
 		license.txt `
 		acknowledgements.txt
+		
+	& $tools_dir\zip.exe -9 -A -j `
+		$release_dir\Rhino.Licensing-AdminTool-$humanReadableversion-Build-$env:ccnetnumericlabel.zip `
+		$build_dir\Caliburn.Core.dll `
+		$build_dir\Caliburn.PresentationFramework.dll `
+		$build_dir\Caliburn.ShellFramework.dll `
+		$build_dir\Caliburn.Windsor.dll `
+		$build_dir\Castle.Core.dll `
+		$build_dir\Castle.DynamicProxy2.dll `
+		$build_dir\Castle.MicroKernel.dll `
+		$build_dir\Castle.Windsor.dll `
+		$build_dir\log4net.dll `
+		$build_dir\Microsoft.Practices.ServiceLocation.dll `
+		$build_dir\Rhino.Licensing.AdminTool.exe `
+		license.txt `
+		acknowledgements.txt
+		
 	if ($lastExitCode -ne 0) {
         throw "Error: Failed to execute ZIP command"
     }

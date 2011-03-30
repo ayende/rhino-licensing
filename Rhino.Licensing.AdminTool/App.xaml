@@ -1,0 +1,17 @@
+﻿<Application x:Class="Rhino.Licensing.AdminTool.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Application.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Rhino.Licensing.AdminTool;component/Theme/ExpressionDark.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Rhino.Licensing.AdminTool;component/Theme/AppStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Rhino.Licensing.AdminTool;component/Theme/Animations.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Rhino.Licensing.AdminTool;component/Theme/DataTemplates.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Rhino.Licensing.AdminTool;component/Theme/DatePickerStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+        
+    </Application.Resources>
+</Application>

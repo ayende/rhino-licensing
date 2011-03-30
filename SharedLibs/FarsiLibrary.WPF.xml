@@ -1,0 +1,640 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FarsiLibrary.WPF</name>
+    </assembly>
+    <members>
+        <member name="M:FarsiLibrary.WPF.Automation.FXDatePickerAutomationPeer.#ctor(FarsiLibrary.WPF.Controls.FXDatePicker)">
+            <summary>
+            Creates a new instance of FXDatePickerAutomationPeer
+            </summary>
+            <param name="owner"></param>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Automation.FXDatePickerAutomationPeer.GetPattern(System.Windows.Automation.Peers.PatternInterface)">
+            <summary>
+            Gets the control pattern that is associated with the specified System.Windows.Automation.Peers.PatternInterface.
+            </summary>
+            <param name="patternInterface">A value from the System.Windows.Automation.Peers.PatternInterface enumeration.</param>
+            <returns>The object that supports the specified pattern, or null if unsupported.</returns>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Automation.FXDatePickerAutomationPeer.GetAutomationControlTypeCore">
+            <summary>
+            Gets the control type for the element that is associated with the UI Automation peer.
+            </summary>
+            <returns>The control type.</returns>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Automation.FXDatePickerAutomationPeer.GetClassNameCore">
+            <summary>
+            Called by GetClassName that gets a human readable name that, in addition to AutomationControlType, 
+            differentiates the control represented by this AutomationPeer.
+            </summary>
+            <returns>The string that contains the name.</returns>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Automation.FXDatePickerAutomationPeer.GetLocalizedControlTypeCore">
+            <summary>
+            Overrides the GetLocalizedControlTypeCore method for DatePicker
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Automation.FXDatePickerAutomationPeer.GetNameCore">
+            <summary>
+            GetNameCore
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Automation.FXMonthViewAutomationPeer.#ctor(FarsiLibrary.WPF.Controls.FXMonthView)">
+            <summary>
+            Initializes a new instance of the FXMonthViewAutomationPeer class.
+            </summary>
+            <param name="owner">Owning MonthView control</param>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Automation.FXMonthViewAutomationPeer.GetPattern(System.Windows.Automation.Peers.PatternInterface)">
+            <summary>
+            Gets the control pattern that is associated with the specified System.Windows.Automation.Peers.PatternInterface.
+            </summary>
+            <param name="patternInterface">A value from the System.Windows.Automation.Peers.PatternInterface enumeration.</param>
+            <returns>The object that supports the specified pattern, or null if unsupported.</returns>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Automation.FXMonthViewAutomationPeer.GetAutomationControlTypeCore">
+            <summary>
+            Gets the control type for the element that is associated with the UI Automation peer.
+            </summary>
+            <returns>The control type.</returns>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Automation.FXMonthViewAutomationPeer.GetClassNameCore">
+            <summary>
+            Called by GetClassName that gets a human readable name that, in addition to AutomationControlType, 
+            differentiates the control represented by this AutomationPeer.
+            </summary>
+            <returns>The string that contains the name.</returns>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Automation.FXMonthViewAutomationPeer.GetNameCore">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Base.TextCell.#cctor">
+            <summary>
+            Ctor
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Base.TextCell.IsSelected">
+            <summary>
+            IsSelected
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Base.TextCell.CellCornerRadius">
+            <summary>
+            CornerRadius
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Base.TextCell.Text">
+            <summary>
+            Text
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Base.TextCell.TextAlignment">
+            <summary>
+            TextAlignment
+            </summary>
+        </member>
+        <member name="T:FarsiLibrary.WPF.Controls.ThemeColor">
+            <summary>
+            WindowsXP standard theme colors
+            </summary>
+        </member>
+        <member name="F:FarsiLibrary.WPF.Controls.ThemeColor.NormalColor">
+            <summary>
+            Normal Color
+            </summary>
+        </member>
+        <member name="F:FarsiLibrary.WPF.Controls.ThemeColor.Homestead">
+            <summary>
+            Homestead
+            </summary>
+        </member>
+        <member name="F:FarsiLibrary.WPF.Controls.ThemeColor.Metallic">
+            <summary>
+            Metallic
+            </summary>
+        </member>
+        <member name="T:FarsiLibrary.WPF.Converters.DateTimeValueConverter">
+            <summary>
+            Convert between DateTime and string, it's the default Converter for DatePicker.DateValueConverter
+            </summary>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Converters.DateTimeValueConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            Convert DateTime to a formatted string(ShortDatePattern)
+            </summary>
+            <param name="value">DateTime</param>
+            <param name="targetType">string</param>
+            <param name="parameter">null</param>
+            <param name="culture"></param>
+            <returns>formatted or empty string</returns>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Converters.DateTimeValueConverter.ConvertBack(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            Convert input string to DateTime
+            </summary>
+            <param name="value">string</param>
+            <param name="targetType">DateTime</param>
+            <param name="parameter">null</param>
+            <param name="culture"></param>
+            <returns>DateTime or null</returns>
+        </member>
+        <member name="T:FarsiLibrary.WPF.Controls.FXDatePicker">
+            <summary>
+            The FXDatePicker control allows the user to enter or select a date and display it in 
+            the specified format. User can limit the date that can be selected by setting the 
+            selection range.  You might consider using a FXDatePicker control instead of a MonthView 
+            if you need custom date formatting and limit the selection to just one date.
+            </summary>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.FXDatePicker.#cctor">
+            <summary>
+            Ctor
+            </summary>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.FXDatePicker.OnApplyTemplate">
+            <summary>
+            Called when the Template's tree has been generated
+            </summary>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.FXDatePicker.ToString">
+            <summary>
+            Returns a string representation for this control. "FXDatePicker, SelectedDateTime:06/02/2006"
+            </summary>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.FXDatePicker.OnLostMouseCapture(System.Windows.Input.MouseEventArgs)">
+            <summary>
+            Close the dropdown content if FXDatePicker lost the mouse capture
+            </summary>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.FXDatePicker.CoerceIsDropDownOpen(System.Windows.DependencyObject,System.Object)">
+            <summary>
+            Coerce IsDropDownOpen with IsLoaded, so set IsDropDownOpen to true before UI ready can work
+            </summary>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.FXDatePicker.OnSelectedDateTimeChanged(System.Windows.RoutedPropertyChangedEventArgs{System.Nullable{System.DateTime}})">
+            <summary>
+            This method is invoked when the SelectedDateTime property changes.
+            </summary>
+            <param name="e">RoutedPropertyChangedEventArgs contains the old and new value.</param>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.FXDatePicker.OnDropDownOpened(System.Windows.RoutedEventArgs)">
+            <summary>
+            Raise DropDownOpened event
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.FXDatePicker.OnDropDownClosed(System.Windows.RoutedEventArgs)">
+            <summary>
+            Raise DropDownClosed event
+            </summary>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.FXDatePicker.OnInvalidEntry(FarsiLibrary.WPF.Controls.InvalidEntryEventArgs)">
+            <summary>
+            This event is invoked when datepicker can't parse the input string correctly
+            </summary>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.FXDatePicker.AttachToVisualTree">
+            <summary>
+            Detaches the EditableTextBox, MonthView from old child tree and attaches them to a new one
+            </summary>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.FXDatePicker.DetachFromVisualTree">
+            <summary>
+            Clear the event, and detach our current EditableTextBox from ComboBox
+            </summary>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.FXDatePicker.OnMouseButtonDown(System.Object,System.Windows.Input.MouseButtonEventArgs)">
+            <summary>
+            If we (or one of our children) are clicked, claim the focus
+            </summary>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.FXDatePicker.IsDescendant(System.Windows.Media.Visual,System.Windows.Media.Visual)">
+            <summary>
+            True, if node is derived from reference
+            </summary>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.FXDatePicker.KeyDownHandler(System.Object,System.Windows.Input.KeyEventArgs)">
+            <summary>
+            Called when a key event occurs.
+            </summary>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.FXDatePicker.KeyboardToggleDropDown(System.Boolean,System.Boolean)">
+            <summary>
+            Close the dropdown and commit the selection if requested.
+            Make sure to set the selection after the dropdown has closed
+            Don't trigger any unnecessary navigation as a result of changing the selection.
+            </summary>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.FXDatePicker.SelectFocusableDate">
+            <summary>
+            Select the focusable date
+            </summary>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.FXDatePicker.IsFocusable(System.Windows.FrameworkElement)">
+            <summary>
+            True if the element can be focused
+            </summary>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.FXDatePicker.DoFormat">
+            <summary>
+            Format SelectedDateTime property to a formatted string
+            </summary>
+        </member>
+        <member name="E:FarsiLibrary.WPF.Controls.FXDatePicker.DropDownOpened">
+            <summary>
+            Add / Remove DropDownOpened handler
+            </summary>
+        </member>
+        <member name="E:FarsiLibrary.WPF.Controls.FXDatePicker.DropDownClosed">
+            <summary>
+            Add / Remove DropDownClosed handler
+            </summary>
+        </member>
+        <member name="E:FarsiLibrary.WPF.Controls.FXDatePicker.InvalidEntry">
+            <summary>
+            Add / Remove InvalidEntry handler
+            </summary>
+        </member>
+        <member name="E:FarsiLibrary.WPF.Controls.FXDatePicker.SelectedDateTimeChanged">
+            <summary>
+            An event reporting that the SelectedDateTime property changed.
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXDatePicker.SelectedDateTime">
+            <summary>
+            The DateTime value of FXDatePicker
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXDatePicker.MinDate">
+            <summary>
+            The min date of FXDatePicker
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXDatePicker.MaxDate">
+            <summary>
+            The max date of FXDatePicker
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXDatePicker.ViewDateTime">
+            <summary>
+            Preview DateTime
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXDatePicker.ShowTodayButton">
+            <summary>
+            Show Today Button
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXDatePicker.ShowEmptyButton">
+            <summary>
+            Show Empty Button
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXDatePicker.ShowWeekDayNames">
+            <summary>
+            ShowWeekDayNames
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXDatePicker.DateConverter">
+            <summary>
+            This property is used to parse/format between SelectedDateTime and text
+            </summary>
+            <remarks>
+            ConvertBack is used to customize the parsing logic
+            Convert is used to customimze the formatting logic
+            If the converter can't parse the input text correctly, throw FormatException will fire InvalidEntry event
+            </remarks>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXDatePicker.DropDownButtonStyle">
+            <summary>
+            DropDownButtonStyle property
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXDatePicker.MonthViewStyle">
+            <summary>
+            The style of drop-down MonthView
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXDatePicker.NullValueText">
+            <summary>
+            This property indicates which input string should convert the SelectedDateTime of FXDatePicker into the null value.
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXDatePicker.IsDropDownOpen">
+            <summary>
+            Whether or not the "popup" for this control is currently open
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXDatePicker.IsValid">
+            <summary>
+            A property indicating whether the SelectedDateTime is valid or not
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXDatePicker.Text">
+            <summary>
+            Text store the formated SelectedDateTime, if the SelectedDateTime is null, it should store the NullValueText property
+            </summary>
+        </member>
+        <member name="T:FarsiLibrary.WPF.Controls.DateSelectionChangedEventHandler">
+            <summary>
+            The delegate type for handling a selection changed event
+            </summary>
+        </member>
+        <member name="T:FarsiLibrary.WPF.Controls.InvalidEntryEventHandler">
+            <summary>
+            The delegate type for handling the InvalidEntry event
+            </summary>
+        </member>
+        <member name="T:FarsiLibrary.WPF.Controls.InvalidEntryEventArgs">
+            <summary>
+            The InvalidEntry event args, occurs when the datepicker can't parse user input string correctly
+            </summary>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.InvalidEntryEventArgs.#ctor(System.Windows.RoutedEvent,System.String)">
+            <summary>
+            Ctor
+            </summary>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.InvalidEntryEventArgs.InvokeEventHandler(System.Delegate,System.Object)">
+            <summary>
+            This method is used to perform the proper type casting in order to
+            call the type-safe InvalidEntryEventHandler delegate for the InvalidEntry event.
+            </summary>
+            <param name="genericHandler">The handler to invoke.</param>
+            <param name="genericTarget">The current object along the event's route.</param>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.InvalidEntryEventArgs.Entry">
+            <summary>
+            The input string
+            </summary>
+        </member>
+        <member name="T:FarsiLibrary.WPF.Controls.DateSelectionChangedEventArgs">
+            <summary>
+            The inputs to a selection changed event handler
+            </summary>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.DateSelectionChangedEventArgs.#ctor(System.Windows.RoutedEvent,System.Collections.Generic.IEnumerable{System.Nullable{System.DateTime}},System.Collections.Generic.IEnumerable{System.Nullable{System.DateTime}})">
+            <summary>
+            The constructor for date selection changed args
+            </summary>
+            <param name="id">The event ID for the event about to fire -- should probably be MonthCalendar.DateSelectionChangedEventID</param>
+            <param name="removedDates">The dates that were unselected during this event</param>
+            <param name="addedDates">The dates that were selected during this event</param>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.DateSelectionChangedEventArgs.RemovedDates">
+            <summary>
+            An IList containing the dates that were unselected during this event
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.DateSelectionChangedEventArgs.AddedDates">
+            <summary>
+            An IList containing the dates that were selected during this event
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.CalendarDay.Date">
+            <summary>
+            DateTime
+            </summary>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.FXMonthViewButton.#cctor">
+            <summary>
+            Ctor
+            </summary>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.FXMonthViewHeader.#cctor">
+            <summary>
+            Ctor
+            </summary>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.FXMonthViewHelper.CompareYearMonth(System.DateTime,System.DateTime)">
+            <summary>
+            Compare the year and month of dt1 and dt2
+            </summary>
+            <returns>
+            less than 0    : dt1 &lt; dt2; 
+            equal 0        : dt1 == dt2; 
+            greater than 0 : dt1 &gt; dt2
+            </returns>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.FXMonthViewHelper.CompareYearMonthDay(System.DateTime,System.DateTime)">
+            <summary>
+            Compare the year,month,day of dt1 and dt2
+            </summary>
+            <returns>
+            less than 0    : dt1 &lt; dt2; 
+            equal 0        : dt1 == dt2; 
+            greater than 0 : dt1 &gt; dt2
+            </returns>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.FXMonthViewHelper.SubtractByMonth(System.DateTime,System.DateTime)">
+            <summary>
+            dt1 subtract dt2 to get the month count between them
+            </summary>
+            <returns>the months between dt1 and dt2</returns>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.FXMonthViewHelper.IsWithinRange(System.DateTime,System.DateTime,System.DateTime)">
+            <summary>
+            True if date is between start and end
+            </summary>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Converters.DaysHeaderConverter.GetDayName(System.Int32)">
+            <summary>
+            Gets DayName based on the culture.
+            </summary>
+            <param name="dayValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.FXMonthView.#cctor">
+            <summary>
+            Ctor
+            </summary>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.FXMonthView.#ctor">
+            <summary>
+            Ctor
+            </summary>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.FXMonthView.OnApplyTemplate">
+            <summary>
+            When overridden in a derived class, is invoked whenever application code or internal processes call <see cref="M:System.Windows.FrameworkElement.ApplyTemplate"></see>.
+            </summary>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.FXMonthView.RaisePreviewSelectedDateTimeChanged(FarsiLibrary.WPF.Controls.DateSelectionChangedEventArgs)">
+            <summary>
+            Raise PreviewSelectedDateTimeChanged event.
+            </summary>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.FXMonthView.RaiseSelectedDateTimeChanged(FarsiLibrary.WPF.Controls.DateSelectionChangedEventArgs)">
+            <summary>
+            Raise SelectedDateTimeChanged event.
+            </summary>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.FXMonthView.RaisePreviewViewDateTimeChanged(System.Windows.RoutedPropertyChangedEventArgs{System.DateTime})">
+            <summary>
+            Raise PreviewViewDateTimeChanged event.
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.FXMonthView.RaiseViewDateTimeChanged(System.Windows.RoutedPropertyChangedEventArgs{System.DateTime})">
+            <summary>
+            Raise ViewDateTimeChanged event.
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.FXMonthView.OnContainerSelectionChanged(System.Object,System.Windows.Controls.SelectionChangedEventArgs)">
+            <summary>
+            Sync selected value of container control with the SelectedDateTime property.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="E:FarsiLibrary.WPF.Controls.FXMonthView.PreviewSelectedDateTimeChanged">
+            <summary>
+            Fired when previewing SelectedDateTimeChanged
+            </summary>
+        </member>
+        <member name="E:FarsiLibrary.WPF.Controls.FXMonthView.SelectedDateTimeChanged">
+            <summary>
+            Fired when the SelectedDateTime property is changed
+            </summary>
+        </member>
+        <member name="E:FarsiLibrary.WPF.Controls.FXMonthView.PreviewViewDateTimeChanged">
+            <summary>
+            Fired when previewing ViewDateTime changed event.
+            </summary>
+        </member>
+        <member name="E:FarsiLibrary.WPF.Controls.FXMonthView.ViewDateTimeChanged">
+            <summary>
+            Fired when ViewDateTime is changed
+            </summary>
+        </member>
+        <member name="E:FarsiLibrary.WPF.Controls.FXMonthView.RecreatingView">
+            <summary>
+            Recreating View event.
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXMonthView.ViewYear">
+            <summary>
+            View Year
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXMonthView.ViewMonth">
+            <summary>
+            View Month
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXMonthView.ViewDay">
+            <summary>
+            View Day
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXMonthView.ViewDateTime">
+            <summary>
+            Preview DateTime
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXMonthView.SelectedDateTime">
+            <summary>
+            SelectedDateTime
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXMonthView.ShowTodayButton">
+            <summary>
+            Show Today Button
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXMonthView.ShowEmptyButton">
+            <summary>
+            Show Empty Button
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXMonthView.ShowWeekDayNames">
+            <summary>
+            ShowWeekDayNames
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXMonthView.ButtonStyle">
+            <summary>
+            Button Styles
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXMonthView.WeekDayHeaderStyle">
+            <summary>
+            DayHeaderStyle property
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXMonthView.HeaderMonthStyle">
+            <summary>
+            Header Month Style property
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXMonthView.DayContainerStyle">
+            <summary>
+            Day Container Style
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXMonthView.HeaderYearStyle">
+            <summary>
+            Header Year Style property
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXMonthView.DayContainerStyleSelector">
+            <summary>
+            Day Container selector Style
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXMonthView.DayTemplateSelector">
+            <summary>
+            DayTemplateSelector allows the app writer to provide custom template selection logic
+            for a template to apply to each item.
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXMonthView.DayTemplate">
+            <summary>
+            Day Data Template
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXMonthView.ViewPreChangeAnimation">
+            <summary>
+            View change animation.
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXMonthView.ViewPostChangeAnimation">
+            <summary>
+            View change animation.
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXMonthView.MaxDate">
+            <summary>
+            The max date of MonthView
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXMonthView.MinDate">
+            <summary>
+            The min date of MonthView
+            </summary>
+        </member>
+        <member name="P:FarsiLibrary.WPF.Controls.FXMonthViewWeekDayHeaderCell.DayNo">
+            <summary>
+            DayNo
+            </summary>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Controls.FXMonthViewItem.OnMouseRightButtonDown(System.Windows.Input.MouseButtonEventArgs)">
+            <summary>
+            Override right-click item selection
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:FarsiLibrary.WPF.Resources.StringLookupExtension.ProvideValue(System.IServiceProvider)">
+            <summary>
+            Returns localizer string for the specified key
+            </summary>
+        </member>
+    </members>
+</doc>

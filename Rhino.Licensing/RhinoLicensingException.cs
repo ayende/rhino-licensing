@@ -1,33 +1,50 @@
+using System;
+using System.Runtime.Serialization;
+
 namespace Rhino.Licensing
 {
-	using System;
-	using System.Runtime.Serialization;
+    /// <summary>
+    /// Base class for all licensing exceptions.
+    /// </summary>
+    [Serializable]
+    public class RhinoLicensingException : Exception
+    {
+        /// <summary>
+        /// Creates a new instance of <seealso cref="RhinoLicensingException"/>.
+        /// </summary>
+        protected RhinoLicensingException()
+        {
+        }
 
-	public class RhinoLicensingException : Exception
-	{
-		//
-		// For guidelines regarding the creation of new exception types, see
-		//    http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cpgenref/html/cpconerrorraisinghandlingguidelines.asp
-		// and
-		//    http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dncscol/html/csharp07192001.asp
-		//
+        /// <summary>
+        /// Creates a new instance of <seealso cref="RhinoLicensingException"/>.
+        /// </summary>
+        /// <param name="message">error message</param>
+        protected RhinoLicensingException(string message)
+            : base(message)
+        {
+        }
 
-		protected RhinoLicensingException()
-		{
-		}
+        /// <summary>
+        /// Creates a new instance of <seealso cref="RhinoLicensingException"/>.
+        /// </summary>
+        /// <param name="message">error message</param>
+        /// <param name="inner">inner exception</param>
+        protected RhinoLicensingException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
 
-		protected RhinoLicensingException(string message) : base(message)
-		{
-		}
-
-		protected RhinoLicensingException(string message, Exception inner) : base(message, inner)
-		{
-		}
-
-		protected RhinoLicensingException(
-			SerializationInfo info,
-			StreamingContext context) : base(info, context)
-		{
-		}
-	}
+        /// <summary>
+        /// Creates a new instance of <seealso cref="RhinoLicensingException"/>.
+        /// </summary>
+        /// <param name="info">serialization information</param>
+        /// <param name="context">streaming context</param>
+        protected RhinoLicensingException(
+            SerializationInfo info,
+            StreamingContext context)
+            : base(info, context)
+        {
+        }
+    }
 }

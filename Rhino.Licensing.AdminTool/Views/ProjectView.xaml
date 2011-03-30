@@ -1,0 +1,98 @@
+﻿<UserControl x:Class="Rhino.Licensing.AdminTool.Views.ProjectView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:cal="http://www.caliburnproject.org" mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" Padding="5">
+
+    <DockPanel LastChildFill="True">
+        
+        <ToolBarPanel DockPanel.Dock="Top" 
+                      HorizontalAlignment="Left" 
+                      Orientation="Horizontal">
+
+            <Button cal:Message.Attach="[Event Click]=[Action Save]" ToolTip="Save" Margin="2">
+                <Image Source="/Images/Save.png" Width="32" Height="32" Style="{DynamicResource ToolbarImageStyle}"/>
+            </Button>
+
+            <Button cal:Message.Attach="[Event Click]=[Action TryClose]" ToolTip="Close" Margin="2">
+                <Image Source="/Images/Close.png" Width="32" Height="32" Style="{DynamicResource ToolbarImageStyle}"/>
+            </Button>
+
+            <Separator Margin="2"/>
+
+            <Button cal:Message.Attach="[Event Click]=[Action AddLicense]" ToolTip="Add License" Margin="2">
+                <Image Source="/Images/NewLicense.png" Width="32" Height="32" Style="{DynamicResource ToolbarImageStyle}"/>
+            </Button>
+            
+        </ToolBarPanel>
+
+        <Grid>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <GroupBox Header="Product Information" Grid.Row="0">
+                <Grid FocusManager.FocusedElement="{Binding ElementName=productName}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Content="Name: " Grid.Column="0" Grid.Row="0" />
+                    <Label Content="Public Key: " Grid.Column="0" Grid.Row="1"/>
+                    <Label Content="Private Key: " Grid.Column="0" Grid.Row="2"/>
+
+                    <TextBox x:Name="productName"
+                             Text="{Binding Path=CurrentProject.Product.Name, UpdateSourceTrigger=PropertyChanged}" 
+                             Grid.Column="1" Grid.Row="0" />
+
+                    <DockPanel Grid.Column="1" Grid.Row="1">
+                        <Button DockPanel.Dock="Right" Margin="2" Height="20" Width="20" cal:Message.Attach="[Event Click]=[Action CopyToClipboard(publicKey.Text)]">
+                            <Button.ToolTip>
+                                <ToolTip Content="Copy to Clipboard" />
+                            </Button.ToolTip>
+                            <Image Source="/Images/Copy.png" />
+                        </Button>
+                        <TextBox x:Name="publicKey" Text="{Binding Path=CurrentProject.Product.PublicKey}"  IsReadOnly="True" />
+                    </DockPanel>
+
+                    <DockPanel Grid.Column="1" Grid.Row="2">
+                        <Button DockPanel.Dock="Right" Margin="2" Height="20" Width="20" cal:Message.Attach="[Event Click]=[Action CopyToClipboard(privateKey.Text)]">
+                            <Button.ToolTip>
+                                <ToolTip Content="Copy to Clipboard" />
+                            </Button.ToolTip>
+                            <Image Source="/Images/Copy.png" />
+                        </Button>
+                        <TextBox x:Name="privateKey" Text="{Binding Path=CurrentProject.Product.PrivateKey}" IsReadOnly="True" />
+                    </DockPanel>
+                </Grid>
+            </GroupBox>
+        
+            <GroupBox Header="Issued Licenses" Grid.Row="1">
+
+                <ListView ItemsSource="{Binding CurrentProject.Product.IssuedLicenses}"
+                          IsSynchronizedWithCurrentItem="True">
+
+                    <ListView.View>
+                        <GridView AllowsColumnReorder="True">
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=OwnerName}" Header="Owner" Width="120" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=LicenseType}" Header="LicenseType" Width="120" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=ExpirationDate}" Header="Expiration Date" Width="120" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                
+            </GroupBox>
+        </Grid>
+    </DockPanel>
+
+</UserControl>

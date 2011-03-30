@@ -27,32 +27,52 @@ namespace Rhino.Licensing.Tests
             Assert.Equal(LicenseType.Trial, validator.LicenseType);
         }
 
-		[Fact]
-		public void Gen_and_validate_with_attributes()
-		{
-			var guid = Guid.NewGuid();
-			var generator = new LicenseGenerator(public_and_private);
-			var expiration = DateTime.Now.AddDays(30);
-			var key = generator.Generate("Oren Eini", guid, expiration,
-			                             new Dictionary<string, string>
-			                             {
-			                             	{"prof", "llb"},
-			                             	{"reporting", "on"}
-			                             }, LicenseType.Trial);
+        [Fact]
+        public void Gen_and_validate_with_attributes()
+        {
+            var guid = Guid.NewGuid();
+            var generator = new LicenseGenerator(public_and_private);
+            var expiration = DateTime.Now.AddDays(30);
+            var key = generator.Generate("Oren Eini", guid, expiration,
+                                         new Dictionary<string, string>
+                                         {
+                                            {"prof", "llb"},
+                                            {"reporting", "on"}
+                                         }, LicenseType.Trial);
 
-			var path = Path.GetTempFileName();
-			File.WriteAllText(path, key);
+            var path = Path.GetTempFileName();
+            File.WriteAllText(path, key);
 
-			var validator = new LicenseValidator(public_only, path);
-			validator.AssertValidLicense();
+            var validator = new LicenseValidator(public_only, path);
+            validator.AssertValidLicense();
 
-			Assert.Equal("llb", validator.LicenseAttributes["prof"]);
-			Assert.Equal("on", validator.LicenseAttributes["reporting"]);
-			Assert.Equal(guid, validator.UserId);
-			Assert.Equal(expiration, validator.ExpirationDate);
-			Assert.Equal("Oren Eini", validator.Name);
-			Assert.Equal(LicenseType.Trial, validator.LicenseType);
-		}
+            Assert.Equal("llb", validator.LicenseAttributes["prof"]);
+            Assert.Equal("on", validator.LicenseAttributes["reporting"]);
+            Assert.Equal(guid, validator.UserId);
+            Assert.Equal(expiration, validator.ExpirationDate);
+            Assert.Equal("Oren Eini", validator.Name);
+            Assert.Equal(LicenseType.Trial, validator.LicenseType);
+        }
+
+        [Fact]
+        public void Throws_date_exception_when_license_is_expired()
+        {
+            var guid = Guid.NewGuid();
+            var generator = new LicenseGenerator(public_and_private);
+            var expiration = DateTime.Now.AddDays(-1);
+            var key = generator.Generate("Oren Eini", guid, expiration,
+                                         new Dictionary<string, string>
+                                         {
+                                            {"prof", "llb"},
+                                            {"reporting", "on"}
+                                         }, LicenseType.Trial);
+
+            var path = Path.GetTempFileName();
+            File.WriteAllText(path, key);
+
+            var validator = new LicenseValidator(public_only, path);
+            Assert.Throws<LicenseExpiredException>(() => validator.AssertValidLicense());
+        }
 
         [Fact]
         public void Cannot_validate_hacked_license()
@@ -81,7 +101,7 @@ namespace Rhino.Licensing.Tests
             File.WriteAllText(path, hackedLicense);
 
             var validator = new LicenseValidator(public_only, path);
-            Assert.Throws<LicenseNotFoundException>(validator.AssertValidLicense);
+            Assert.Throws<LicenseNotFoundException>(() => validator.AssertValidLicense());
         }
     }
 }

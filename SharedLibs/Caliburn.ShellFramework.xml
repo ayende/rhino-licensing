@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Caliburn.ShellFramework</name>
+    </assembly>
+    <members>
+        <member name="T:Caliburn.ShellFramework.ShellFrameworkExtensions">
+            <summary>
+            General extension methods related to the shell framework.
+            </summary>
+        </member>
+        <member name="M:Caliburn.ShellFramework.ShellFrameworkExtensions.ShellFramework(Caliburn.Core.Configuration.IModuleHook)">
+            <summary>
+            Adds the shell framework module's configuration to the system.
+            </summary>
+            <param name="hook">The hook.</param>
+        </member>
+        <member name="M:Caliburn.ShellFramework.ShellFrameworkExtensions.DetermineDisplayName(System.Object)">
+            <summary>
+            Determines the display name for the item.
+            </summary>
+            <param name="item">The item.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.ShellFramework.ShellFrameworkExtensions.CreateScope``2(``1,``0)">
+            <summary>
+            Creates the scope.
+            </summary>
+            <typeparam name="TScope">The type of scope controller.</typeparam>
+            <typeparam name="TInScope">The type of the item in scope.</typeparam>
+            <param name="inScope">The in item scope.</param>
+            <param name="scope">The scope controller.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Caliburn.ShellFramework.ShellFrameworkExtensions.DescendantsAndSelf``1(``0)">
+            <summary>
+            Returns the descendants and self.
+            </summary>
+            <typeparam name="T">The type of item to query.</typeparam>
+            <param name="self">The item to return descendants for.</param>
+            <returns>The flattened hierarchy.</returns>
+        </member>
+    </members>
+</doc>
