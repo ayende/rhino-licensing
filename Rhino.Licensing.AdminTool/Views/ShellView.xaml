@@ -17,7 +17,7 @@
             <Menu.Items>
                 <MenuItem Header="_File">
                     <MenuItem Header="_New Project"  InputGestureText="Ctrl+N" cal:Message.Attach="[Gesture MouseAction: LeftClick]=[Action CreateNewProject];[Gesture Key:N, Modifiers:Control]=[Action CreateNewProject]" />
-                    <MenuItem Header="_Open Project" InputGestureText="Ctrl+O" cal:Message.Attach="[Gesture MouseAction: LeftClick]" />
+                    <MenuItem Header="_Open Project" InputGestureText="Ctrl+O" cal:Message.Attach="[Gesture MouseAction: LeftClick]=[Action OpenProject];[Gesture Key:O, Modifiers:Control]=[Action OpenProject]" />
                     <Separator />
                     <MenuItem Header="E_xit" InputGestureText="Ctrl+X" cal:Message.Attach="[Gesture MouseAction: LeftClick]=[Action TryClose]" />
                 </MenuItem>
