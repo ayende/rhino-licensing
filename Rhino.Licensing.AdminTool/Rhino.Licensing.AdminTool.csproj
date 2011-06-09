@@ -136,6 +136,7 @@
     <Compile Include="Model\Product.cs" />
     <Compile Include="Model\Project.cs" />
     <Compile Include="Services\DialogService.cs" />
+    <Compile Include="Services\ExportService.cs" />
     <Compile Include="Services\StatusService.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -260,6 +261,9 @@
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Export.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

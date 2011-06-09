@@ -3,7 +3,7 @@ using Caliburn.PresentationFramework.Screens;
 
 namespace Rhino.Licensing.AdminTool.ViewModels
 {
-    public interface IFileDialogViewModel
+    public interface IFileDialogViewModel : IScreen
     {
         bool AddExtension { get; set; }
         bool CheckFileExists { get; set; }
@@ -13,7 +13,6 @@ namespace Rhino.Licensing.AdminTool.ViewModels
         string Filter { get; set; }
         string InitialDirectory { get; set; }
         string Title { get; set; }
-        string DisplayName { get; set; }
         IEnumerable<string> FileNames { get; set; }
         bool? Result { get; set; }
     }

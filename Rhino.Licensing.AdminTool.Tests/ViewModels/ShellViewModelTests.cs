@@ -19,6 +19,7 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
         private readonly IDialogService _dialogService;
         private readonly IStatusService _statusService;
         private readonly ProjectViewModel _projectViewModel;
+        private readonly IExportService _exportService;
 
         public ShellViewModelTests()
         {
@@ -27,7 +28,8 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
             _projectService = MockRepository.GenerateMock<IProjectService>();
             _dialogService = MockRepository.GenerateMock<IDialogService>();
             _statusService = MockRepository.GenerateMock<IStatusService>();
-            _projectViewModel = MockRepository.GenerateMock<ProjectViewModel>(_projectService, _dialogService, _statusService, _viewModelFactory, _windowManager);
+            _exportService = MockRepository.GenerateMock<IExportService>();
+            _projectViewModel = MockRepository.GenerateMock<ProjectViewModel>(_projectService, _dialogService, _statusService, _exportService, _viewModelFactory, _windowManager);
         }
 
         [Fact]
@@ -122,7 +124,7 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
 
         private ProjectViewModel CreateProjectViewModel()
         {
-            return new ProjectViewModel(_projectService, _dialogService, _statusService, _viewModelFactory, _windowManager);
+            return new ProjectViewModel(_projectService, _dialogService, _statusService, _exportService, _viewModelFactory, _windowManager);
         }
 
         private ShellViewModel CreateShellViewModel()
