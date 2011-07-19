@@ -88,6 +88,7 @@ task Release -depends Test {
 		
 	& $tools_dir\zip.exe -9 -A -j `
 		$release_dir\Rhino.Licensing-AdminTool-$humanReadableversion-Build-$env:ccnetnumericlabel.zip `
+		$build_dir\Rhino.Licensing.dll `
 		$build_dir\Caliburn.Core.dll `
 		$build_dir\Caliburn.PresentationFramework.dll `
 		$build_dir\Caliburn.ShellFramework.dll `
@@ -96,6 +97,11 @@ task Release -depends Test {
 		$build_dir\Castle.DynamicProxy2.dll `
 		$build_dir\Castle.MicroKernel.dll `
 		$build_dir\Castle.Windsor.dll `
+		$build_dir\FarsiLibrary.WPF.dll `
+		$build_dir\FarsiLibrary.Utils.dll `
+		$build_dir\FarsiLibrary.Resources.dll `
+		$build_dir\J832.Common.dll `
+		$build_dir\J832.Wpf.BagOTricksLib.dll `
 		$build_dir\log4net.dll `
 		$build_dir\Microsoft.Practices.ServiceLocation.dll `
 		$build_dir\Rhino.Licensing.AdminTool.exe `
