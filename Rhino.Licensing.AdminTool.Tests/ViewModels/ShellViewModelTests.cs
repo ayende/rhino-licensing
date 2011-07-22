@@ -1,11 +1,9 @@
 using Caliburn.PresentationFramework.ApplicationModel;
 using Caliburn.PresentationFramework.Screens;
-using Caliburn.Testability;
 using Rhino.Licensing.AdminTool.Factories;
 using Rhino.Licensing.AdminTool.Services;
 using Rhino.Licensing.AdminTool.Tests.Base;
 using Rhino.Licensing.AdminTool.ViewModels;
-using Rhino.Licensing.AdminTool.Views;
 using Rhino.Mocks;
 using Xunit;
 
@@ -30,17 +28,6 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
             _statusService = MockRepository.GenerateMock<IStatusService>();
             _exportService = MockRepository.GenerateMock<IExportService>();
             _projectViewModel = MockRepository.GenerateMock<ProjectViewModel>(_projectService, _dialogService, _statusService, _exportService, _viewModelFactory, _windowManager);
-        }
-
-        [Fact]
-        public void Shell_Has_Correct_Binding()
-        {
-            var validator = Validator.For<ShellView, ShellViewModel>()
-                                     .Validate();
-
-            validator.AssertNoErrors();
-            validator.AssertWasBound(x => x.DisplayName);
-            validator.AssertWasBound(x => x.StatusMessage);
         }
 
         [Fact]

@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Rhino.Licensing.AdminTool.Tests</RootNamespace>
     <AssemblyName>Rhino.Licensing.AdminTool.Tests</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -41,7 +41,8 @@
     <Reference Include="Caliburn.ShellFramework">
       <HintPath>..\SharedLibs\Caliburn.ShellFramework.dll</HintPath>
     </Reference>
-    <Reference Include="Caliburn.Testability">
+    <Reference Include="Caliburn.Testability, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\SharedLibs\Caliburn.Testability.dll</HintPath>
     </Reference>
     <Reference Include="Caliburn.Windsor">
@@ -88,6 +89,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -120,8 +122,12 @@
     <Compile Include="ViewModels\AboutViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\DialogViewModelTests.cs" />
-    <Compile Include="ViewModels\ProjectViewModelTests.cs" />
-    <Compile Include="ViewModels\ShellViewModelTests.cs" />
+    <Compile Include="ViewModels\ProjectViewModelTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewModels\ShellViewModelTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Rhino.Licensing.AdminTool\Rhino.Licensing.AdminTool.csproj">

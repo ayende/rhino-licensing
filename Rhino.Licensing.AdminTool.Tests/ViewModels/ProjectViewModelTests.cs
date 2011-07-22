@@ -1,13 +1,11 @@
 using System.IO;
 using System.Windows;
 using Caliburn.PresentationFramework.ApplicationModel;
-using Caliburn.Testability;
 using Rhino.Licensing.AdminTool.Factories;
 using Rhino.Licensing.AdminTool.Model;
 using Rhino.Licensing.AdminTool.Services;
 using Rhino.Licensing.AdminTool.Tests.Base;
 using Rhino.Licensing.AdminTool.ViewModels;
-using Rhino.Licensing.AdminTool.Views;
 using Rhino.Mocks;
 using Xunit;
 using Caliburn.Testability.Extensions;
@@ -47,18 +45,6 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
             var vm = CreateProjectViewModel();
 
             vm.AssertThatProperty(x => x.CurrentProject).RaisesChangeNotification();
-        }
-
-        [Fact]
-        public void CurrentProject_Properties_Are_Bound()
-        {
-            var validator = Validator.For<ProjectView, ProjectViewModel>()
-                                     .Validate();
-
-            validator.AssertWasBound(x => x.CurrentProject.Product.Name);
-            validator.AssertWasBound(x => x.CurrentProject.Product.PrivateKey);
-            validator.AssertWasBound(x => x.CurrentProject.Product.PublicKey);
-            validator.AssertWasBound(x => x.CurrentProject.Product.IssuedLicenses);
         }
 
         [Fact]
@@ -298,7 +284,7 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
 
             vm.ExportLicense();
 
-            _exportService.AssertWasCalled(x => x.Export(Arg.Is(vm.CurrentProject.Product), Arg.Is(vm.SelectedLicense), Arg<FileInfo>.Matches(fi => fi.FullName == licensepath)));
+            _exportService.AssertWasCalled(x => x.Export(Arg.Is(vm.CurrentProject.Product), Arg.Is(vm.SelectedLicense), Arg<FileInfo>.Is.NotNull));
         }
 
         private ProjectViewModel CreateProjectViewModel()
