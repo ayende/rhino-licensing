@@ -5,21 +5,6 @@ using SaveFileDialog = Rhino.Licensing.AdminTool.Dialogs.SaveFileDialog;
 
 namespace Rhino.Licensing.AdminTool.Services
 {
-    public interface IDialogService
-    {
-        /// <summary>
-        /// Shows a OpenFileDialog
-        /// </summary>
-        /// <returns></returns>
-        void ShowOpenFileDialog(IOpenFileDialogViewModel model);
-
-        /// <summary>
-        /// Shows a SaveFileDialog
-        /// </summary>
-        /// <returns></returns>
-        void ShowSaveFileDialog(ISaveFileDialogViewModel model);
-    }
-
     public class DialogService : IDialogService
     {
         private readonly IDialogFactory _dialogFactory;

@@ -111,6 +111,8 @@
     <Compile Include="Dialogs\SaveFileDialogTests.cs" />
     <Compile Include="Models\LicenseModelTests.cs" />
     <Compile Include="Services\BoolToVisibilityConverterTests.cs" />
+    <Compile Include="Services\ExpirationDateConverterTests.cs" />
+    <Compile Include="Services\ExportServiceTests.cs" />
     <Compile Include="Services\StatusServiceTests.cs" />
     <Compile Include="Startup\ContainerTests.cs" />
     <Compile Include="Startup\GuyWireTests.cs" />
@@ -122,12 +124,14 @@
     <Compile Include="ViewModels\AboutViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\DialogViewModelTests.cs" />
+    <Compile Include="ViewModels\IssueLicenseViewModelTests.cs" />
     <Compile Include="ViewModels\ProjectViewModelTests.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModels\ShellViewModelTests.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModels\UserDataViewModelTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Rhino.Licensing.AdminTool\Rhino.Licensing.AdminTool.csproj">

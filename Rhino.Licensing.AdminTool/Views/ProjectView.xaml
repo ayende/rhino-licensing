@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:cal="http://www.caliburnproject.org" mc:Ignorable="d" 
+             Background="{DynamicResource TabSelectionBrush}"
              d:DesignHeight="300" d:DesignWidth="300" Padding="5">
 
     <DockPanel LastChildFill="True">
@@ -89,9 +90,9 @@
 
                     <ListView.View>
                         <GridView AllowsColumnReorder="True">
-                            <GridViewColumn DisplayMemberBinding="{Binding Path=OwnerName}" Header="Owner" Width="120" />
-                            <GridViewColumn DisplayMemberBinding="{Binding Path=LicenseType}" Header="LicenseType" Width="120" />
-                            <GridViewColumn DisplayMemberBinding="{Binding Path=ExpirationDate}" Header="Expiration Date" Width="120" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=OwnerName}" Header="Owner" Width="150" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=LicenseType}" Header="LicenseType" Width="150" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=ExpirationDate}" Header="Expiration Date" Width="150" />
                         </GridView>
                     </ListView.View>
                 </ListView>

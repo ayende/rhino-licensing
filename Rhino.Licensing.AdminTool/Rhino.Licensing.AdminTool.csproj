@@ -133,12 +133,17 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Factories\IDialogFactory.cs" />
     <Compile Include="Factories\IViewModelFactory.cs" />
+    <Compile Include="Infrastructure\WindowManager.cs" />
     <Compile Include="Model\License.cs" />
+    <Compile Include="Model\UserData.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Model\Project.cs" />
     <Compile Include="Services\DialogService.cs" />
     <Compile Include="Services\ExportService.cs" />
-    <Compile Include="Services\StatusService.cs" />
+    <Compile Include="Services\IDialogService.cs" />
+    <Compile Include="Services\IExportService.cs" />
+    <Compile Include="Services\IProjectService.cs" />
+    <Compile Include="Services\IStatusService.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -154,22 +159,34 @@
     <Compile Include="ValueConverters\ExpirationDateConverter.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\FileDialogViewModel.cs" />
+    <Compile Include="ViewModels\IFileDialogViewModel.cs" />
+    <Compile Include="ViewModels\ILicenseHolder.cs" />
+    <Compile Include="ViewModels\ILicenseInfoViewModel.cs" />
     <Compile Include="ViewModels\IssueLicenseViewModel.cs" />
+    <Compile Include="ViewModels\IUserDataViewModel.cs" />
+    <Compile Include="ViewModels\LicenseInfoViewModel.cs" />
     <Compile Include="ViewModels\OpenFileDialogViewModel.cs" />
     <Compile Include="ViewModels\ProjectViewModel.cs" />
     <Compile Include="ViewModels\SaveFileDialogViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="ViewModels\UserDataViewModel.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\IssueLicenseView.xaml.cs">
       <DependentUpon>IssueLicenseView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\LicenseInfoView.xaml.cs">
+      <DependentUpon>LicenseInfoView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ProjectView.xaml.cs">
       <DependentUpon>ProjectView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserDataView.xaml.cs">
+      <DependentUpon>UserDataView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -207,11 +224,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\LicenseInfoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ProjectView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ShellView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserDataView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

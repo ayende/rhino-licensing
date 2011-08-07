@@ -13,7 +13,7 @@ namespace Rhino.Licensing.AdminTool.ValueConverters
 
             if(value is DateTime)
             {
-                return ((DateTime)value).ToString("g");
+                return ((DateTime)value).ToString("g", culture ?? CultureInfo.InvariantCulture);
             }
 
             return value;

@@ -242,7 +242,7 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
         public void Can_Issues_New_License()
         {
             var vm = CreateProjectViewModel();
-            var issueVm = new IssueLicenseViewModel();
+            var issueVm = new IssueLicenseViewModel(new UserDataViewModel(), new LicenseInfoViewModel());
 
             _viewModelFactory.Expect(f => f.Create<IssueLicenseViewModel>()).Return(issueVm);
             _windowManager.Expect(w => w.ShowDialog(Arg.Is(issueVm), Arg<object>.Is.Null)).Return(true);

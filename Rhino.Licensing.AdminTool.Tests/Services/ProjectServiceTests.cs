@@ -3,7 +3,6 @@ using System.IO;
 using Rhino.Licensing.AdminTool.Model;
 using Rhino.Licensing.AdminTool.Services;
 using Xunit;
-using Xunit.Extensions;
 
 namespace Rhino.Licensing.AdminTool.Tests.Services
 {
