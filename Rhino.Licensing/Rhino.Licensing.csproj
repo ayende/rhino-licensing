@@ -78,6 +78,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractLicenseValidator.cs" />
+    <Compile Include="Discovery\DiscoveryClient.cs" />
+    <Compile Include="Discovery\DiscoveryHost.cs" />
     <Compile Include="LicenseExpiredException.cs" />
     <Compile Include="InvalidationType.cs" />
     <Compile Include="StringLicenseValidator.cs" />
