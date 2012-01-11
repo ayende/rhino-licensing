@@ -1,7 +1,9 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Linq;
 
 namespace Rhino.Licensing.Discovery
 {
@@ -11,7 +13,9 @@ namespace Rhino.Licensing.Discovery
 	public class DiscoveryHost : IDisposable
 	{
 		private Socket socket;
-		readonly byte[] buffer = new byte[1024 * 4];
+		private readonly byte[] buffer = new byte[1024*4];
+		private const string AllHostsMulticastIP = "224.0.0.1";
+		private const int DiscoveryPort = 12391;
 
 		///<summary>
 		/// Starts listening to network notifications
@@ -20,11 +24,29 @@ namespace Rhino.Licensing.Discovery
 		{
 			socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 			socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, 1);
-			socket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership,
-								   new MulticastOption(IPAddress.Parse("224.0.0.1"))); // all hosts group
-
-			socket.Bind(new IPEndPoint(IPAddress.Any, 12391));
+			BindUpAdaptersToMulticast();
+			socket.Bind(new IPEndPoint(IPAddress.Any, DiscoveryPort));
 			StartListening();
+		}
+
+		private void BindUpAdaptersToMulticast()
+		{
+			NetworkInterface.GetAllNetworkInterfaces()
+				.Where(card => card.OperationalStatus == OperationalStatus.Up)
+				.ToList()
+				.ForEach(SetSocketOptionsForNic);
+		}
+
+		private void SetSocketOptionsForNic(NetworkInterface nic)
+		{
+			nic.GetIPProperties()
+				.UnicastAddresses
+				.Where(unicast => unicast.Address.AddressFamily == AddressFamily.InterNetwork)
+				.ToList()
+				.ForEach(
+					address =>
+					socket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership,
+					                       new MulticastOption(IPAddress.Parse(AllHostsMulticastIP), address.Address)));
 		}
 
 		private void StartListening()
@@ -106,14 +128,17 @@ namespace Rhino.Licensing.Discovery
 			/// The client's license id
 			/// </summary>
 			public Guid UserId { get; set; }
+
 			/// <summary>
 			/// The client machine name
 			/// </summary>
 			public string MachineName { get; set; }
+
 			/// <summary>
 			/// The client user name
 			/// </summary>
 			public string UserName { get; set; }
+
 			/// <summary>
 			/// The id of the sender
 			/// </summary>
