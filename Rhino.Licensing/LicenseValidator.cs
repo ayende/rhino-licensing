@@ -54,7 +54,7 @@ namespace Rhino.Licensing
                 catch (Exception e)
                 {
                     inMemoryLicense = value;
-                    Log.Warn("Could not write new license value, using in memory model instrea", e);
+                    Log.Warn("Could not write new license value, using in memory model instead", e);
                 }
             }
         }
