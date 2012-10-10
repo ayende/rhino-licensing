@@ -138,6 +138,7 @@
     <Compile Include="Model\UserData.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Model\Project.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DialogService.cs" />
     <Compile Include="Services\ExportService.cs" />
     <Compile Include="Services\IDialogService.cs" />
@@ -190,9 +191,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
