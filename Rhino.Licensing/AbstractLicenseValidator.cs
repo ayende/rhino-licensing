@@ -49,7 +49,7 @@ namespace Rhino.Licensing
         private bool currentlyValidatingSubscriptionLicense;
 		private readonly DiscoveryHost discoveryHost;
     	private DiscoveryClient discoveryClient;
-    	private readonly Guid senderId = Guid.NewGuid();
+        private readonly Guid senderId;
 
     	/// <summary>
         /// Fired when license data is invalidated
@@ -173,7 +173,7 @@ namespace Rhino.Licensing
         	LicenseAttributes = new Dictionary<string, string>();
             nextLeaseTimer = new Timer(LeaseLicenseAgain);
             this.publicKey = publicKey;
-        	this.senderId = senderId;
+        	this.senderId = Guid.NewGuid();
         	discoveryHost.ClientDiscovered += DiscoveryHostOnClientDiscovered;
 			discoveryHost.Start();
         }
@@ -202,6 +202,9 @@ namespace Rhino.Licensing
 			}
     	}
 
+        /// <summary>
+        /// Event that's raised when duplicate licenses are found
+        /// </summary>
     	public event EventHandler<DiscoveryHost.ClientDiscoveredEventArgs> MultipleLicensesWereDiscovered;
 
     	/// <summary>
@@ -212,7 +215,7 @@ namespace Rhino.Licensing
 			:this(publicKey)
         {
             this.licenseServerUrl = licenseServerUrl;
-    		this.senderId = senderId;
+    		this.senderId = Guid.NewGuid();
     		this.clientId = clientId;
         }
 
@@ -427,6 +430,9 @@ namespace Rhino.Licensing
             }
         }
 
+        /// <summary>
+        /// Lease timeout
+        /// </summary>
     	public TimeSpan LeaseTimeout { get; set; }
 
     	private bool ValidateFloatingLicense(string publicKeyOfFloatingLicense)

@@ -146,6 +146,9 @@ namespace Rhino.Licensing.Discovery
 
 		}
 
+        /// <summary>
+        /// Disposes of the object
+        /// </summary>
 		public void Dispose()
 		{
 			if (socket != null)
