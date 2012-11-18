@@ -161,9 +161,12 @@ function Configure-BuildEnvironment
   if ($framework.Length -ne 3 -and $framework.Length -ne 6) {
     throw "Error: Invalid .NET Framework version, $framework, specified"
   }
+  Write-Host "Framework is $framework"
+    
   $versionPart = $framework.Substring(0,3)
   $bitnessPart = $framework.Substring(3)
   $versions = $null
+  
   switch ($versionPart)
   {
     '1.0' { $versions = @('v1.0.3705')  }
@@ -185,12 +188,13 @@ function Configure-BuildEnvironment
         $ptrSize = [System.IntPtr]::Size
         switch ($ptrSize)
         {
-          4 { $bitness = 'Framework' }
           8 { $bitness = 'Framework64' }
-          default { throw "Error: Unknown pointer size ($ptrSize) returned from System.IntPtr." }
+          default { $bitness = 'Framework' } #default to x86
         }
       }
-      default { throw "Error: Unknown .NET Framework bitness, $bitnessPart, specified in $framework" }
+      default { 
+	     $bitness = 'Framework'
+      }
     }
   }
   $frameworkDirs = $versions | foreach { "$env:windir\Microsoft.NET\$bitness\$_\" }
