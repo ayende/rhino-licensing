@@ -1,9 +1,10 @@
 properties { 
+  $product_name = "Rhino.Licensing"
   $base_dir = Resolve-Path .
   $lib_dir = "$base_dir\SharedLibs"
   $build_dir = "$base_dir\build"
   $buildartifacts_dir = "$build_dir\"
-  $sln_file = "$base_dir\Rhino.Licensing.sln"
+  $sln_file = "$base_dir\$product_name.sln"
   $version = "1.2.0.0"
   $humanReadableversion = "1.2"
   $tools_dir = "$base_dir\Tools"
@@ -11,11 +12,23 @@ properties {
   $uploadCategory = "Rhino-Mocks"
   $uploadScript = "C:\Builds\Upload\PublishBuild.build"
   $xunit = "$tools_dir\xUnit\xunit.console.clr4.exe"
+  $nuget = "$tools_dir\NuGet.exe"
+  $nuget_project = "$base_dir\$product_name\$product_name.csproj"
 } 
 
 include .\psake_ext.ps1
 
 task default -depends Release
+
+task Nuget-Pack -depends Release {
+  write-host "Generating nuget artefacts..."
+  exec { invoke-expression "$nuget pack $nuget_project -OutputDirectory $release_dir" }
+}
+
+task Nuget-Publish  { #-depends Nuget-Pack
+  write-host "Publishing nuget package at $release_dir\$product_name.$humanReadableversion.nupkg..."
+  exec { invoke-expression "$nuget push $release_dir\$product_name.$humanReadableversion.nupkg" }
+}
 
 task Clean { 
   write-host "lib folder is $lib_dir"
