@@ -22,7 +22,6 @@ param(
 
 $buildFile = '.\default.ps1'
 
-remove-module psake
 import-module (join-path $scriptPath psake.psm1)
 
 if ($help) {
