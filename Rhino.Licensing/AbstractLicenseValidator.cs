@@ -15,7 +15,7 @@ namespace Rhino.Licensing
     /// <summary>
     /// Base license validator.
     /// </summary>
-    public abstract class AbstractLicenseValidator
+    public abstract class AbstractLicenseValidator : IDisposable
     {
         /// <summary>
         /// License validator logger
@@ -41,6 +41,7 @@ namespace Rhino.Licensing
             "nist1.sjc.certifiedtime.com"
         };
 
+        private bool disposed;
         private readonly string licenseServerUrl;
         private readonly Guid clientId;
         private readonly string publicKey;
@@ -562,6 +563,33 @@ namespace Rhino.Licensing
         {
             disableFutureChecks = true;
             nextLeaseTimer.Dispose();
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~AbstractLicenseValidator()
+        {
+            Dispose(false);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposed)
+                return;
+
+            if (disposing)
+            {
+                nextLeaseTimer.Dispose();
+            }
+
+            // release any unmanaged objects
+            // set the object references to null
+
+            disposed = true;
         }
     }
 }
