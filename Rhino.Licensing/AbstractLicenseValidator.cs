@@ -125,6 +125,11 @@ namespace Rhino.Licensing
         }
 
         /// <summary>
+        /// Whether the client discovery server is enabled. This detects duplicate licenses used on the same network.
+        /// </summary>
+        public bool DiscoveryEnabled { get; protected set; }
+
+        /// <summary>
         /// Gets extra license information
         /// </summary>
         public IDictionary<string, string> LicenseAttributes
@@ -166,16 +171,21 @@ namespace Rhino.Licensing
         /// Creates a license validator with specfied public key.
         /// </summary>
         /// <param name="publicKey">public key</param>
-        protected AbstractLicenseValidator(string publicKey)
+        /// <param name="enableDiscovery">Whether to enable the client discovery server to detect duplicate licenses used on the same network.</param>
+        protected AbstractLicenseValidator(string publicKey, bool enableDiscovery = true)
         {
         	LeaseTimeout = TimeSpan.FromMinutes(5);
-        	discoveryHost = new DiscoveryHost();
         	LicenseAttributes = new Dictionary<string, string>();
             nextLeaseTimer = new Timer(LeaseLicenseAgain);
             this.publicKey = publicKey;
-        	this.senderId = Guid.NewGuid();
-        	discoveryHost.ClientDiscovered += DiscoveryHostOnClientDiscovered;
-			discoveryHost.Start();
+            if (enableDiscovery)
+            {
+                this.DiscoveryEnabled = true;
+                this.senderId = Guid.NewGuid();
+                this.discoveryHost = new DiscoveryHost();
+                this.discoveryHost.ClientDiscovered += DiscoveryHostOnClientDiscovered;
+                this.discoveryHost.Start();
+            }
         }
 
     	private void DiscoveryHostOnClientDiscovered(object sender, DiscoveryHost.ClientDiscoveredEventArgs clientDiscoveredEventArgs)
@@ -215,7 +225,6 @@ namespace Rhino.Licensing
 			:this(publicKey)
         {
             this.licenseServerUrl = licenseServerUrl;
-    		this.senderId = Guid.NewGuid();
     		this.clientId = clientId;
         }
 
@@ -227,9 +236,12 @@ namespace Rhino.Licensing
             LicenseAttributes.Clear();
             if (HasExistingLicense())
             {
-				discoveryClient = new DiscoveryClient(senderId, UserId, Environment.MachineName, Environment.UserName);
-				discoveryClient.PublishMyPresence();
-            	return;
+                if (this.DiscoveryEnabled)
+                {
+                    discoveryClient = new DiscoveryClient(senderId, UserId, Environment.MachineName, Environment.UserName);
+                    discoveryClient.PublishMyPresence();
+                }
+                return;
             }
 
             Log.WarnFormat("Could not validate existing license\r\n{0}", License);
