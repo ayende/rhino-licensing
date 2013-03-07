@@ -57,6 +57,12 @@ namespace Rhino.Licensing
         public event Action<InvalidationType> LicenseInvalidated;
 
         /// <summary>
+        /// Fired when license is expired
+        /// </summary>
+        public event Action<DateTime> LicenseExpired;
+
+
+        /// <summary>
         /// Gets the expiration date of the license
         /// </summary>
         public DateTime ExpirationDate
@@ -256,8 +262,16 @@ namespace Rhino.Licensing
                 if (result)
                     ValidateUsingNetworkTime();
                 else
-                    throw new LicenseExpiredException("Expiration Date : " + ExpirationDate);
-                return true;
+                {
+                    if (LicenseExpired == null)
+                        throw new LicenseExpiredException("Expiration Date : " + ExpirationDate);
+                    else
+                    {
+                        DisableFutureChecks();
+                        LicenseExpired(ExpirationDate);
+                    }
+                }
+              return true;
             }
             catch (RhinoLicensingException)
             {
