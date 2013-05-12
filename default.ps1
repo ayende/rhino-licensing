@@ -5,15 +5,20 @@ properties {
   $build_dir = "$base_dir\build"
   $buildartifacts_dir = "$build_dir\"
   $sln_file = "$base_dir\$product_name.sln"
-  $version = "1.2.0.0"
-  $humanReadableversion = "1.2"
+  $version = "1.3.0.0"
+  $humanReadableversion = "1.3"
   $tools_dir = "$base_dir\Tools"
   $release_dir = "$base_dir\Release"
   $uploadCategory = "Rhino-Mocks"
   $uploadScript = "C:\Builds\Upload\PublishBuild.build"
   $xunit = "$tools_dir\xUnit\xunit.console.clr4.exe"
   $nuget = "$tools_dir\NuGet.exe"
+  $nuget_spec = "$build_dir\rhino.licensing.nuspec"
   $nuget_project = "$base_dir\$product_name\$product_name.csproj"
+  $company = "Hibernating Rhinos"
+  $title = "Rhino Licensing $version"
+  $copyright = "Hibernating Rhinos & Ayende Rahien 2004 - 2009"
+  $description = "Licensing Framework for .NET"
 } 
 
 include .\psake_ext.ps1
@@ -22,7 +27,7 @@ task default -depends Release
 
 task Nuget-Pack -depends Release {
   write-host "Generating nuget artefacts..."
-  exec { invoke-expression "$nuget pack $nuget_project -OutputDirectory $release_dir" }
+  exec { invoke-expression "$nuget pack Rhino.Licensing.nuspec -OutputDirectory $release_dir" }
 }
 
 task Nuget-Publish  { #-depends Nuget-Pack
@@ -41,40 +46,40 @@ task Init -depends Clean {
 	
 	Generate-Assembly-Info `
 		-file "$base_dir\Rhino.Licensing\Properties\AssemblyInfo.cs" `
-		-title "Rhino Licensing $version" `
-		-description "Licensing Framework for .NET" `
-		-company "Hibernating Rhinos" `
-		-product "Rhino Licensing $version" `
+		-title $title `
+		-description $description `
+		-company $company `
+		-product $title `
 		-version $version `
-		-copyright "Hibernating Rhinos & Ayende Rahien 2004 - 2009"
+		-copyright $copyright
 		
 	Generate-Assembly-Info `
 		-file "$base_dir\Rhino.Licensing.Tests\Properties\AssemblyInfo.cs" `
-		-title "Rhino Licensing $version" `
-		-description "Licensing Framework for .NET" `
-		-company "Hibernating Rhinos" `
-		-product "Rhino Licensing $version" `
+		-title $title `
+		-description $description `
+		-company $company `
+		-product $title `
 		-version $version `
-		-copyright "Hibernating Rhinos & Ayende Rahien 2004 - 2009"
+		-copyright $copyright
 		
 	Generate-Assembly-Info `
 		-file "$base_dir\Rhino.Licensing.AdminTool\Properties\AssemblyInfo.cs" `
-		-title "Rhino Licensing $version" `
-		-description "Licensing Framework for .NET" `
-		-company "Hibernating Rhinos" `
-		-product "Rhino Licensing $version" `
+		-title $title `
+		-description $description `
+		-company $company `
+		-product $title `
 		-version $version `
-		-copyright "Hibernating Rhinos & Ayende Rahien 2004 - 2009"
+		-copyright $copyright
 		
 	Generate-Assembly-Info `
 		-file "$base_dir\Rhino.Licensing.AdminTool.Tests\Properties\AssemblyInfo.cs" `
-		-title "Rhino Licensing $version" `
-		-description "Licensing Framework for .NET" `
-		-company "Hibernating Rhinos" `
-		-product "Rhino Licensing $version" `
+		-title $title `
+		-description $description `
+		-company $company `
+		-product $title `
 		-version $version `
 		-clsCompliant "false" `
-		-copyright "Hibernating Rhinos & Ayende Rahien 2004 - 2009"
+		-copyright $copyright
 		
 	new-item $release_dir -itemType directory 
 	new-item $buildartifacts_dir -itemType directory 
