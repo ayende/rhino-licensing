@@ -53,7 +53,10 @@ namespace Rhino.Licensing
 			index += 1;
 			if (hosts.Length <= index)
 			{
-				failure();
+				if (hosts.Length == index)
+				{
+					failure();
+				}
 				return;
 			}
 			try
@@ -111,7 +114,10 @@ namespace Rhino.Licensing
 			var theState = (State)state;
 			try
 			{
-				theState.Socket.Close();
+				if (theState.Socket != null)
+				{
+					theState.Socket.Close();
+				}
 			}
 			catch (Exception)
 			{
