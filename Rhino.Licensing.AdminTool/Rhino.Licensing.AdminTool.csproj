@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Rhino.Licensing.AdminTool</RootNamespace>
     <AssemblyName>Rhino.Licensing.AdminTool</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -108,6 +108,7 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -132,11 +133,18 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Factories\IDialogFactory.cs" />
     <Compile Include="Factories\IViewModelFactory.cs" />
+    <Compile Include="Infrastructure\WindowManager.cs" />
     <Compile Include="Model\License.cs" />
+    <Compile Include="Model\UserData.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Model\Project.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DialogService.cs" />
-    <Compile Include="Services\StatusService.cs" />
+    <Compile Include="Services\ExportService.cs" />
+    <Compile Include="Services\IDialogService.cs" />
+    <Compile Include="Services\IExportService.cs" />
+    <Compile Include="Services\IProjectService.cs" />
+    <Compile Include="Services\IStatusService.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -152,16 +160,25 @@
     <Compile Include="ValueConverters\ExpirationDateConverter.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\FileDialogViewModel.cs" />
+    <Compile Include="ViewModels\IFileDialogViewModel.cs" />
+    <Compile Include="ViewModels\ILicenseHolder.cs" />
+    <Compile Include="ViewModels\ILicenseInfoViewModel.cs" />
     <Compile Include="ViewModels\IssueLicenseViewModel.cs" />
+    <Compile Include="ViewModels\IUserDataViewModel.cs" />
+    <Compile Include="ViewModels\LicenseInfoViewModel.cs" />
     <Compile Include="ViewModels\OpenFileDialogViewModel.cs" />
     <Compile Include="ViewModels\ProjectViewModel.cs" />
     <Compile Include="ViewModels\SaveFileDialogViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="ViewModels\UserDataViewModel.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\IssueLicenseView.xaml.cs">
       <DependentUpon>IssueLicenseView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LicenseInfoView.xaml.cs">
+      <DependentUpon>LicenseInfoView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProjectView.xaml.cs">
       <DependentUpon>ProjectView.xaml</DependentUpon>
@@ -169,11 +186,11 @@
     <Compile Include="Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UserDataView.xaml.cs">
+      <DependentUpon>UserDataView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
@@ -205,11 +222,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\LicenseInfoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ProjectView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ShellView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserDataView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -261,12 +286,16 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Export.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
+  <Target Name="BeforeBuild" />
   -->
+  <UsingTask AssemblyFile="..\Tools\Weaving\Costura.dll" TaskName="Costura.EmbedTask" />
+  <Target Name="AfterBuild">
+    <Costura.EmbedTask DeleteReferences="false" MessageImportance="Normal" />
+  </Target>
 </Project>

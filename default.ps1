@@ -1,22 +1,25 @@
 properties { 
-  $base_dir  = resolve-path .
+  $base_dir = Resolve-Path .
   $lib_dir = "$base_dir\SharedLibs"
-  $build_dir = "$base_dir\build" 
-  $buildartifacts_dir = "$build_dir\" 
-  $sln_file = "$base_dir\Rhino.Licensing.sln" 
+  $build_dir = "$base_dir\build"
+  $buildartifacts_dir = "$build_dir\"
+  $sln_file = "$base_dir\Rhino.Licensing.sln"
   $version = "1.2.0.0"
   $humanReadableversion = "1.2"
   $tools_dir = "$base_dir\Tools"
   $release_dir = "$base_dir\Release"
   $uploadCategory = "Rhino-Mocks"
   $uploadScript = "C:\Builds\Upload\PublishBuild.build"
+  $xunit = "$tools_dir\xUnit\xunit.console.clr4.exe"
 } 
 
 include .\psake_ext.ps1
-	
+
 task default -depends Release
 
 task Clean { 
+  write-host "lib folder is $lib_dir"
+
   remove-item -force -recurse $buildartifacts_dir -ErrorAction SilentlyContinue 
   remove-item -force -recurse $release_dir -ErrorAction SilentlyContinue 
 } 
@@ -66,17 +69,18 @@ task Init -depends Clean {
 } 
 
 task Compile -depends Init { 
-  exec msbuild "/p:OutDir=""$buildartifacts_dir "" $sln_file"
+  exec { msbuild /p:OutDir=$buildartifacts_dir $sln_file  }
 } 
 
 task Test -depends Compile {
   $old = pwd
   cd $build_dir
-  exec "$tools_dir\xUnit\xunit.console.exe" "$build_dir\Rhino.Licensing.Tests.dll"
-  exec "$tools_dir\xUnit\xunit.console.exe" "$build_dir\Rhino.Licensing.AdminTool.Tests.dll"
+  
+  exec { invoke-expression "$xunit $build_dir\Rhino.Licensing.Tests.dll /noshadow" }  
+  exec { invoke-expression "$xunit $build_dir\Rhino.Licensing.AdminTool.Tests.dll /noshadow" }
+  
   cd $old		
 }
-
 
 task Release -depends Test {
 	& $tools_dir\zip.exe -9 -A -j `
@@ -88,16 +92,6 @@ task Release -depends Test {
 		
 	& $tools_dir\zip.exe -9 -A -j `
 		$release_dir\Rhino.Licensing-AdminTool-$humanReadableversion-Build-$env:ccnetnumericlabel.zip `
-		$build_dir\Caliburn.Core.dll `
-		$build_dir\Caliburn.PresentationFramework.dll `
-		$build_dir\Caliburn.ShellFramework.dll `
-		$build_dir\Caliburn.Windsor.dll `
-		$build_dir\Castle.Core.dll `
-		$build_dir\Castle.DynamicProxy2.dll `
-		$build_dir\Castle.MicroKernel.dll `
-		$build_dir\Castle.Windsor.dll `
-		$build_dir\log4net.dll `
-		$build_dir\Microsoft.Practices.ServiceLocation.dll `
 		$build_dir\Rhino.Licensing.AdminTool.exe `
 		license.txt `
 		acknowledgements.txt

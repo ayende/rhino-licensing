@@ -9,7 +9,7 @@
         WindowStartupLocation="CenterScreen"
         Title="{Binding DisplayName}"
         d:DesignHeight="300" d:DesignWidth="300"
-        Height="480" Width="640">
+        Height="600" Width="800">
 
     <DockPanel Background="{DynamicResource DialogBackgroundBrush}">
         

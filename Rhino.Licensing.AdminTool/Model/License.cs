@@ -1,4 +1,5 @@
 using System;
+using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Caliburn.PresentationFramework;
 
@@ -7,6 +8,7 @@ namespace Rhino.Licensing.AdminTool.Model
     [DataContract(Name = "License", Namespace = "http://schemas.hibernatingrhinos.com/")]
     public class License : PropertyChangedBase
     {
+        private ObservableCollection<UserData> _data;
         private string _ownerName;
         private DateTime? _expirationDate;
         private LicenseType _licenseType;
@@ -15,6 +17,7 @@ namespace Rhino.Licensing.AdminTool.Model
         public License()
         {
             _id = Guid.NewGuid();
+            Data = new ObservableCollection<UserData>();
         }
 
         [DataMember]
@@ -58,6 +61,17 @@ namespace Rhino.Licensing.AdminTool.Model
             {
                 _licenseType = value;
                 NotifyOfPropertyChange(() => LicenseType);
+            }
+        }
+
+        [DataMember]
+        public virtual ObservableCollection<UserData> Data
+        {
+            get { return _data; }
+            private set
+            {
+                _data = value;
+                NotifyOfPropertyChange(() => Data);
             }
         }
     }

@@ -4,6 +4,7 @@ using Caliburn.Core;
 using Caliburn.Core.Configuration;
 using Caliburn.PresentationFramework;
 using Caliburn.Windsor;
+using Rhino.Licensing.AdminTool.Infrastructure;
 using Rhino.Licensing.AdminTool.Startup;
 
 namespace Rhino.Licensing.AdminTool
@@ -34,6 +35,7 @@ namespace Rhino.Licensing.AdminTool
                 .With.Core()
                 .With.Assemblies(SelectAssemblies())
                 .With.PresentationFramework()
+                .Using(x => x.WindowManager<WindowManager>())
                 .Start();
         }
 

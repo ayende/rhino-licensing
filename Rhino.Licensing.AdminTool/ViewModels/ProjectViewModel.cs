@@ -13,25 +13,31 @@ namespace Rhino.Licensing.AdminTool.ViewModels
 {
     public class ProjectViewModel : Screen
     {
-        private Project _project;
-
         private readonly IProjectService _projectService;
         private readonly IDialogService _dialogService;
         private readonly IStatusService _statusService;
+        private readonly IExportService _exportService;
         private readonly IViewModelFactory _viewModelFactory;
         private readonly IWindowManager _windowManager;
+        private Project _project;
+        private License _selectedLicense;
         private string _filePath;
+
+        public const string ProjectFileFilter = "Rhino Project|*.rlic";
+        public const string LicenseFileFilter = "Rhino License|*.xml";
 
         public ProjectViewModel(
             IProjectService projectService,
             IDialogService dialogService,
             IStatusService statusService,
+            IExportService exportService,
             IViewModelFactory viewModelFactory,
             IWindowManager windowManager)
         {
             _projectService = projectService;
             _dialogService = dialogService;
             _statusService = statusService;
+            _exportService = exportService;
             _viewModelFactory = viewModelFactory;
             _windowManager = windowManager;
         }
@@ -44,6 +50,16 @@ namespace Rhino.Licensing.AdminTool.ViewModels
                 _project = value;
                 NotifyOfPropertyChange(() => CurrentProject);
                 OnCurrentProjectChanged();
+            }
+        }
+
+        public virtual License SelectedLicense
+        {
+            get { return _selectedLicense; }
+            set
+            {
+                _selectedLicense = value;
+                NotifyOfPropertyChange(() => SelectedLicense);
             }
         }
 
@@ -65,7 +81,8 @@ namespace Rhino.Licensing.AdminTool.ViewModels
         [AutoCheckAvailability]
         public virtual void Save()
         {
-            var model = CreateSaveDialogModel();
+            var model = _viewModelFactory.Create<ISaveFileDialogViewModel>();
+            model.Filter = ProjectFileFilter;
 
             if(_filePath == null)
             {
@@ -85,7 +102,8 @@ namespace Rhino.Licensing.AdminTool.ViewModels
         [AutoCheckAvailability]
         public virtual bool Open()
         {
-            var model = CreateOpenDialogModel();
+            var model = _viewModelFactory.Create<IOpenFileDialogViewModel>();
+            model.Filter = ProjectFileFilter;
 
             _dialogService.ShowOpenFileDialog(model);
 
@@ -112,28 +130,32 @@ namespace Rhino.Licensing.AdminTool.ViewModels
             }
         }
 
-        public bool CanAddLicense()
+        public virtual bool CanAddLicense()
         {
             return CurrentProject != null &&
                    CurrentProject.Product.PublicKey.IsNotEmpty() &&
                    CurrentProject.Product.PrivateKey.IsNotEmpty();
         }
 
-        public virtual IOpenFileDialogViewModel CreateOpenDialogModel()
+        public virtual bool CanExportLicense()
         {
-            return new OpenFileDialogViewModel
-            {
-                Filter = "Rhino License|*.rlic",
-            };
+            return SelectedLicense != null;
         }
 
-        public virtual ISaveFileDialogViewModel CreateSaveDialogModel()
+        [AutoCheckAvailability]
+        public virtual void ExportLicense()
         {
-            return new SaveFileDialogViewModel
+            var license = SelectedLicense;
+            var product = CurrentProject.Product;
+            var model = _viewModelFactory.Create<ISaveFileDialogViewModel>();
+            model.Filter = LicenseFileFilter;
+
+            _dialogService.ShowSaveFileDialog(model);
+
+            if(model.Result.GetValueOrDefault(false))
             {
-                Filter = "Rhino License|*.rlic",
-                OverwritePrompt = true,
-            };
+                _exportService.Export(product, license, new FileInfo(model.FileName));
+            }
         }
 
         public virtual void CopyToClipboard(string text)
