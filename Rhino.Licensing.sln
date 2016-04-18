@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhino.Licensing", "Rhino.Licensing\Rhino.Licensing.csproj", "{05EFD7EB-F0FB-4B65-8E4A-C8FF8DDC6A78}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhino.Licensing.Tests", "Rhino.Licensing.Tests\Rhino.Licensing.Tests.csproj", "{DE9C3868-B836-4CA5-A6FB-2FD78542D3B6}"
