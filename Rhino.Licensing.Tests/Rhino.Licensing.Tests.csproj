@@ -64,6 +64,9 @@
     <Compile Include="Can_check_trial_date.cs" />
     <Compile Include="Can_use_floating_licenses.cs" />
     <Compile Include="Can_use_subscription_license.cs" />
+    <Compile Include="$(SolutionDir)\Solution Items\SolutionInfo.cs">
+      <Link>Properties\SolutionInfo.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
