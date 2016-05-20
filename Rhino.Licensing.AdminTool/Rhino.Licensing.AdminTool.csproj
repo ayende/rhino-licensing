@@ -96,9 +96,9 @@
     <Reference Include="J832.Wpf.BagOTricksLib">
       <HintPath>..\SharedLibs\J832.Wpf.BagOTricksLib.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SharedLibs\log4net.dll</HintPath>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.5\lib\net40-full\log4net.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\SharedLibs\Microsoft.Practices.ServiceLocation.dll</HintPath>
@@ -174,7 +174,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-  	<Compile Include="$(SolutionDir)\Solution Items\SolutionInfo.cs">
+    <Compile Include="$(SolutionDir)\Solution Items\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -262,6 +262,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -8,3 +8,4 @@ build/
 *.sln.cache
 _ReSharper.*/
 *.user
+packages

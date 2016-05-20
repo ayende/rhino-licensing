@@ -76,9 +76,6 @@
     <Reference Include="J832.Wpf.BagOTricksLib">
       <HintPath>..\SharedLibs\J832.Wpf.BagOTricksLib.dll</HintPath>
     </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\SharedLibs\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\SharedLibs\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
@@ -120,7 +117,7 @@
     <Compile Include="Services\ProjectServiceTests.cs" />
     <Compile Include="Startup\InstallersTests.cs" />
     <Compile Include="ViewModels\AboutViewModelTests.cs" />
-	<Compile Include="$(SolutionDir)\Solution Items\SolutionInfo.cs">
+    <Compile Include="$(SolutionDir)\Solution Items\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
