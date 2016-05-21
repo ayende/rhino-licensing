@@ -5,12 +5,19 @@ using System.Threading;
 
 namespace Rhino.Licensing
 {
+    /// <summary>
+    /// 
+    /// </summary>
 	public class SntpClient
 	{
 		private const byte SntpDataLength = 48;
 		private readonly string[] hosts;
 		private int index = -1;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="hosts"></param>
 		public SntpClient(string[] hosts)
 		{
 			this.hosts = hosts;
@@ -48,6 +55,11 @@ namespace Rhino.Licensing
 			return milliseconds;
 		}
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="getTime"></param>
+        /// <param name="failure"></param>
 		public void BeginGetDate(Action<DateTime> getTime, Action failure)
 		{
 			index += 1;
@@ -174,7 +186,7 @@ namespace Rhino.Licensing
 
 		#region Nested type: State
 
-		public class State
+		private class State
 		{
 			public State(UdpClient socket, IPEndPoint endPoint, Action<DateTime> getTime, Action failure)
 			{
