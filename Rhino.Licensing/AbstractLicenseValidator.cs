@@ -19,12 +19,12 @@ namespace Rhino.Licensing
         /// <summary>
         /// License validator logger
         /// </summary>
-        protected readonly ILog Log = LogManager.GetLogger(typeof(LicenseValidator));
+        protected static readonly ILog Log = LogManager.GetLogger(typeof(LicenseValidator));
 
         /// <summary>
         /// Standard Time servers
         /// </summary>
-        protected readonly string[] TimeServers = new[]
+        private static readonly string[] TimeServers = new[]
         {
             "time.nist.gov",
             "time-nw.nist.gov",
@@ -106,7 +106,7 @@ namespace Rhino.Licensing
         /// </summary>
         public IDictionary<string, string> LicenseAttributes
         {
-            get; private set;
+            get;
         }
 
         /// <summary>
@@ -115,23 +115,6 @@ namespace Rhino.Licensing
         protected abstract string License
         {
             get; set;
-        }
-
-        private void LeaseLicenseAgain(object state)
-        {
-            if (HasExistingLicense())
-                return;
-            RaiseLicenseInvalidated();
-        }
-
-        private void RaiseLicenseInvalidated()
-        {
-            var licenseInvalidated = LicenseInvalidated;
-            if (licenseInvalidated == null)
-                throw new InvalidOperationException("License was invalidated, but there is no one subscribe to the LicenseInvalidated event");
-            licenseInvalidated(LicenseType == LicenseType.Floating
-                                ? InvalidationType.CannotGetNewLicense
-                                : InvalidationType.TimeExpired);
         }
 
         /// <summary>
@@ -153,12 +136,27 @@ namespace Rhino.Licensing
         /// <param name="licenseServerUrl"></param>
         /// <param name="clientId"></param>
         protected AbstractLicenseValidator(string publicKey, string licenseServerUrl, Guid clientId)
+            : this(publicKey)
         {
-            LicenseAttributes = new Dictionary<string, string>();
-            nextLeaseTimer = new Timer(LeaseLicenseAgain);
-            this.publicKey = publicKey;
             this.licenseServerUrl = licenseServerUrl;
             this.clientId = clientId;
+        }
+
+        private void LeaseLicenseAgain(object state)
+        {
+            if (HasExistingLicense())
+                return;
+            RaiseLicenseInvalidated();
+        }
+
+        private void RaiseLicenseInvalidated()
+        {
+            var licenseInvalidated = LicenseInvalidated;
+            if (licenseInvalidated == null)
+                throw new InvalidOperationException("License was invalidated, but there is no one subscribe to the LicenseInvalidated event");
+            licenseInvalidated(LicenseType == LicenseType.Floating
+                                ? InvalidationType.CannotGetNewLicense
+                                : InvalidationType.TimeExpired);
         }
 
         /// <summary>
