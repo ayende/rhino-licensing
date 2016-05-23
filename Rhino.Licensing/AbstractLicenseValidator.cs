@@ -54,6 +54,14 @@ namespace Rhino.Licensing
         public event Action<InvalidationType> LicenseInvalidated;
 
         /// <summary>
+        /// Disable the <see cref="ExpirationDate"/> validation with the time servers
+        /// </summary>
+        public bool DisableTimeServersCheck
+        {
+            get; set;
+        }
+
+        /// <summary>
         /// Gets the expiration date of the license
         /// </summary>
         public DateTime ExpirationDate
@@ -188,10 +196,12 @@ namespace Rhino.Licensing
                 else
                     result = DateTime.UtcNow < ExpirationDate;
 
-                if (result)
-                    ValidateUsingNetworkTime();
-                else
+                if (!result)
                     throw new LicenseExpiredException("Expiration Date : " + ExpirationDate);
+
+                if (!DisableTimeServersCheck)
+                    ValidateUsingNetworkTime();
+                    
                 return true;
             }
             catch (RhinoLicensingException)
