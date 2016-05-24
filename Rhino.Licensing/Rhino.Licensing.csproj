@@ -106,6 +106,7 @@
       <Link>ayende-open-source.snk</Link>
     </None>
     <None Include="packages.config" />
+    <None Include="Rhino.Licensing.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

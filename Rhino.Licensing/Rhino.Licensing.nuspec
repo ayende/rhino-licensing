@@ -1,0 +1,17 @@
+﻿<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://github.com/ayende/rhino-licensing/blob/master/license.txt</licenseUrl>
+    <projectUrl>https://github.com/ayende/rhino-licensing/blob</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/hibernating-rhinos/rhino-licensing/master/rhino-icon.jpg</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <copyright>Hibernating Rhinos &amp; Ayende Rahien</copyright>
+    <tags>Licensing</tags>
+  </metadata>
+</package>
