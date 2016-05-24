@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="Rhino.Licensing.AdminTool.Views.LicenseInfoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:fl="http://schemas.hightech.ir/wpf/2008/FarsiLibrary"
+             xmlns:cnv="clr-namespace:Rhino.Licensing.AdminTool.ValueConverters" 
+             xmlns:sys="clr-namespace:System;assembly=mscorlib" 
+             xmlns:lic="clr-namespace:Rhino.Licensing;assembly=Rhino.Licensing"
+             Background="{DynamicResource TabSelectionBrush}"
+             mc:Ignorable="d" d:DesignHeight="200" d:DesignWidth="400">
+    <UserControl.Resources>
+        <cnv:ExpirationDateConverter x:Key="expirationDateConverter" />
+
+        <ObjectDataProvider x:Key="licenseTypes" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="lic:LicenseType" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+    </UserControl.Resources>
+
+    <Grid Grid.Row="1" Grid.Column="0" Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="License ID: " VerticalAlignment="Center" Grid.Row="0" />
+        <TextBlock Text="Owner Name: " VerticalAlignment="Center" Grid.Row="1" />
+        <TextBlock Text="License Type: " VerticalAlignment="Center" Grid.Row="2" />
+        <TextBlock Text="Expiration Date: " VerticalAlignment="Center" Grid.Row="3" />
+
+        <TextBox x:Name="LicenseID" Text="{Binding Path=CurrentLicense.ID}" IsReadOnly="True" Grid.Row="0" Grid.Column="1" />
+        <TextBox x:Name="LicenseOwner" Text="{Binding Path=CurrentLicense.OwnerName, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" />
+        <ComboBox x:Name="LicenseType" ItemsSource="{Binding Source={StaticResource licenseTypes}}" SelectedItem="{Binding Path=CurrentLicense.LicenseType}" Grid.Row="2" Grid.Column="1" />
+        <fl:FXDatePicker x:Name="LicenseDate"  SelectedDateTime="{Binding Path=CurrentLicense.ExpirationDate}" Grid.Row="3" Grid.Column="1" NullValueText="&lt;Never&gt;" DateConverter="{StaticResource expirationDateConverter}" />
+
+    </Grid>
+</UserControl>

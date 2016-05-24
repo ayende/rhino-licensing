@@ -1,16 +1,23 @@
 using System;
+using Caliburn.PresentationFramework.Filters;
 using Caliburn.PresentationFramework.Screens;
 using Rhino.Licensing.AdminTool.Model;
 using Rhino.Licensing.AdminTool.Properties;
 
 namespace Rhino.Licensing.AdminTool.ViewModels
 {
-    public class IssueLicenseViewModel : Screen
+    public class IssueLicenseViewModel : Conductor<ILicenseHolder>.Collection.OneActive
     {
-        private License currentLicense;
+        private License _currentLicense;
 
-        public IssueLicenseViewModel()
+        public IssueLicenseViewModel(IUserDataViewModel userDataViewModel, ILicenseInfoViewModel licenseInfoViewModel)
         {
+            UserData = userDataViewModel;
+            LicenseInfo = licenseInfoViewModel;
+
+            Items.Add(userDataViewModel);
+            Items.Add(licenseInfoViewModel);
+
             CurrentLicense = new License
             {
                 LicenseType = LicenseType.Trial,
@@ -20,15 +27,44 @@ namespace Rhino.Licensing.AdminTool.ViewModels
 
         public virtual License CurrentLicense
         {
-            get { return currentLicense; }
-            set
+            get { return _currentLicense; }
+            private set
             {
-                currentLicense = value;
+                _currentLicense = value;
+                NotifyLicenseChanged();
                 NotifyOfPropertyChange(() => CurrentLicense);
             }
         }
 
-        public virtual void Close()
+        private void NotifyLicenseChanged()
+        {
+            foreach (var item in Items)
+            {
+                item.CurrentLicense = CurrentLicense;
+            }
+        }
+
+        public virtual IUserDataViewModel UserData
+        {
+            get; private set; 
+        }
+
+        public virtual ILicenseInfoViewModel LicenseInfo
+        {
+            get; private set;
+        }
+
+        public virtual bool CanAccept
+        {
+            get
+            {
+                return CurrentLicense != null &&
+                       !string.IsNullOrWhiteSpace(CurrentLicense.OwnerName);
+            }
+        }
+
+        [AutoCheckAvailability]
+        public virtual void Accept()
         {
             TryClose(true);
         }
