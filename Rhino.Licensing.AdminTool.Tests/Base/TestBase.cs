@@ -4,8 +4,9 @@ namespace Rhino.Licensing.AdminTool.Tests.Base
     {
         static TestBase()
         {
-            var app = new App();
-            app.InitializeComponent();
+            //seem to hang when upgraded to PSAKE 4.0
+            //var app = new App();
+            //app.InitializeComponent();
         }
     }
 }

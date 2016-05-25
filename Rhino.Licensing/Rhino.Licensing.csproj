@@ -80,10 +80,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractLicenseValidator.cs" />
+    <Compile Include="Discovery\DiscoveryClient.cs" />
+    <Compile Include="Discovery\DiscoveryHost.cs" />
+    <Compile Include="FloatingLicenseNotAvailableException.cs" />
     <Compile Include="LicenseExpiredException.cs" />
     <Compile Include="InvalidationType.cs" />
     <Compile Include="StringLicenseValidator.cs" />
-    <Compile Include="FloatingLicenseNotAvialableException.cs" />
     <Compile Include="ILicensingService.cs" />
     <Compile Include="ISubscriptionLicensingService.cs" />
     <Compile Include="LicenseFileNotFoundException.cs" />
@@ -104,6 +106,7 @@
       <Link>ayende-open-source.snk</Link>
     </None>
     <None Include="packages.config" />
+    <None Include="Rhino.Licensing.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

@@ -1,4 +1,4 @@
 ﻿using System.Reflection;
 
 [assembly: AssemblyTitle("Rhino.Licensing.Tests")]
-[assembly: AssemblyDescription("Licensing Framework for .NET")]
+[assembly: AssemblyDescription("Tests for Rhino.Licensing")]

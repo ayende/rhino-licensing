@@ -4,25 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:cal="http://www.caliburnproject.org"
-             xmlns:fl="http://schemas.hightech.ir/wpf/2008/FarsiLibrary"
-             xmlns:cnv="clr-namespace:Rhino.Licensing.AdminTool.ValueConverters" 
-             xmlns:sys="clr-namespace:System;assembly=mscorlib" 
-             xmlns:lic="clr-namespace:Rhino.Licensing;assembly=Rhino.Licensing" mc:Ignorable="d" 
+             xmlns:views="clr-namespace:Rhino.Licensing.AdminTool.Views" mc:Ignorable="d" 
              Background="{DynamicResource DialogBackgroundBrush}"
              d:DesignHeight="300" d:DesignWidth="300"
-             Width="480" Height="200">
+             Width="550" Height="300">
     
-    <UserControl.Resources>
-        <cnv:ExpirationDateConverter x:Key="expirationDateConverter" />
-
-        <ObjectDataProvider x:Key="licenseTypes" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="lic:LicenseType" />
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
-        
-    </UserControl.Resources>
-
     <Grid FocusManager.FocusedElement="{Binding ElementName=LicenseOwner}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -32,42 +18,18 @@
         <TabControl Margin="5" SelectedIndex="0" Style="{StaticResource BaseTabControl}" Grid.Row="0">
         
             <TabControl.Items>
-
-                <TabItem Header="License Info" Width="120" HorizontalContentAlignment="Center" >
-                    <Grid Grid.Row="1" Grid.Column="0" Margin="5">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-
-                        <TextBlock Text="License ID: " VerticalAlignment="Center" Grid.Row="0" />
-                        <TextBlock Text="Owner Name: " VerticalAlignment="Center" Grid.Row="1" />
-                        <TextBlock Text="License Type: " VerticalAlignment="Center" Grid.Row="2" />
-                        <TextBlock Text="Expiration Date: " VerticalAlignment="Center" Grid.Row="3" />
-
-                        <TextBox x:Name="LicenseID" Text="{Binding Path=CurrentLicense.ID}" IsReadOnly="True" Grid.Row="0" Grid.Column="1" />
-                        <TextBox x:Name="LicenseOwner" Text="{Binding Path=CurrentLicense.OwnerName}" Grid.Row="1" Grid.Column="1" />
-                        <ComboBox x:Name="LicenseType" ItemsSource="{Binding Source={StaticResource licenseTypes}}" SelectedItem="{Binding Path=CurrentLicense.LicenseType}" Grid.Row="2" Grid.Column="1" />
-                        <fl:FXDatePicker x:Name="LicenseDate"  SelectedDateTime="{Binding Path=CurrentLicense.ExpirationDate}" Grid.Row="3" Grid.Column="1" NullValueText="&lt;Never&gt;" DateConverter="{StaticResource expirationDateConverter}" />
-                        
-                    </Grid>
+                <TabItem Header="License Info" Width="120" HorizontalContentAlignment="Center">
+                    <views:LicenseInfoView cal:View.Model="{Binding LicenseInfo}" />
                 </TabItem>
                 <TabItem Header="User Data" Width="120" HorizontalContentAlignment="Center" >
-                
+                    <views:UserDataView cal:View.Model="{Binding UserData}" />
                 </TabItem>
-            
             </TabControl.Items>
         </TabControl>
         <StackPanel Orientation="Horizontal" Grid.Row="1"
+                    Margin="5,0,5,5"
                     HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button IsDefault="True" Content="Ok" Margin="5" cal:Message.Attach="[Event Click]=[Action Close]" />
+            <Button IsDefault="True" Content="Ok" Margin="5" cal:Message.Attach="[Event Click]=[Action Accept]" />
             <Button IsCancel="True" Content="Cancel" Margin="5" />
         </StackPanel>
 

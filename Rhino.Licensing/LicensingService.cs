@@ -94,7 +94,7 @@ namespace Rhino.Licensing
                         Debug.WriteLine("Accepting license for: " + validator.Name + " " + validator.UserId);
                     }
                 }
-                catch (Exception)
+                catch
                 {
                     continue;
                 }

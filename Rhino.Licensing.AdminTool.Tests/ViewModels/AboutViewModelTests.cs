@@ -1,7 +1,5 @@
 using System.Reflection;
-using Caliburn.Testability;
 using Rhino.Licensing.AdminTool.ViewModels;
-using Rhino.Licensing.AdminTool.Views;
 using Xunit;
 using Rhino.Licensing.AdminTool.Extensions;
 
@@ -9,16 +7,6 @@ namespace Rhino.Licensing.AdminTool.Tests.ViewModels
 {
     public class AboutViewModelTests
     {
-        [Fact]
-        public void Properties_Are_Bound()
-        {
-            var validator = Validator.For<AboutView, AboutViewModel>()
-                                     .Validate();
-
-            validator.AssertWasBound(x => x.Version);
-            validator.AssertWasBound(x => x.Copyright);
-        }
-
         [Fact]
         public void Version_Property_Returns_Value_From_AssemblyInfo()
         {
