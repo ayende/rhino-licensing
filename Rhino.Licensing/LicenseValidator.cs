@@ -17,10 +17,12 @@ namespace Rhino.Licensing
         /// </summary>
         /// <param name="publicKey">public key</param>
         /// <param name="licensePath">path to license file</param>
-        public LicenseValidator(string publicKey, string licensePath)
+        /// <param name="inMemoryLicense">Optionally set the inMemory license</param>
+        public LicenseValidator(string publicKey, string licensePath, string inMemoryLicense = null)
             : base(publicKey)
         {
             this.licensePath = licensePath;
+            this.inMemoryLicense = inMemoryLicense;
         }
 
         /// <summary>
@@ -49,7 +51,10 @@ namespace Rhino.Licensing
             {
                 try
                 {
-                    File.WriteAllText(licensePath, value);
+                    if (string.IsNullOrEmpty(licensePath))
+                        inMemoryLicense = value;
+                    else
+                        File.WriteAllText(licensePath, value);
                 }
                 catch (Exception e)
                 {
@@ -64,7 +69,7 @@ namespace Rhino.Licensing
         /// </summary>
         public override void AssertValidLicense()
         {
-            if (File.Exists(licensePath) == false)
+            if (!(string.IsNullOrEmpty(licensePath) && !string.IsNullOrEmpty(inMemoryLicense)) && File.Exists(licensePath) == false)
             {
                 Log.WarnFormat("Could not find license file: {0}", licensePath);
                 throw new LicenseFileNotFoundException();
@@ -78,7 +83,8 @@ namespace Rhino.Licensing
         /// </summary>
         public override void RemoveExistingLicense()
         {
-            File.Delete(licensePath);
+            if (!string.IsNullOrEmpty(licensePath))
+                File.Delete(licensePath);
         }
     }
 }

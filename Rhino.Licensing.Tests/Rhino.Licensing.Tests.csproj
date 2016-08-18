@@ -71,6 +71,7 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Duplicate_license.cs" />
+    <Compile Include="License_From_File_And_String_Validate_Correctly.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
