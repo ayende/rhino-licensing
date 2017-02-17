@@ -1,0 +1,1 @@
+Tools\nuget pack Rhino.Licensing\Rhino.Licensing.csproj -Prop Configuration=Release -OutputDirectory build -Symbols -Build

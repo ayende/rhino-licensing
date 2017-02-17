@@ -6,7 +6,7 @@ using System.Threading;
 namespace Rhino.Licensing
 {
     /// <summary>
-    /// An SNTP helper client
+    /// 
     /// </summary>
 	public class SntpClient
 	{
@@ -15,7 +15,7 @@ namespace Rhino.Licensing
 		private int index = -1;
 
         /// <summary>
-        /// Creates a new instance of SNTP client
+        /// 
         /// </summary>
         /// <param name="hosts"></param>
 		public SntpClient(string[] hosts)
@@ -55,22 +55,27 @@ namespace Rhino.Licensing
 			return milliseconds;
 		}
 
-		/// <summary>
-		/// Starts to get the date asynchronously
-		/// </summary>
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="getTime"></param>
+        /// <param name="failure"></param>
 		public void BeginGetDate(Action<DateTime> getTime, Action failure)
 		{
 			index += 1;
 			if (hosts.Length <= index)
 			{
-				failure();
+				if (hosts.Length == index)
+				{
+					failure();
+				}
 				return;
 			}
 			try
 			{
 				var host = hosts[index];
 				var state = new State(null, null, getTime, failure);
-				var result = Dns.BeginGetHostAddresses(host, EndGetHostAddress, state);
+				var result = Dns.BeginGetHostAddresses(host, EndGetHostAddress, state );
 				RegisterWaitForTimeout(state, result);
 			}
 			catch (Exception)
@@ -121,7 +126,10 @@ namespace Rhino.Licensing
 			var theState = (State)state;
 			try
 			{
-				theState.Socket.Close();
+				if (theState.Socket != null)
+				{
+					theState.Socket.Close();
+				}
 			}
 			catch (Exception)
 			{
@@ -178,14 +186,8 @@ namespace Rhino.Licensing
 
 		#region Nested type: State
 
-        /// <summary>
-        /// Manages the state of the asynchronous method call
-        /// </summary>
-		public class State
+		private class State
 		{
-            /// <summary>
-            /// Creates a new instance of the state holder object
-            /// </summary>
 			public State(UdpClient socket, IPEndPoint endPoint, Action<DateTime> getTime, Action failure)
 			{
 				Socket = socket;
@@ -194,24 +196,12 @@ namespace Rhino.Licensing
 				Failure = failure;
 			}
 
-            /// <summary>
-            /// Socket instance that the call is made on
-            /// </summary>
 			public UdpClient Socket { get; private set; }
 
-            /// <summary>
-            /// Action to perform when getting the time
-            /// </summary>
 			public Action<DateTime> GetTime { get; private set; }
 
-            /// <summary>
-            /// Action to perform upon failure
-            /// </summary>
 			public Action Failure { get; private set; }
 
-            /// <summary>
-            /// Endpoint instance
-            /// </summary>
 			public IPEndPoint EndPoint { get; private set; }
 		}
 
