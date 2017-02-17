@@ -25,7 +25,7 @@ namespace Rhino.Licensing
         /// <summary>
         /// Standard Time servers
         /// </summary>
-        protected readonly string[] TimeServers = new[]
+        protected readonly string[] TimeServers =
         {
             "time.nist.gov",
             "time-nw.nist.gov",
@@ -47,14 +47,20 @@ namespace Rhino.Licensing
         private readonly Timer nextLeaseTimer;
         private bool disableFutureChecks;
         private bool currentlyValidatingSubscriptionLicense;
-		private readonly DiscoveryHost discoveryHost;
+		private DiscoveryHost discoveryHost;
     	private DiscoveryClient discoveryClient;
-        private readonly Guid senderId;
+        private Guid senderId;
 
     	/// <summary>
         /// Fired when license data is invalidated
         /// </summary>
         public event Action<InvalidationType> LicenseInvalidated;
+
+        /// <summary>
+        /// Fired when license is expired
+        /// </summary>
+        public event Action<DateTime> LicenseExpired;
+
 
         /// <summary>
         /// Gets the expiration date of the license
@@ -125,6 +131,11 @@ namespace Rhino.Licensing
         }
 
         /// <summary>
+        /// Whether the client discovery server is enabled. This detects duplicate licenses used on the same network.
+        /// </summary>
+        public bool DiscoveryEnabled { get; protected set; }
+
+        /// <summary>
         /// Gets extra license information
         /// </summary>
         public IDictionary<string, string> LicenseAttributes
@@ -157,31 +168,51 @@ namespace Rhino.Licensing
             var licenseInvalidated = LicenseInvalidated;
             if (licenseInvalidated == null)
                 throw new InvalidOperationException("License was invalidated, but there is no one subscribe to the LicenseInvalidated event");
-            licenseInvalidated(LicenseType == LicenseType.Floating
-                                ? InvalidationType.CannotGetNewLicense
-                                : InvalidationType.TimeExpired);
+
+            licenseInvalidated(LicenseType == LicenseType.Floating ? InvalidationType.CannotGetNewLicense : 
+                                                                     InvalidationType.TimeExpired);
+        }
+
+        private void RaiseMultipleLicenseDiscovered(DiscoveryHost.ClientDiscoveredEventArgs args)
+        {
+            var onMultipleLicensesWereDiscovered = MultipleLicensesWereDiscovered;
+            if (onMultipleLicensesWereDiscovered != null)
+            {
+                onMultipleLicensesWereDiscovered(this, args);
+            }
         }
 
         /// <summary>
         /// Creates a license validator with specfied public key.
         /// </summary>
         /// <param name="publicKey">public key</param>
-        protected AbstractLicenseValidator(string publicKey)
+        /// <param name="enableDiscovery">Whether to enable the client discovery server to detect duplicate licenses used on the same network.</param>
+        protected AbstractLicenseValidator(string publicKey, bool enableDiscovery = true)
         {
         	LeaseTimeout = TimeSpan.FromMinutes(5);
-        	discoveryHost = new DiscoveryHost();
         	LicenseAttributes = new Dictionary<string, string>();
             nextLeaseTimer = new Timer(LeaseLicenseAgain);
             this.publicKey = publicKey;
-        	this.senderId = Guid.NewGuid();
-        	discoveryHost.ClientDiscovered += DiscoveryHostOnClientDiscovered;
-			discoveryHost.Start();
+            SetupDiscoveryHost(enableDiscovery);
         }
 
-    	private void DiscoveryHostOnClientDiscovered(object sender, DiscoveryHost.ClientDiscoveredEventArgs clientDiscoveredEventArgs)
+        private void SetupDiscoveryHost(bool enableDiscovery)
+        {
+            DiscoveryEnabled = enableDiscovery;
+
+            if (!enableDiscovery) return;
+
+            senderId = Guid.NewGuid();
+            discoveryHost = new DiscoveryHost();
+            discoveryHost.ClientDiscovered += DiscoveryHostOnClientDiscovered;
+            discoveryHost.Start();
+        }
+
+        private void DiscoveryHostOnClientDiscovered(object sender, DiscoveryHost.ClientDiscoveredEventArgs clientDiscoveredEventArgs)
     	{
 			if (senderId == clientDiscoveredEventArgs.SenderId) // we got our own notification, ignore it
 				return;
+
 			if (UserId != clientDiscoveredEventArgs.UserId) // another license, we don't care
 				return;
 
@@ -195,11 +226,7 @@ namespace Rhino.Licensing
     		}
 
 			RaiseLicenseInvalidated();
-    		var onMultipleLicensesWereDiscovered = MultipleLicensesWereDiscovered;
-			if(onMultipleLicensesWereDiscovered!=null)
-			{
-				onMultipleLicensesWereDiscovered(this, clientDiscoveredEventArgs);
-			}
+            RaiseMultipleLicenseDiscovered(clientDiscoveredEventArgs);
     	}
 
         /// <summary>
@@ -215,7 +242,6 @@ namespace Rhino.Licensing
 			:this(publicKey)
         {
             this.licenseServerUrl = licenseServerUrl;
-    		this.senderId = Guid.NewGuid();
     		this.clientId = clientId;
         }
 
@@ -227,9 +253,12 @@ namespace Rhino.Licensing
             LicenseAttributes.Clear();
             if (HasExistingLicense())
             {
-				discoveryClient = new DiscoveryClient(senderId, UserId, Environment.MachineName, Environment.UserName);
-				discoveryClient.PublishMyPresence();
-            	return;
+                if (DiscoveryEnabled)
+                {
+                    discoveryClient = new DiscoveryClient(senderId, UserId, Environment.MachineName, Environment.UserName);
+                    discoveryClient.PublishMyPresence();
+                }
+                return;
             }
 
             Log.WarnFormat("Could not validate existing license\r\n{0}", License);
@@ -249,14 +278,27 @@ namespace Rhino.Licensing
 
                 bool result;
                 if (LicenseType == LicenseType.Subscription)
+                {
                     result = ValidateSubscription();
+                }
                 else
+                {
                     result = DateTime.UtcNow < ExpirationDate;
+                }
 
                 if (result)
+                {
                     ValidateUsingNetworkTime();
+                }
                 else
-                    throw new LicenseExpiredException("Expiration Date : " + ExpirationDate);
+                {
+                    if (LicenseExpired == null)
+                        throw new LicenseExpiredException("Expiration Date : " + ExpirationDate);
+
+                    DisableFutureChecks();
+                    LicenseExpired(ExpirationDate);
+                }
+
                 return true;
             }
             catch (RhinoLicensingException)
@@ -493,7 +535,7 @@ namespace Rhino.Licensing
 
         internal bool ValidateXmlDocumentLicense(XmlDocument doc)
         {
-            XmlNode id = doc.SelectSingleNode("/license/@id");
+            var id = doc.SelectSingleNode("/license/@id");
             if (id == null)
             {
                 Log.WarnFormat("Could not find id attribute in license:\r\n{0}", License);
@@ -502,7 +544,7 @@ namespace Rhino.Licensing
 
             UserId = new Guid(id.Value);
 
-            XmlNode date = doc.SelectSingleNode("/license/@expiration");
+            var date = doc.SelectSingleNode("/license/@expiration");
             if (date == null)
             {
                 Log.WarnFormat("Could not find expiration in license:\r\n{0}", License);
@@ -511,7 +553,7 @@ namespace Rhino.Licensing
 
             ExpirationDate = DateTime.ParseExact(date.Value, "yyyy-MM-ddTHH:mm:ss.fffffff", CultureInfo.InvariantCulture);
 
-            XmlNode licenseType = doc.SelectSingleNode("/license/@type");
+            var licenseType = doc.SelectSingleNode("/license/@type");
             if (licenseType == null)
             {
                 Log.WarnFormat("Could not find license type in {0}", licenseType);
@@ -520,7 +562,7 @@ namespace Rhino.Licensing
 
             LicenseType = (LicenseType)Enum.Parse(typeof(LicenseType), licenseType.Value);
 
-            XmlNode name = doc.SelectSingleNode("/license/name/text()");
+            var name = doc.SelectSingleNode("/license/name/text()");
             if (name == null)
             {
                 Log.WarnFormat("Could not find licensee's name in license:\r\n{0}", License);
