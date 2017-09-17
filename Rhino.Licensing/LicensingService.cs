@@ -13,7 +13,7 @@ namespace Rhino.Licensing
     /// about multi threading issues. it is not something that we 
     /// expect to have to deal with huge load, anyway.
     /// </summary>
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Single)]
+    [System.ServiceModel.ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Single)]
     public class LicensingService : ILicensingService
     {
         private readonly List<LicenseValidator> availableLicenses = new List<LicenseValidator>();
