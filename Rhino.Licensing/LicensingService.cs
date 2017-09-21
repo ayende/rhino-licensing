@@ -1,5 +1,9 @@
+
+#if DESKTOP
+
 namespace Rhino.Licensing
 {
+
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
@@ -218,3 +222,5 @@ namespace Rhino.Licensing
 		}
 	}
 }
+
+#endif

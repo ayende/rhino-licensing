@@ -1,3 +1,4 @@
+using Rhino.Licensing.Logging;
 using System;
 using System.IO;
 
@@ -9,6 +10,11 @@ namespace Rhino.Licensing
     /// </summary>
     public class LicenseValidator : AbstractLicenseValidator
     {
+        /// <summary>
+        /// License validator logger
+        /// </summary>
+        private static readonly ILog Log = LogProvider.GetLogger(typeof(LicenseValidator));
+
         private readonly string licensePath;
         private string inMemoryLicense;
 

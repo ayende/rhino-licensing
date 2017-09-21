@@ -7,8 +7,8 @@ using System.Security.Cryptography.Xml;
 using System.ServiceModel;
 using System.Threading;
 using System.Xml;
-using log4net;
 using Rhino.Licensing.Discovery;
+using Rhino.Licensing.Logging;
 
 namespace Rhino.Licensing
 {
@@ -20,7 +20,7 @@ namespace Rhino.Licensing
         /// <summary>
         /// License validator logger
         /// </summary>
-        protected static readonly ILog Log = LogManager.GetLogger(typeof(LicenseValidator));
+        private static readonly ILog Log = LogProvider.GetLogger(typeof(AbstractLicenseValidator));
 
         /// <summary>
         /// Standard Time servers
@@ -345,7 +345,8 @@ namespace Rhino.Licensing
 
         private void TryGettingNewLeaseSubscription()
         {
-            var service = ChannelFactory<ISubscriptionLicensingService>.CreateChannel(new BasicHttpBinding(), new EndpointAddress(SubscriptionEndpoint));
+            var channelFactory = new ChannelFactory<ISubscriptionLicensingService>(new BasicHttpBinding(), new EndpointAddress(SubscriptionEndpoint));
+            var service = channelFactory.CreateChannel();
             try
             {
                 var newLicense = service.LeaseLicense(License);
@@ -482,7 +483,8 @@ namespace Rhino.Licensing
             }
 
             var success = false;
-            var licensingService = ChannelFactory<ILicensingService>.CreateChannel(new WSHttpBinding(), new EndpointAddress(licenseServerUrl));
+            var channelFactory = new ChannelFactory<ILicensingService>(new BasicHttpBinding(), new EndpointAddress(licenseServerUrl));
+            var licensingService = channelFactory.CreateChannel();
             try
             {
                 var leasedLicense = licensingService.LeaseLicense(
