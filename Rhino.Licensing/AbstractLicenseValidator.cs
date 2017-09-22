@@ -73,7 +73,7 @@ namespace Rhino.Licensing
         {
             get; set;
         }
-
+        
         /// <summary>
         /// Gets the expiration date of the license
         /// </summary>
@@ -396,7 +396,7 @@ namespace Rhino.Licensing
             if (!NetworkInterface.GetIsNetworkAvailable())
                 return;
 
-            var sntp = new SntpClient(TimeServers);
+            var sntp = new SntpClient(GetTimeServers());
             sntp.BeginGetDate(time =>
             {
                 if (time > ExpirationDate)
@@ -406,6 +406,15 @@ namespace Rhino.Licensing
             {
                 /* ignored */
             });
+        }
+
+        /// <summary>
+        /// Extension point to return different time servers
+        /// </summary>
+        /// <returns></returns>
+        protected virtual string[] GetTimeServers()
+        {
+            return TimeServers;
         }
 
         /// <summary>
